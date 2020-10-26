@@ -7,21 +7,30 @@ public class PlayerControl : UnitBase
 
     public Vector3 moveDir;
 
-    private bool isInputCommand = true;
+    public bool isInputAction = true;
     public bool isMove = true;
-    public EnumInfo.Command currentCommand, nextCommand;
-    private int AttackCount;
     private bool isChaking;
 
 
     public float RollingCoolTime;
+    public float RollingTime = 0.5f;
     private bool isRollingCollTime;
+    public float rollingSpeed;
 
     private bool isTimeAction = false;
     private float currentTime;
     private float oldTime;
     private float waitTime = 0.1f;
     private float tick = 0.01f;
+
+    public ComboSystem comboSystem;
+
+    private bool isTimeStopCorutine = false;
+
+    public float stopTimeScale;
+    public float stopTime;
+    public float recoveryTime;
+
 
     public void Start()
     {
@@ -31,26 +40,26 @@ public class PlayerControl : UnitBase
     public override void Initializer()
     {
         base.Initializer();
-        currentCommand = EnumInfo.Command.NoCommand;
-        nextCommand = currentCommand;
     }
 
     public void Update()
     {
         //print("AA");
-        Rotation();
+        if (isMove)
+        {
+            Rotation();
+        }
         Move();
-        Attack();
-
-
     }
 
     public void Move()
     {
+        if (!isInputAction) return;
+
+
         if (!isMove)
         {
-            if(!isRollingCollTime)
-            rigidbody.velocity = Vector3.zero;
+                rigidbody.velocity = Vector3.zero;
             return;
         }
 
@@ -58,14 +67,11 @@ public class PlayerControl : UnitBase
         {
             rigidbody.velocity = moveDir * speed;
             modelAni.SetBool("IsWalk", true);
-            isChaking = true;
         }
-        else
+        else 
         {
-            if (isChaking)
-            {
-                StartCoroutine(SkipFram());
-            }
+            modelAni.SetBool("IsWalk", false);
+            rigidbody.velocity = Vector3.zero;
         }
     }
 
@@ -73,7 +79,7 @@ public class PlayerControl : UnitBase
     {
         isChaking = false; 
         yield return new WaitForFixedUpdate();
-        if(moveDir.sqrMagnitude < 0.1f)
+        if(moveDir.sqrMagnitude < 0.1f && isInputAction)
         {
             modelAni.SetBool("IsWalk", false);
             rigidbody.velocity = Vector3.zero;
@@ -82,109 +88,86 @@ public class PlayerControl : UnitBase
 
     private void Rotation()
     {
-        if (!isMove) return;
         if (moveDir == Vector3.zero) return;
         transform.LookAt(transform.position + moveDir);
-    }
-
-    public void CommandAddAttack()
-    {
-        SetNextCommand(EnumInfo.Command.Attack);
     }
 
 
     public override void Attack()
     {
-        if (isAttackRate || !isInputCommand) return;
-
-        NextCommand();
-
-        if (currentCommand == EnumInfo.Command.Attack && AttackCount < 1)
-            {
-            isMove = false;
-                base.Attack();
-                Debug.Log("Player Attack");
-                AttackCount++;
-                modelAni.SetInteger("AttackCount", AttackCount);
-               modelAni.SetTrigger("Attack");
-
-            StartCoroutine(AttackRate());
-        }
-        else
-        {
-            AttackCount = 0;
-        }
-
+        comboSystem.Attack();
     }
 
 
     public void WeaponTimeAction()
     {
+        if (isTimeStopCorutine) StopCoroutine(TimeAction());
         isTimeAction = true;
         Time.timeScale = 0.00f;
+        isTimeStopCorutine = false;
         StartCoroutine(TimeAction());
     }
-
+    public float addtime;
     IEnumerator TimeAction()
     {
-        float scale = 0.01f;
+        float scale = stopTimeScale;
         Time.timeScale = scale;
-        yield return new WaitForSecondsRealtime(0.35f);
-        while (scale < 1.0f)
+        addtime = 0;
+        yield return new WaitForSecondsRealtime(stopTime);
+
+        while (true)
         {
-            scale += 0.05f;
-            Mathf.Clamp(scale, 0.0f, 1.0f);
-            Time.timeScale = scale;
-            print(scale);
+            Time.timeScale += scale;
+            if(Time.timeScale >= 1)
+            {
+                Time.timeScale = 1.0f;
+                break;
+            }
             yield return new WaitForSecondsRealtime(0.01f);
         }
-    }
-
-
-    public void SetNextCommand(EnumInfo.Command command)
-    {
-        if (!isInputCommand) return;
-        nextCommand = command;
-    }
-
-    public void NextCommand()
-    {
-        currentCommand = nextCommand;
-        nextCommand = EnumInfo.Command.NoCommand;
+            yield return new WaitForSecondsRealtime(0.01f);
+        isTimeStopCorutine = false;
 
     }
 
-    public void ResetAttackCount()
-    {
-        AttackCount = 0;
-        modelAni.SetInteger("AttackCount", AttackCount);
-    }
 
-    public int GetAttackCount()
-    {
-        return AttackCount;
-    }
 
     public void Rolling()
     {
         if (isRollingCollTime) return;
 
+        comboSystem.ResetCombo();
+
         isRollingCollTime = true;
-        isInputCommand = false;
+        isInputAction = false;
         isMove = false;
 
 
         modelAni.SetTrigger("Rolling");
-        rigidbody.velocity = transform.forward.normalized * 7.0f;
-        StartCoroutine(RollingCoolEvent());
+
+        StartCoroutine(RollingEvent());
     }
 
 
-    IEnumerator RollingCoolEvent()
+    IEnumerator RollingEvent()
     {
-        yield return new WaitForSeconds(RollingCoolTime);
+        float time = Time.deltaTime;
+        Rotation();
+        Vector3 rollinPower = transform.forward.normalized * rollingSpeed;
+
+        while (time < RollingTime)
+        {
+            rigidbody.velocity = rollinPower;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        rigidbody.velocity = Vector3.zero;
+
         isMove = true;
-        isInputCommand = true;
+        isInputAction = true;
+
+        yield return new WaitForSeconds(RollingCoolTime);
         isRollingCollTime = false;
     }
 }

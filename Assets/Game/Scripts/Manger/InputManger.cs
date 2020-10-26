@@ -19,7 +19,7 @@ public class InputManger : MonoBehaviour
         if (context.started)
         {
           //  Debug.Log("Code 1 : OnAttack!!" );
-            GameMagner.Instance.GetPlayerControl().CommandAddAttack();
+            GameMagner.Instance.GetPlayerControl().Attack();
         }
     }
 

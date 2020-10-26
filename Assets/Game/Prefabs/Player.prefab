@@ -422,7 +422,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5929061797413287157}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.000030517574, y: -90.000046, z: -180}
 --- !u!137 &364604200937710492
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -468,7 +468,13 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -8081099773619822009, guid: 44174fe624936d249a651b06e29730a9, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: -0.000000029802322, y: 0.0016317181, z: 0.77846545}
@@ -1658,6 +1664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37066366095387720}
   - component: {fileID: 7929058182950699314}
+  - component: {fileID: 2067667368}
   m_Layer: 0
   m_Name: Set WeaponMasterUnity-chan GreatSword
   m_TagString: Untagged
@@ -1698,7 +1705,7 @@ Animator:
   m_GameObject: {fileID: 3952179638472285787}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 44174fe624936d249a651b06e29730a9, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50f1b8a223eb61243832529d780ebaf5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1707,6 +1714,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2067667368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952179638472285787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff7e9324e1cd5949aa8bfd28a788f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitAni: {fileID: 7929058182950699314}
 --- !u!1 &3959222024082049691
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,7 +3073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   MAXHP: 5
-  speed: 10
+  speed: 4
   temperature: 36.5
   HotTemperatuer: 50
   ColdTemperatuer: -50
@@ -3061,8 +3081,21 @@ MonoBehaviour:
   rigidbody: {fileID: 5945224836325913294}
   weaponTransfrom: {fileID: 6047697465454694272}
   weapon: {fileID: 11400000, guid: 31f8945557902444590752a9dd0f3e6e, type: 2}
+  modelTransfrom: {fileID: 5945224836678978415}
+  modelAni: {fileID: 7929058182950699314}
+  weaponSensor: {fileID: 6397810202378807268}
   isAttackRate: 0
   moveDir: {x: 0, y: 0, z: 0}
+  isInputAction: 1
+  isMove: 1
+  RollingCoolTime: 1
+  RollingTime: 0.5
+  rollingSpeed: 5
+  comboSystem: {fileID: 2067667368}
+  stopTimeScale: 0.1
+  stopTime: 0.3
+  recoveryTime: 0.5
+  addtime: 0
 --- !u!54 &5945224836325913294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3078,7 +3111,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!136 &2917178397696785436
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4308,6 +4341,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6047697465454694272}
   - component: {fileID: 2289776788793674789}
+  - component: {fileID: 7289322311138421788}
+  - component: {fileID: 6397810202378807268}
   m_Layer: 0
   m_Name: WeaponTrasform
   m_TagString: Untagged
@@ -4344,6 +4379,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3650234, y: 0.2, z: 1.1575657}
   m_Center: {x: 0.051153332, y: 0.00000066026405, z: 0.634382}
+--- !u!54 &7289322311138421788
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308239039395936748}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6397810202378807268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308239039395936748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83656201050ed4f46bef29115599423f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8341362878123458537
 GameObject:
   m_ObjectHideFlags: 0

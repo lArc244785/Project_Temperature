@@ -15,6 +15,13 @@ public class GameMagner : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+        Intilize();
+    }
+
+    private void Intilize()
+    {
+        GetPlayerControl();
+        GetCamerManger();
     }
 
 

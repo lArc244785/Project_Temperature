@@ -53,7 +53,7 @@ public class UnitBase : Status
         //AniTrigger
         weapon.Attack();
         if(weaponSensor != null)
-        weaponSensor.ActionStart();
+        weaponSensor.HitEventOn();
     }
 
     public virtual void HandleDeath()

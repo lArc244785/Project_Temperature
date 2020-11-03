@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitBase : Status
 {
-    public Transform unitTransform;
-    public Rigidbody rigidbody;
+    protected Transform unitTransform;
+    protected Rigidbody rigidbody;
     public Transform weaponTransfrom;
     public WeaponBase weapon;
     public Transform modelTransfrom;
@@ -14,30 +13,28 @@ public class UnitBase : Status
 
     //공격을 했나?
     public bool isAttackRate = false;
-    public virtual  void Initializer()
+    public virtual void Initializer()
     {
         hp = MAXHP;
 
 
-        if(unitTransform == null)
         unitTransform = transform;
+
+        rigidbody = GetComponent<Rigidbody>();
         if (rigidbody == null)
         {
-            rigidbody = GetComponent<Rigidbody>();
-            if (rigidbody == null)
-            {
-                Debug.LogWarning("Code 100: rigidbody Null");
-            }
+            Debug.LogWarning("Code 100: rigidbody Null");
         }
-        if(weaponTransfrom == null)
+
+        if (weaponTransfrom == null)
         {
             weaponTransfrom = transform.FindChild("WeaponTransform");
-            if(weaponTransfrom == null)
+            if (weaponTransfrom == null)
             {
                 Debug.LogWarning("Code 100: weaponTransfrom Null");
             }
         }
-        if(weapon != null)
+        if (weapon != null)
         {
             weapon.Initializer(weaponTransfrom, this);
         }
@@ -52,8 +49,8 @@ public class UnitBase : Status
     {
         //AniTrigger
         weapon.Attack();
-        if(weaponSensor != null)
-        weaponSensor.HitEventOn();
+        if (weaponSensor != null)
+            weaponSensor.HitEventOn();
     }
 
     public virtual void HandleDeath()
@@ -75,8 +72,8 @@ public class UnitBase : Status
     }
 
 
-    
 
-   
+
+
 
 }

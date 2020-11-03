@@ -17,26 +17,35 @@ public class ComboSystem : MonoBehaviour
         playerControl = GameMagner.Instance.GetPlayerControl();
     }
 
-    public void Attack()
+    public bool Attack()
     {
-        if (!IsComboPossible) return;
+        if (!IsComboPossible) return false;
+        bool isAttack = false;
         playerControl.isMove = false;
-
         if (currentCombo == 0)
         {
             UnitAni.SetTrigger("Attack");
             currentCombo++;
+            isAttack = true;
         }
 
         else if ( currentCombo <= MaxCombo)
         {
             currentCombo++;
+            isAttack = true;
         }
 
         UnitAni.SetInteger("AttackCombo", currentCombo);
-        playerControl.weaponSensor.HitEventOn();
-        playerControl.weaponSensor.HitActionOn();
+        //playerControl.weaponSensor.HitEventOn();
+        //playerControl.weaponSensor.HitActionOn();
         IsComboPossible = false;
+
+        return isAttack;
+    }
+
+    public void MoveAction()
+    {
+        playerControl.ActionMove();
     }
 
     public void ResetCombo()
@@ -61,5 +70,11 @@ public class ComboSystem : MonoBehaviour
     {
         playerControl.weaponSensor.HitEvnetOff();
     }
-    
+
+    public void WeaponHitOn() {
+        playerControl.weaponSensor.HitEventOn();
+        playerControl.weaponSensor.HitActionOn();
+    }
+
+
 }

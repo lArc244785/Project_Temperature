@@ -13,13 +13,14 @@ public class WeaponSensor : MonoBehaviour
         pc = GameMagner.Instance.GetPlayerControl();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
 
         if(other.tag == "Enemy")
         {
             if (isHitEvent)
             {
+                isHitEvent = false;
                 print("Enem Hit");
                 if (isHitAction)
                     pc.WeaponTimeAction();
@@ -46,5 +47,8 @@ public class WeaponSensor : MonoBehaviour
     {
         isHitAction = false;
     }
+
+   
+
 
 }

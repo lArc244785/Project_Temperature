@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControl : UnitBase
 {
@@ -44,12 +45,16 @@ public class PlayerControl : UnitBase
 
     public void Update()
     {
+        TS = Time.timeScale;
         //print("AA");
-        if (isMove)
+        if (isInputAction)
         {
+            if(isMove)
             Rotation();
+            Move();
         }
-        Move();
+
+
     }
 
     public void Move()
@@ -59,7 +64,7 @@ public class PlayerControl : UnitBase
 
         if (!isMove)
         {
-                rigidbody.velocity = Vector3.zero;
+            //rigidbody.velocity = Vector3.zero;
             return;
         }
 
@@ -88,44 +93,77 @@ public class PlayerControl : UnitBase
 
     private void Rotation()
     {
-        if (moveDir == Vector3.zero) return;
-        transform.LookAt(transform.position + moveDir);
+        Camera mainCam = GameMagner.Instance.GetCamerManger().GetMainCamera();
+
+        //Get the Screen positions of the object
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+        //Get the Screen position of the mouse
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue());
+
+        //Get the angle between the points
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+
+        transform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(b.x - a.x, b.y - a.y) * Mathf.Rad2Deg;
     }
 
 
     public override void Attack()
     {
-        comboSystem.Attack();
+        if (!isInputAction) return;
+        comboSystem.Attack(); 
+
     }
+
+    public void ActionMove()
+    {
+        rigidbody.velocity = transform.forward.normalized * 3;
+    }
+
 
 
     public void WeaponTimeAction()
     {
         if (isTimeStopCorutine) StopCoroutine(TimeAction());
-        isTimeAction = true;
+
         Time.timeScale = 0.00f;
-        isTimeStopCorutine = false;
+        isTimeStopCorutine = true;
+        weaponSensor.HitActionOff();
         StartCoroutine(TimeAction());
     }
-    public float addtime;
+    public float TS;
+    protected float recoveryTimeScale;
+    float t;
     IEnumerator TimeAction()
     {
+
+        Debug.Log("TimeActionStart");
         float scale = stopTimeScale;
         Time.timeScale = scale;
-        addtime = 0;
+        recoveryTimeScale = 1 / recoveryTime;
+ 
         yield return new WaitForSecondsRealtime(stopTime);
+        Time.timeScale = 1.0f;
 
-        while (true)
-        {
-            Time.timeScale += scale;
-            if(Time.timeScale >= 1)
-            {
-                Time.timeScale = 1.0f;
-                break;
-            }
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-            yield return new WaitForSecondsRealtime(0.01f);
+        //while (true)
+        //{
+        //    t += Time.unscaledDeltaTime ;
+        //    Time.timeScale += Time.unscaledDeltaTime * recoveryTimeScale;
+        //    if(Time.timeScale >= 1)
+        //    {
+        //        Time.timeScale = 1.0f;
+        //        break;
+        //    }
+        //    yield return null;
+        //}
+        Debug.Log("TimeAction Time : " + t);
+        t = 0;
         isTimeStopCorutine = false;
 
     }
@@ -135,6 +173,12 @@ public class PlayerControl : UnitBase
     public void Rolling()
     {
         if (isRollingCollTime) return;
+        if (isTimeStopCorutine)
+        {
+            StopCoroutine(TimeAction());
+            Time.timeScale = 1.0f;
+        }
+
 
         comboSystem.ResetCombo();
 
@@ -153,7 +197,9 @@ public class PlayerControl : UnitBase
     {
         float time = Time.deltaTime;
         Rotation();
-        Vector3 rollinPower = transform.forward.normalized * rollingSpeed;
+        //  Vector3 rollinPower = transform.forward.normalized * rollingSpeed;
+        Vector3 rollinPower = moveDir * rollingSpeed;
+        transform.LookAt(transform.position + moveDir);
 
         while (time < RollingTime)
         {
@@ -164,10 +210,23 @@ public class PlayerControl : UnitBase
 
         rigidbody.velocity = Vector3.zero;
 
+        yield return new WaitForSeconds(0.1f);
+
+
         isMove = true;
         isInputAction = true;
 
         yield return new WaitForSeconds(RollingCoolTime);
         isRollingCollTime = false;
+    }
+
+    public void SetTimeStopCorutine(bool value)
+    {
+        isTimeStopCorutine = value;
+    }
+
+    public bool GetTimeStopCorutine()
+    {
+        return isTimeStopCorutine;
     }
 }

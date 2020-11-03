@@ -46,4 +46,9 @@ public class CamerManger : MonoBehaviour
         mainCamPos.position = currentPos;
     }
 
+    public Camera GetMainCamera()
+    {
+        return mainCam;
+    }
+
 }

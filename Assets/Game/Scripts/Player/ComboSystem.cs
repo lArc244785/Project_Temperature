@@ -24,6 +24,7 @@ public class ComboSystem : MonoBehaviour
         playerControl.isMove = false;
         if (currentCombo == 0)
         {
+            playerControl.GetRigidbody().velocity = Vector3.zero;
             UnitAni.SetTrigger("Attack");
             currentCombo++;
             isAttack = true;

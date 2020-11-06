@@ -7,6 +7,7 @@ public class PlayerControl : UnitBase
 {
 
     public Vector3 moveDir;
+    public Vector3 oldMoveDir;
 
     public bool isInputAction = true;
     public bool isMove = true;
@@ -59,7 +60,7 @@ public class PlayerControl : UnitBase
 
     public void Move()
     {
-        if (!isInputAction) return;
+        if (!isInputAction || !isMove) return;
 
 
         if (!isMove)
@@ -136,6 +137,8 @@ public class PlayerControl : UnitBase
         isTimeStopCorutine = true;
         weaponSensor.HitActionOff();
         StartCoroutine(TimeAction());
+
+        GameMagner.Instance.GetCamerManger().TimeAction();
     }
     public float TS;
     protected float recoveryTimeScale;
@@ -198,8 +201,9 @@ public class PlayerControl : UnitBase
         float time = Time.deltaTime;
         Rotation();
         //  Vector3 rollinPower = transform.forward.normalized * rollingSpeed;
-        Vector3 rollinPower = moveDir * rollingSpeed;
-        transform.LookAt(transform.position + moveDir);
+        Vector3 dir = moveDir == Vector3.zero ? oldMoveDir : moveDir;
+        Vector3 rollinPower = dir * rollingSpeed;
+        transform.LookAt(transform.position + dir);
 
         while (time < RollingTime)
         {

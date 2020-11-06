@@ -8,7 +8,7 @@ public class GameMagner : MonoBehaviour
 
     private PlayerControl playerControl;
     private CamerManger camMagner;
-
+    private InputManger inputManger;
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -22,6 +22,8 @@ public class GameMagner : MonoBehaviour
     {
         GetPlayerControl();
         GetCamerManger();
+        inputManger = GameObject.FindObjectOfType<InputManger>();
+        inputManger.Initializer();
     }
 
 

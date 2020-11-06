@@ -72,7 +72,10 @@ public class UnitBase : Status
     }
 
 
-
+    public Rigidbody GetRigidbody()
+    {
+        return rigidbody;
+    }
 
 
 

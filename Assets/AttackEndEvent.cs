@@ -17,15 +17,9 @@ public class AttackEndEvent : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        PlayerControl pc = GameMagner.Instance.GetPlayerControl();
-        if (pc.currentCommand != EnumInfo.Command.Attack)
-        {
-            pc.isMove = true;
-        }
-        pc.modelAni.SetBool("IsWalk", false);
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

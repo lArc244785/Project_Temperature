@@ -8,13 +8,22 @@ public class GameMagner : MonoBehaviour
 
     private PlayerControl playerControl;
     private CamerManger camMagner;
-
+    private InputManger inputManger;
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else {
             Destroy(gameObject);
         }
+        Intilize();
+    }
+
+    private void Intilize()
+    {
+        GetPlayerControl();
+        GetCamerManger();
+        inputManger = GameObject.FindObjectOfType<InputManger>();
+        inputManger.Initializer();
     }
 
 

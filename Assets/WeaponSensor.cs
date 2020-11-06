@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WeaponSensor : MonoBehaviour
 {
-    private bool isAction;
+    private bool isHitEvent;
+    private bool isHitAction;
     PlayerControl pc;
 
     private void Start()
@@ -12,18 +13,42 @@ public class WeaponSensor : MonoBehaviour
         pc = GameMagner.Instance.GetPlayerControl();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (!isAction) return;
+
         if(other.tag == "Enemy")
         {
-            pc.WeaponTimeAction();
-            isAction = false;
+            if (isHitEvent)
+            {
+                isHitEvent = false;
+                print("Enem Hit");
+                if (isHitAction)
+                    pc.WeaponTimeAction();
+            }
+
         }
     }
 
-    public void ActionStart()
+    public void HitEventOn()
     {
-        isAction = true;
+        isHitEvent = true;
     }
+    public void HitEvnetOff()
+    {
+        isHitEvent = false;
+    }
+
+    public void HitActionOn()
+    {
+        isHitAction = true;
+    }
+
+    public void HitActionOff()
+    {
+        isHitAction = false;
+    }
+
+   
+
+
 }

@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 678565449585356227}
   - component: {fileID: 5796058504871530450}
   m_Layer: 0
-  m_Name: CubeTile
+  m_Name: CubeTile_Proto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

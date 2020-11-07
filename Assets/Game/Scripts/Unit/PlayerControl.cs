@@ -97,15 +97,15 @@ public class PlayerControl : UnitBase
         Camera mainCam = GameMagner.Instance.GetCamerManger().GetMainCamera();
 
         //Get the Screen positions of the object
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+        Vector2 positionOnScreen = mainCam.WorldToViewportPoint(transform.position);
 
         //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue());
+        Vector2 mouseOnScreen = (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
 
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
-        transform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+        modelTransfrom.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
 
     }
 
@@ -124,7 +124,7 @@ public class PlayerControl : UnitBase
 
     public void ActionMove()
     {
-        rigidbody.velocity = transform.forward.normalized * 3;
+        rigidbody.velocity = modelTransfrom.forward.normalized * 3;
     }
 
 
@@ -203,7 +203,7 @@ public class PlayerControl : UnitBase
         //  Vector3 rollinPower = transform.forward.normalized * rollingSpeed;
         Vector3 dir = moveDir == Vector3.zero ? oldMoveDir : moveDir;
         Vector3 rollinPower = dir * rollingSpeed;
-        transform.LookAt(transform.position + dir);
+        modelTransfrom.LookAt(transform.position + dir);
 
         while (time < RollingTime)
         {

@@ -22,8 +22,7 @@ public class GameMagner : MonoBehaviour
     {
         GetPlayerControl();
         GetCamerManger();
-        inputManger = GameObject.FindObjectOfType<InputManger>();
-        inputManger.Initializer();
+        GetInPutManger();
     }
 
 
@@ -42,6 +41,7 @@ public class GameMagner : MonoBehaviour
         if(camMagner == null)
         {
             camMagner = GameObject.Find("CamerManger").GetComponent<CamerManger>();
+            camMagner.Initializer();
         }
         return camMagner;
     }
@@ -51,5 +51,14 @@ public class GameMagner : MonoBehaviour
         return camMagner.transform;
     }
 
+    public InputManger GetInPutManger()
+    {
+        if (inputManger == null)
+        {
+            inputManger = GameObject.FindObjectOfType<InputManger>();
+            inputManger.Initializer();
+        }
+        return inputManger;
+    }
 
 }

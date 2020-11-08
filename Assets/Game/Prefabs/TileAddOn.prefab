@@ -51,7 +51,7 @@ MonoBehaviour:
   upTargetPosX: 7
   upTargetPosY: 0
   upTargetPosZ: 0
-  addOnTargetPosX: 3
+  addOnTargetPosX: 4
   addOnTargetPosZ: 0
 --- !u!1001 &3389165985931598699
 PrefabInstance:

@@ -10,33 +10,50 @@ public class TileBase : MonoBehaviour
     public Transform modelTr;
     public Rigidbody rigidbody;
     public ConstantForce constantForce;
+    public BoxCollider collider;
 
-    public Vector3 gravity;
-    public int gravityValue;
+    private Vector3 gravity;
+    private float gravityValue;
 
     public bool test = false;
 
     private void Start()
     {
-        gravityValue = UnityEngine.Random.Range(-10,-3);
+        gravityValue = UnityEngine.Random.Range(-10f,-3f);
         gravity = new Vector3(0, gravityValue, 0);
         constantForce.force = gravity;
 
         if (test ==true)
         {
-            HandleFall();
+            //HandleFall();
+            StartCoroutine(Fall());
         }
     }
 
     private void Update()
     { 
+
     }
 
-    public void HandleFall()
+    IEnumerator Fall()
     {
         rigidbody.isKinematic = false;
+        collider.isTrigger = true;
+
         Invoke("Death", 2f);
+
+        yield return new WaitForSeconds(.1f);
+
+        collider.isTrigger = false;
+
     }
+
+    //public void HandleFall()
+    //{
+    //    rigidbody.isKinematic = false;
+    //    collider.isTrigger = true;
+    //    Invoke("Death", 2f);
+    //}
 
     public void Death()
     {
@@ -47,7 +64,7 @@ public class TileBase : MonoBehaviour
     {
         if(collision.collider.tag == "Unit")
         {
-            modelTr.Translate(0, transform.position.y - 0.05f, 0);
+            modelTr.Translate(0 , - 0.05f, 0);
         }
     }
 
@@ -55,9 +72,9 @@ public class TileBase : MonoBehaviour
     {
         if(collision.collider.tag == "Unit")
         {
-            if (modelTr.localPosition.y < transform.localPosition.y)
+            if (modelTr.localPosition.y < 0)
             {
-                modelTr.DOMove(transform.position, 1f);
+                modelTr.DOLocalMove(Vector3.zero, 1f);
                 //modelTr.Translate(transform.localPosition);
             }
         }

@@ -42,7 +42,7 @@ public class TileBase : MonoBehaviour
 
         Invoke("Death", 2f);
 
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.1f);
 
         collider.isTrigger = false;
 
@@ -64,7 +64,7 @@ public class TileBase : MonoBehaviour
     {
         if(collision.collider.tag == "Unit")
         {
-            modelTr.Translate(0, transform.position.y - 0.05f, 0);
+            modelTr.Translate(0 , - 0.05f, 0);
         }
     }
 
@@ -72,9 +72,9 @@ public class TileBase : MonoBehaviour
     {
         if(collision.collider.tag == "Unit")
         {
-            if (modelTr.localPosition.y < transform.localPosition.y)
+            if (modelTr.localPosition.y < 0)
             {
-                modelTr.DOMove(transform.position, 1f);
+                modelTr.DOLocalMove(Vector3.zero, 1f);
                 //modelTr.Translate(transform.localPosition);
             }
         }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 747527163358731535}
   - component: {fileID: 6006320657488379678}
   m_Layer: 0
-  m_Name: CherryBlossomTile
+  m_Name: TileBasic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

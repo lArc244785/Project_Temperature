@@ -64,7 +64,7 @@ public class TileBase : MonoBehaviour
     {
         if(collision.collider.tag == "Unit")
         {
-            modelTr.Translate(0 , - 0.05f, 0);
+            modelTr.Translate(0 , - 0.07f, 0);
         }
     }
 

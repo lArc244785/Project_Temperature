@@ -5,7 +5,9 @@ public class InputManger : MonoBehaviour
 {
     PlayerControl pc;
     Camera mainCam;
-    public Vector2 ScreenMousePos;
+
+
+
     public void Initializer()
     {
         pc = GameMagner.Instance.GetPlayerControl();
@@ -39,9 +41,11 @@ public class InputManger : MonoBehaviour
         pc.Rolling();
     }
 
-    public void Update()
+
+
+    public Vector2 GetMousePostionToScreen()
     {
-        ScreenMousePos = (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
+        return (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
     }
 
 }

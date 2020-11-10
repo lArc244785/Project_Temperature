@@ -160,3 +160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   offset: {x: 0, y: 10, z: -8}
+  moveOffsetRadius: {x: 3, y: 3}
+  offsetSpeed: 500
+  shake: 0.1

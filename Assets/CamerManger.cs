@@ -1,5 +1,4 @@
-﻿using Cinemachine;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,76 +7,80 @@ public class CamerManger : MonoBehaviour
 {
     public Transform Target;
 
+    private Vector3 currentPos;
+    private Vector3 currentVelocity;
+    private Vector3 targetPos;
 
+    public Vector3 offset;
+    private Vector3 currentOffset;
+    private Vector3 currentOffsetVelocity;
+    private Vector3 targetOffset;
+    private Vector3 origineOffset;
+    public Vector2 moveOffsetRadius;
+    public float offsetTime = 0.5f;
 
     private Camera mainCam;
     private Transform mainCamPos;
-    public CinemachineVirtualCamera FollowCam;
-
 
     private Vector3 camPos_orignal;
 
     public float shake;
-    public float FollowOffsetSpeed;
-    public Vector3 FollowCamOffsetSize;
-    private Vector3 OrigineFollowCamOffset;
-    private Vector3 currentFollowCamOffset;
-    private Vector3 currentFollowCamOffsetVelocity;
-    private Vector3 targetFollowCamOffset;
-    public CinemachineOrbitalTransposer orbital;
-    public void Initializer()
+
+    public bool isMouseOffset;
+
+
+    public void Intilize()
     {
-        mainCam =GameObject.Find("Main Camera").GetComponent<Camera>();
+        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         mainCamPos = transform;
-        orbital = FollowCam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        OrigineFollowCamOffset = orbital.m_FollowOffset;
-        currentFollowCamOffset = OrigineFollowCamOffset;
-        targetFollowCamOffset = currentFollowCamOffset;
+
+        SetTarget();
+
+        currentPos = targetPos;
+        currentVelocity = currentPos;
+        camPos_orignal = Vector3.zero;
+
+        origineOffset = offset;
+        currentOffset = origineOffset;
+        currentOffsetVelocity = currentOffset;
+        targetOffset = currentOffset;
+
+        isMouseOffset = false;
+      
+    }
+
+    private void Start()
+    {
+        Invoke("MouseOffsetTrue", 1.0f);
+    }
+
+    private void MouseOffsetTrue()
+    {
+        isMouseOffset = true;
     }
 
 
+    private void SetTarget()
+    {
+        targetPos = Target.position + offset;
+    }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 ScreenMousePos = GameMagner.Instance.GetInPutManger().ScreenMousePos;
-        //마우스의 스크린 퍼센트를 확인
-        //X와 Y둘중 0.95을 넘었는지 확인
-        if (Mathf.Abs(ScreenMousePos.x) > 0.95f)
-        {
-       
-            targetFollowCamOffset.x = ScreenMousePos.x > 0 ? FollowCamOffsetSize.x : -FollowCamOffsetSize.x;
-            targetFollowCamOffset.x += OrigineFollowCamOffset.x;
-        }
-        else
-        {
-            targetFollowCamOffset.x = OrigineFollowCamOffset.x; 
-        }
+        if(camPos_orignal == Vector3.zero)
+        TargetCam();
 
-        if (Mathf.Abs(ScreenMousePos.y) > 0.95f)
-        {
-            targetFollowCamOffset.z = ScreenMousePos.y > 0 ? FollowCamOffsetSize.z : -FollowCamOffsetSize.z;
-            targetFollowCamOffset.z += OrigineFollowCamOffset.z;
-        }
-        else
-        {
-            targetFollowCamOffset.y = OrigineFollowCamOffset.y;
-        }
-
-        currentFollowCamOffset = Vector3.SmoothDamp(
-            currentFollowCamOffset,
-            targetFollowCamOffset,
-            ref currentFollowCamOffsetVelocity,
-            0.2f, FollowOffsetSpeed);
-
-        orbital.m_FollowOffset = currentFollowCamOffset;
-        //넘었으면 지정한 간격까지 일정속도로 카메라의 Offset변경
-
-
+        SetOffset();
     }
 
-
+    private void TargetCam()
+    {
+        SetTarget();
+        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentVelocity, 0.2f);
+        mainCamPos.position = currentPos;
+    }
 
     public Camera GetMainCamera()
     {
@@ -112,6 +115,60 @@ public class CamerManger : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.05f);
         transform.position = camPos_orignal;
         camPos_orignal = Vector3.zero;
+    }
+
+    public void SetOffset()
+    {
+        if (!isMouseOffset) return;
+
+        Vector2 screenPoint = GameMagner.Instance.GetInputManger().GetMousePostionToScreen();
+        Debug.Log(screenPoint);
+        if (screenPoint.x > 0.9f  || screenPoint.x  < 0.1f )
+        {
+            if(screenPoint.x > 0.1f)
+            {
+                targetOffset.x = origineOffset.x + moveOffsetRadius.x;
+            }
+            else
+            {
+                targetOffset.x = origineOffset.x - moveOffsetRadius.x;
+            }
+        }
+        else
+        {
+            targetOffset.x = origineOffset.x;
+        }
+
+        if(screenPoint.y > 0.9f || screenPoint.y < 0.1f)
+        {
+            if(screenPoint.y > 0.1f)
+            {
+                targetOffset.z = origineOffset.z + moveOffsetRadius.y;
+                targetOffset.z -= 0.5f;
+            }
+            else
+            {
+                targetOffset.z = origineOffset.z - moveOffsetRadius.y;
+
+            }
+        }
+        else
+        {
+            targetOffset.z = origineOffset.z;
+        }
+
+        TargetOffCam();
+    }
+
+    private void TargetOffCam()
+    {
+        if (targetOffset == origineOffset && origineOffset == currentOffset) return;
+
+        currentOffset = Vector3.SmoothDamp(currentOffset, targetOffset, ref currentOffsetVelocity, offsetTime);
+       
+        currentOffset.y = origineOffset.y;
+
+        offset = currentOffset;
     }
 
 }

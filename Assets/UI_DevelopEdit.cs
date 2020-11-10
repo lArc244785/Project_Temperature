@@ -7,6 +7,7 @@ using UnityEngine;
 public class UI_DevelopEdit : MonoBehaviour
 {
     private PlayerControl pc;
+    private CamerManger camManger;
 
     public TMP_InputField MoveSpeedValue;
     public TMP_InputField RollingSpeedValue;
@@ -14,6 +15,9 @@ public class UI_DevelopEdit : MonoBehaviour
     public TMP_InputField StopTimeScaleValue;
     public TMP_InputField StopTimeWaitTimeValue;
 
+    public TMP_InputField MouseOffsetRadiusXValue;
+    public TMP_InputField MouseOffsetRadiusYValue;
+    public TMP_InputField MoveOffsetSpeedValue;
 
     private void Start()
     {
@@ -22,11 +26,16 @@ public class UI_DevelopEdit : MonoBehaviour
     public void Initialize()
     {
         pc = GameMagner.Instance.GetPlayerControl();
+        camManger = GameMagner.Instance.GetCamerManger();
+
         MoveSpeedValue.text = pc.speed.ToString();
         RollingSpeedValue.text = pc.rollingSpeed.ToString();
         RollingTimeValue.text = pc.RollingTime.ToString();
         StopTimeScaleValue.text = pc.stopTimeScale.ToString();
         StopTimeWaitTimeValue.text = pc.stopTime.ToString();
+        MouseOffsetRadiusXValue.text = camManger.moveOffsetRadius.x.ToString();
+        MouseOffsetRadiusYValue.text = camManger.moveOffsetRadius.y.ToString();
+        MoveOffsetSpeedValue.text = camManger.offsetTime.ToString();
     }
 
 
@@ -56,5 +65,34 @@ public class UI_DevelopEdit : MonoBehaviour
     {
         if(StopTimeWaitTimeValue.text.ToString() != null)
         pc.stopTime = float.Parse(StopTimeWaitTimeValue.text.ToString());
+    }
+
+    public void EditMouseOffSetRadiusX()
+    {
+        if (MouseOffsetRadiusXValue.text.ToString() != null)
+        {
+            camManger.moveOffsetRadius.x =
+                float.Parse(MouseOffsetRadiusXValue.text.ToString());
+            camManger.SetOffset();
+        }
+    }
+
+    public void EditMouseOffSetRadiusY()
+    {
+        if (MouseOffsetRadiusYValue.text.ToString() != null)
+        {
+            camManger.moveOffsetRadius.y =
+                float.Parse(MouseOffsetRadiusYValue.text.ToString());
+            camManger.SetOffset();
+        }
+    }
+
+    public void EditMouseOffSetSpeed()
+    {
+        if(MoveOffsetSpeedValue.text.ToString() != null)
+        {
+            camManger.offsetTime =
+                float.Parse(MoveOffsetSpeedValue.text.ToString());
+        }
     }
 }

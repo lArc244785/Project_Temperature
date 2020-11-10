@@ -3038,7 +3038,7 @@ GameObject:
   - component: {fileID: 2917178397696785436}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3077,6 +3077,8 @@ MonoBehaviour:
   temperature: 36.5
   HotTemperatuer: 50
   ColdTemperatuer: -50
+  unitTransform: {fileID: 5945224836325913297}
+  rigidbody: {fileID: 5945224836325913294}
   weaponTransfrom: {fileID: 6047697465454694272}
   weapon: {fileID: 11400000, guid: 31f8945557902444590752a9dd0f3e6e, type: 2}
   modelTransfrom: {fileID: 5945224836678978415}
@@ -3084,7 +3086,6 @@ MonoBehaviour:
   weaponSensor: {fileID: 6397810202378807268}
   isAttackRate: 0
   moveDir: {x: 0, y: 0, z: 0}
-  oldMoveDir: {x: 0, y: 0, z: 0}
   isInputAction: 1
   isMove: 1
   RollingCoolTime: 1
@@ -3092,9 +3093,9 @@ MonoBehaviour:
   rollingSpeed: 5
   comboSystem: {fileID: 2067667368}
   stopTimeScale: 0.1
-  stopTime: 0.1
-  recoveryTime: 0.2
-  TS: 0
+  stopTime: 0.3
+  recoveryTime: 0.5
+  addtime: 0
 --- !u!54 &5945224836325913294
 Rigidbody:
   m_ObjectHideFlags: 0

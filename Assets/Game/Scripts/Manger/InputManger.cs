@@ -24,7 +24,7 @@ public class InputManger : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>();
 
 
-        Debug.Log("Code 1 : OnMove" + input );
+        //Debug.Log("Code 1 : OnMove" + input );
         if(input == Vector2.zero)
         {
             pc.oldMoveDir = pc.moveDir;

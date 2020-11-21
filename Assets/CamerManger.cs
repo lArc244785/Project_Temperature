@@ -107,7 +107,7 @@ public class CamerManger : MonoBehaviour
     public void SetOffset()
     {
         Vector2 screenPoint = GameMagner.Instance.GetInputManger().MousePointToScreen;
-        Debug.Log(screenPoint);
+        //Debug.Log(screenPoint);
         if (screenPoint.x > 0.95f  || screenPoint.x  < 0.1f)
         {
             if(screenPoint.x > 0.1f)

@@ -10,30 +10,31 @@ public class ComboSystem : MonoBehaviour
     private int currentCombo;
 
     private bool IsComboPossible = true;
-
+    private int hitBoxSize;
 
     private void Start()
     {
-        playerControl = GameMagner.Instance.GetPlayerControl();
+        playerControl = GameManger.Instance.GetPlayerControl();
+        hitBoxSize = playerControl.weaponSensor.hitBoxs.Length;
     }
 
-    public bool Attack()
+    public bool isPushCombo()
     {
         if (!IsComboPossible) return false;
-        bool isAttack = false;
+        bool isComboOn = false;
         playerControl.isMove = false;
         if (currentCombo == 0)
         {
             playerControl.GetRigidbody().velocity = Vector3.zero;
             UnitAni.SetTrigger("Attack");
             currentCombo++;
-            isAttack = true;
+            isComboOn = true;
         }
 
         else if ( currentCombo <= MaxCombo)
         {
             currentCombo++;
-            isAttack = true;
+            isComboOn = true;
         }
 
         UnitAni.SetInteger("AttackCombo", currentCombo);
@@ -41,7 +42,7 @@ public class ComboSystem : MonoBehaviour
         //playerControl.weaponSensor.HitActionOn();
         IsComboPossible = false;
 
-        return isAttack;
+        return isComboOn;
     }
 
     public void MoveAction()
@@ -54,7 +55,6 @@ public class ComboSystem : MonoBehaviour
         currentCombo = 0;
         UnitAni.SetInteger("AttackCombo", currentCombo);
         ComboPossible();
-        WeaponHItEventOff();
     }
 
     public void isMovePossible()
@@ -67,14 +67,16 @@ public class ComboSystem : MonoBehaviour
         IsComboPossible = true;
     }
 
-    public void WeaponHItEventOff()
+  public void Attack(int hitBox)
     {
-        playerControl.weaponSensor.HitEvnetOff();
-    }
 
-    public void WeaponHitOn() {
-        playerControl.weaponSensor.HitEventOn();
-        playerControl.weaponSensor.HitActionOn();
+       if(hitBox < 0 || hitBox > hitBoxSize)
+        {
+            Debug.LogWarning("HitBox Index Over :" + hitBox);
+            return;
+        }
+
+        playerControl.Attack(hitBox);
     }
 
 

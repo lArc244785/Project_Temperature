@@ -1,28 +1,35 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMagner : MonoBehaviour
+public class GameManger : MonoBehaviour
 {
-    public static GameMagner Instance;
+    public static GameManger Instance;
 
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
+    private MapMagner mapManger;
+    private EnemyManger enemyManger;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else {
             Destroy(gameObject);
         }
-        Intilize();
+        Initializer();
+        DOTween.defaultAutoPlay = AutoPlay.None;
     }
 
-    private void Intilize()
+    private void Initializer()
     {
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
+        GetMapManger();
+        GetEnemyManger();
     }
 
 
@@ -30,7 +37,7 @@ public class GameMagner : MonoBehaviour
     {
         if(playerControl == null)
         {
-            playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+            playerControl = GameObject.FindObjectOfType<PlayerControl>();
             playerControl.Initializer();
         }
 
@@ -62,5 +69,25 @@ public class GameMagner : MonoBehaviour
         return inputManger;
     }
 
+    public MapMagner GetMapManger()
+    {
+        if(mapManger == null)
+        {
+            mapManger = GameObject.FindObjectOfType<MapMagner>();
+            mapManger.Initializer();
+        }
 
+        return mapManger;
+    }
+
+    public EnemyManger GetEnemyManger()
+    {
+        if(enemyManger == null)
+        {
+            enemyManger = GameObject.FindObjectOfType<EnemyManger>();
+            enemyManger.Initializer();
+        }
+
+        return enemyManger;
+    }
 }

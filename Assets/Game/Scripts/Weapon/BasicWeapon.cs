@@ -10,9 +10,9 @@ public class BasicWeapon : WeaponBase
     }
 
 
-    public override void Attack()
+    public override void Attack(int hitBox = 0)
     {
-        base.Attack();
-        Debug.Log("NomalAttack");
+        Debug.Log("HitBox:" + hitBox);
+        base.Attack(hitBox);
     }
 }

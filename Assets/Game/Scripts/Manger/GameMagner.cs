@@ -9,9 +9,16 @@ public class GameMagner : MonoBehaviour
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
+
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+
+            GameObject.DontDestroyOnLoad(this.gameObject);
+        }
         else {
             Destroy(gameObject);
         }
@@ -23,6 +30,11 @@ public class GameMagner : MonoBehaviour
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
 
@@ -62,5 +74,22 @@ public class GameMagner : MonoBehaviour
         return inputManger;
     }
 
+    public void SetMainMenu(bool value)
+    {
+        UIManager.Instance.uiMainMenu.Toggle(true);
+        UIManager.Instance.uiInGame.Toggle(false);
+        UIManager.Instance.uiOption.Toggle(false);
+    }
 
+    public void ExitGame()
+    {
+        if(Application.isPlaying)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+    }
 }

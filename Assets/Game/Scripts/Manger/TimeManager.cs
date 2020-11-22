@@ -6,44 +6,100 @@ public class TimeManager : MonoBehaviour
 {
 
     private float blend = 0f;
-    private float timer = 0.0f;
 
     public Material[] mat;
 
     public int index;
 
     public Light mainLight;
-    public Light colorLight;
     public Light nightLIght;
 
-    public Color colerRed;
-    public Color colorBlue;
+    private float currentIntensity;
+    private float targetIntensity;
+    private float currentIntensityVelocity;
 
-    private Color originalNightLightColor;
-    private Color originalColorLightColor;
+    private float currentMainIntensity;
+    private float targetMainIntensity;
+    private float currentMainIntensityVelocity;
+
+    private float degreePerSecond;
+    private float daySecond;
+
+    private float timer = 0f;
+
+    public bool isNight;
 
     private void Start()
     {
-        transform.GetComponent<MeshRenderer>().sharedMaterial.shader = Shader.Find("Skybox/Blend");
+        daySecond = 320;
+        degreePerSecond = 360 / daySecond;
+        mainLight.transform.rotation = Quaternion.Euler(90, 0, 0);
+        nightLIght.intensity = 0;
+        currentMainIntensity = .8f;
 
-        originalNightLightColor = nightLIght.color;
+        isNight = false;
     }
 
     private void Update()
     {
-        //time for game
-        //360 = 1day 80sec = 6degree
-        mainLight.transform.Rotate(new Vector3(4.5f, 0f, 0f) * Time.deltaTime);
+        MainLIghtControl();
+        NightLightControl();
 
         SkyboxBlend();
 
+        UIManager.Instance.uiInGame.DayNIghtIcon(isNight);
+    }
+
+    public void Timer()
+    {
+        timer += Time.deltaTime;
+    }
+
+    public void MainLIghtControl()
+    {
+        //time for game
+        //360 = 1day 300sec = 6degree
+        mainLight.transform.Rotate(Vector3.right, degreePerSecond*Time.deltaTime);
+
+        if (mainLight.transform.eulerAngles.x > 270)
+        {
+            isNight = true;
+
+            targetMainIntensity = 0f;
+            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
+            mainLight.intensity = currentMainIntensity;
+        }
+        else
+        {
+            isNight = false;
+
+            targetMainIntensity = .8f;
+            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
+            mainLight.intensity = currentMainIntensity;
+        }
+    }
+
+    public void NightLightControl()
+    {
+        if (mainLight.transform.eulerAngles.x > 270 || mainLight.transform.eulerAngles.x < 20)
+        {
+            targetIntensity = 0.3f;
+            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 10f);
+            nightLIght.intensity = currentIntensity;
+        }
+        else
+        {
+            targetIntensity = 0f;
+            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 10f);
+            nightLIght.intensity = currentIntensity;
+        }
     }
 
     public void SkyboxBlend()
     {
         if(blend < 1)
         {
-            blend += Time.deltaTime * 0.05f;
+            blend += Time.deltaTime * 0.0125f;
             //test ;
             //blend += Time.deltaTime * 0.1f;
             mat[index].SetFloat("_Blend", blend);
@@ -69,11 +125,5 @@ public class TimeManager : MonoBehaviour
                     mat[3].SetFloat("_Blend", 0);
             }
         }
-    }
-
-    public void lightColor()
-    {
-        //if(mainLight.transform.eulerAngles.x >)
-        nightLIght.color = Color.Lerp(originalNightLightColor, colorBlue, 0.01f);
     }
 }

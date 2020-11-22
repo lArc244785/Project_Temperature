@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class UIMainMenu : MonoBehaviour
+public class UIMainMenu : UIView
 {
     public void StartGame()
     {
-
+        AsyncOperation sceneLoadAsync = SceneManager.LoadSceneAsync("Jun_map", LoadSceneMode.Single);
     }
 
     public void ShowOption()
@@ -16,6 +17,15 @@ public class UIMainMenu : MonoBehaviour
 
     public void ExitGame()
     {
+        //GameMagner.Instance.ExitGame();
 
+        if (Application.isPlaying)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
     }
 }

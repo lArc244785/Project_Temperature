@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Game/Sences/InGame.unity
     guid: 870ef47e80ad50f47839f0d7dbd0503e
   - enabled: 1
+    path: Assets/Game/Sences/Jun/MainMenu.unity
+    guid: f56be863539452a4a94635c04254118a
+  - enabled: 1
     path: Assets/Game/Sences/Jun/Jun_map.unity
     guid: 9a2b6db0950c32d4892325f46e58c8db
   m_configObjects: {}

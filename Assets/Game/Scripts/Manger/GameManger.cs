@@ -10,21 +10,30 @@ public class GameManger : MonoBehaviour
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
     private MapMagner mapManger;
     private EnemyManger enemyManger;
 =======
 
 >>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+    private MapMagner mapManger;
+    private EnemyManger enemyManger;
+=======
+
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+=======
+    private MapMagner mapManger;
+    private EnemyManger enemyManger;
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-
-            GameObject.DontDestroyOnLoad(this.gameObject);
-        }
+        if (Instance == null) Instance = this;
         else {
             Destroy(gameObject);
         }
@@ -39,11 +48,6 @@ public class GameManger : MonoBehaviour
         GetInputManger();
         GetMapManger();
         GetEnemyManger();
-    }
-
-    private void Start()
-    {
-        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
 
@@ -83,7 +87,14 @@ public class GameManger : MonoBehaviour
         return inputManger;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
     public MapMagner GetMapManger()
     {
         if(mapManger == null)
@@ -104,6 +115,10 @@ public class GameManger : MonoBehaviour
         }
 
         return enemyManger;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
 =======
     public void SetMainMenu(bool value)
     {
@@ -123,5 +138,10 @@ public class GameManger : MonoBehaviour
 #endif
         }
 >>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
     }
 }

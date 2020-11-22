@@ -15,11 +15,11 @@ TagManager:
   - UI
   - 
   - 
-  - Enemy
   - Player
-  - Ghost
-  - Model
+  - Enemy
   - Wall
+  - Ghost
+  - 
   - 
   - 
   - 

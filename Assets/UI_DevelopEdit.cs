@@ -35,7 +35,7 @@ public class UI_DevelopEdit : MonoBehaviour
         StopTimeWaitTimeValue.text = pc.stopTime.ToString();
         MouseOffsetRadiusXValue.text = camManger.moveOffsetRadius.x.ToString();
         MouseOffsetRadiusYValue.text = camManger.moveOffsetRadius.y.ToString();
-        MoveOffsetSpeedValue.text = camManger.offsetSpeed.ToString();
+        MoveOffsetSpeedValue.text = camManger.offsetTime.ToString();
     }
 
 
@@ -91,7 +91,7 @@ public class UI_DevelopEdit : MonoBehaviour
     {
         if(MoveOffsetSpeedValue.text.ToString() != null)
         {
-            camManger.offsetSpeed =
+            camManger.offsetTime =
                 float.Parse(MoveOffsetSpeedValue.text.ToString());
         }
     }

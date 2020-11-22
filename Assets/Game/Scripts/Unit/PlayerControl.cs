@@ -111,7 +111,11 @@ public class PlayerControl : UnitBase
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
 
         //Get the Screen position of the mouse
+<<<<<<< HEAD
         Vector2 mouseOnScreen = GameManger.Instance.GetInputManger().GetMousePostionToScreen();
+=======
+        Vector2 mouseOnScreen = GameMagner.Instance.GetInputManger().MousePointToScreen;
+>>>>>>> Jun
 
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);

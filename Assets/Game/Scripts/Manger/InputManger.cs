@@ -4,14 +4,24 @@ using UnityEngine.InputSystem;
 public class InputManger : MonoBehaviour
 {
     PlayerControl pc;
-    Camera mainCam;
-
+    private Vector2 mouseScreenPoint;
+    public Vector2 MousePointToScreen
+    {
+        get
+        {
+            return mouseScreenPoint;
+        }
+    }
 
 
     public void Initializer()
     {
+<<<<<<< HEAD
         pc = GameManger.Instance.GetPlayerControl();
         mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
+=======
+        pc = GameMagner.Instance.GetPlayerControl();
+>>>>>>> Jun
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -45,11 +55,9 @@ public class InputManger : MonoBehaviour
         pc.Desh();
     }
 
-
-
-    public Vector2 GetMousePostionToScreen()
+    private void Update()
     {
-        return (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
+        mouseScreenPoint = (Vector2)Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue());
     }
 
 }

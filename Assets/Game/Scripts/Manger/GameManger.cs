@@ -10,12 +10,21 @@ public class GameManger : MonoBehaviour
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
     private MapMagner mapManger;
     private EnemyManger enemyManger;
+=======
+
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+
+            GameObject.DontDestroyOnLoad(this.gameObject);
+        }
         else {
             Destroy(gameObject);
         }
@@ -30,6 +39,11 @@ public class GameManger : MonoBehaviour
         GetInputManger();
         GetMapManger();
         GetEnemyManger();
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
 
@@ -69,6 +83,7 @@ public class GameManger : MonoBehaviour
         return inputManger;
     }
 
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
     public MapMagner GetMapManger()
     {
         if(mapManger == null)
@@ -89,5 +104,24 @@ public class GameManger : MonoBehaviour
         }
 
         return enemyManger;
+=======
+    public void SetMainMenu(bool value)
+    {
+        UIManager.Instance.uiMainMenu.Toggle(true);
+        UIManager.Instance.uiInGame.Toggle(false);
+        UIManager.Instance.uiOption.Toggle(false);
+    }
+
+    public void ExitGame()
+    {
+        if(Application.isPlaying)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
     }
 }

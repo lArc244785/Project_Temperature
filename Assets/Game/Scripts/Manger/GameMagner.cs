@@ -1,44 +1,40 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManger : MonoBehaviour
+public class GameMagner : MonoBehaviour
 {
-    public static GameManger Instance;
+    public static GameMagner Instance;
 
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
-<<<<<<< HEAD
-<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
-    private MapMagner mapManger;
-    private EnemyManger enemyManger;
-=======
 
->>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
-=======
-    private MapMagner mapManger;
-    private EnemyManger enemyManger;
->>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+
+            GameObject.DontDestroyOnLoad(this.gameObject);
+        }
         else {
             Destroy(gameObject);
         }
-        Initializer();
-        DOTween.defaultAutoPlay = AutoPlay.None;
+        Intilize();
     }
 
-    private void Initializer()
+    private void Intilize()
     {
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
-        GetMapManger();
-        GetEnemyManger();
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
 
@@ -46,7 +42,7 @@ public class GameManger : MonoBehaviour
     {
         if(playerControl == null)
         {
-            playerControl = GameObject.FindObjectOfType<PlayerControl>();
+            playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
             playerControl.Initializer();
         }
 
@@ -78,32 +74,6 @@ public class GameManger : MonoBehaviour
         return inputManger;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
-=======
->>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
-    public MapMagner GetMapManger()
-    {
-        if(mapManger == null)
-        {
-            mapManger = GameObject.FindObjectOfType<MapMagner>();
-            mapManger.Initializer();
-        }
-
-        return mapManger;
-    }
-
-    public EnemyManger GetEnemyManger()
-    {
-        if(enemyManger == null)
-        {
-            enemyManger = GameObject.FindObjectOfType<EnemyManger>();
-            enemyManger.Initializer();
-        }
-
-        return enemyManger;
-<<<<<<< HEAD
-=======
     public void SetMainMenu(bool value)
     {
         UIManager.Instance.uiMainMenu.Toggle(true);
@@ -121,8 +91,5 @@ public class GameManger : MonoBehaviour
             Application.Quit();
 #endif
         }
->>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
-=======
->>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
     }
 }

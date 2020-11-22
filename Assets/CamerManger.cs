@@ -17,7 +17,7 @@ public class CamerManger : MonoBehaviour
     private Vector3 targetOffset;
     private Vector3 origineOffset;
     public Vector2 moveOffsetRadius;
-    public float offsetSpeed = 500.0f;
+    public float offsetTime = 0.5f;
 
     private Camera mainCam;
     private Transform mainCamPos;
@@ -26,7 +26,7 @@ public class CamerManger : MonoBehaviour
 
     public float shake;
 
-
+    public bool isMouseOffset;
 
 
     public void Intilize()
@@ -45,7 +45,20 @@ public class CamerManger : MonoBehaviour
         currentOffsetVelocity = currentOffset;
         targetOffset = currentOffset;
 
+        isMouseOffset = false;
+      
     }
+
+    private void Start()
+    {
+        Invoke("MouseOffsetTrue", 1.0f);
+    }
+
+    private void MouseOffsetTrue()
+    {
+        isMouseOffset = true;
+    }
+
 
     private void SetTarget()
     {
@@ -107,16 +120,22 @@ public class CamerManger : MonoBehaviour
     public void SetOffset()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
         if (!isMouseOffset) return;
 
         Vector2 screenPoint = GameManger.Instance.GetInputManger().GetMousePostionToScreen();
         //Debug.Log(screenPoint);
         if (screenPoint.x > 0.9f  || screenPoint.x  < 0.1f )
+<<<<<<< HEAD
 =======
         Vector2 screenPoint = GameMagner.Instance.GetInputManger().MousePointToScreen;
         //Debug.Log(screenPoint);
         if (screenPoint.x > 0.95f  || screenPoint.x  < 0.1f)
 >>>>>>> Jun
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
         {
             if(screenPoint.x > 0.1f)
             {
@@ -132,7 +151,7 @@ public class CamerManger : MonoBehaviour
             targetOffset.x = origineOffset.x;
         }
 
-        if(screenPoint.y > 0.95f || screenPoint.y < 0.1f)
+        if(screenPoint.y > 0.9f || screenPoint.y < 0.1f)
         {
             if(screenPoint.y > 0.1f)
             {
@@ -157,7 +176,7 @@ public class CamerManger : MonoBehaviour
     {
         if (targetOffset == origineOffset && origineOffset == currentOffset) return;
 
-        currentOffset = Vector3.SmoothDamp(currentOffset, targetOffset, ref currentOffsetVelocity, 1.0f, Time.deltaTime * offsetSpeed);
+        currentOffset = Vector3.SmoothDamp(currentOffset, targetOffset, ref currentOffsetVelocity, offsetTime);
        
         currentOffset.y = origineOffset.y;
 

@@ -25,12 +25,12 @@ public class UI_DevelopEdit : MonoBehaviour
     }
     public void Initialize()
     {
-        pc = GameMagner.Instance.GetPlayerControl();
-        camManger = GameMagner.Instance.GetCamerManger();
+        pc = GameManger.Instance.GetPlayerControl();
+        camManger = GameManger.Instance.GetCamerManger();
 
         MoveSpeedValue.text = pc.speed.ToString();
         RollingSpeedValue.text = pc.rollingSpeed.ToString();
-        RollingTimeValue.text = pc.RollingTime.ToString();
+        RollingTimeValue.text = pc.DeshTime.ToString();
         StopTimeScaleValue.text = pc.stopTimeScale.ToString();
         StopTimeWaitTimeValue.text = pc.stopTime.ToString();
         MouseOffsetRadiusXValue.text = camManger.moveOffsetRadius.x.ToString();
@@ -54,7 +54,7 @@ public class UI_DevelopEdit : MonoBehaviour
     public void EditRollingTimeValue()
     {
         if (RollingTimeValue.text.ToString() != null)
-            pc.RollingTime = float.Parse(RollingTimeValue.text.ToString());
+            pc.DeshTime = float.Parse(RollingTimeValue.text.ToString());
     }
     public void EditStopTimeScale()
     {

@@ -10,8 +10,8 @@ public class InputManger : MonoBehaviour
 
     public void Initializer()
     {
-        pc = GameMagner.Instance.GetPlayerControl();
-        mainCam = GameMagner.Instance.GetCamerManger().GetMainCamera();
+        pc = GameManger.Instance.GetPlayerControl();
+        mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -19,7 +19,7 @@ public class InputManger : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>();
 
 
-        Debug.Log("Code 1 : OnMove" + input );
+        //Debug.Log("Code 1 : OnMove" + input );
         if(input == Vector2.zero)
         {
             pc.oldMoveDir = pc.moveDir;
@@ -32,13 +32,17 @@ public class InputManger : MonoBehaviour
         if (context.started)
         {
             //  Debug.Log("Code 1 : OnAttack!!" );
-            pc.Attack();
+            pc.modelAni.SetBool("MousePush", true);
+            pc.AttackMotion();
+        }else if (context.canceled)
+        {
+            pc.modelAni.SetBool("MousePush", false);
         }
     }
 
     public void OnRolling(InputAction.CallbackContext context)
     {
-        pc.Rolling();
+        pc.Desh();
     }
 
 

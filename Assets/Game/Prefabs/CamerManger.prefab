@@ -161,5 +161,6 @@ MonoBehaviour:
   Target: {fileID: 0}
   offset: {x: 0, y: 10, z: -8}
   moveOffsetRadius: {x: 3, y: 3}
-  offsetSpeed: 500
+  offsetTime: 0.5
   shake: 0.1
+  isMouseOffset: 0

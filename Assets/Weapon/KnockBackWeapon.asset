@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca2cc63ab57b90f47acade35ec75f45a, type: 3}
-  m_Name: BasicWeapon
+  m_Script: {fileID: 11500000, guid: 609821ed220e00648b08da852998a3f3, type: 3}
+  m_Name: KnockBackWeapon
   m_EditorClassIdentifier: 
   damageList:
-  - DamageType: 1
-    damage: 10
-  tickRate: 1
+  - DamageType: 0
+    damage: 1
+  tick: 1
+  tickRate: 0.5
+  KnockBackTime: 0.8
+  SternTime: 0.5

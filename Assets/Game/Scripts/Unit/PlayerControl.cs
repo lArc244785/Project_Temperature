@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +9,14 @@ public class PlayerControl : UnitBase
     public Vector3 moveDir;
     public Vector3 oldMoveDir;
 
-
+    public bool isInputAction = true;
     public bool isMove = true;
     private bool isChaking;
 
 
     public float RollingCoolTime;
-    public float DeshTime = 1.0f;
-    private bool isDeshCollTime;
+    public float RollingTime = 0.5f;
+    private bool isRollingCollTime;
     public float rollingSpeed;
 
     private bool isTimeAction = false;
@@ -34,12 +33,11 @@ public class PlayerControl : UnitBase
     public float stopTime;
     public float recoveryTime;
 
-
+   
 
     public void Start()
     {
         Initializer();
-
     }
 
     public override void Initializer()
@@ -51,44 +49,36 @@ public class PlayerControl : UnitBase
     {
         TS = Time.timeScale;
         //print("AA");
-        if (isInputAction && isControl)
+        if (isInputAction)
         {
-
+            if(isMove)
             Rotation();
-           Move();
-
+            Move();
         }
 
-        weaponSensor.transform.position = new Vector3(
-            SkinnedMesh.bounds.center.x,
-            weaponSensor.transform.position.y, 
-            SkinnedMesh.bounds.center.z);
 
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-
-
- 
     }
 
     public void Move()
     {
+        if (!isInputAction || !isMove) return;
+
+
+        if (!isMove)
+        {
+            //rigidbody.velocity = Vector3.zero;
+            return;
+        }
 
         if (moveDir.sqrMagnitude > 0.1f)
         {
             rigidbody.velocity = moveDir * speed;
-            modelAni.SetFloat("Walk" ,1.0f);
-            isMove = true;
+            modelAni.SetBool("IsWalk", true);
         }
         else 
         {
-            modelAni.SetFloat("Walk", 0.0f);
-            isMove = false;
-        }
-
-        if (!isMove)
-        {
+            modelAni.SetBool("IsWalk", false);
             rigidbody.velocity = Vector3.zero;
-            return;
         }
     }
 
@@ -98,20 +88,20 @@ public class PlayerControl : UnitBase
         yield return new WaitForFixedUpdate();
         if(moveDir.sqrMagnitude < 0.1f && isInputAction)
         {
-            modelAni.SetFloat("Walk", 0.0f);
+            modelAni.SetBool("IsWalk", false);
             rigidbody.velocity = Vector3.zero;
         }
     }
 
     private void Rotation()
     {
-        Camera mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
+        Camera mainCam = GameMagner.Instance.GetCamerManger().GetMainCamera();
 
         //Get the Screen positions of the object
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
 
         //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = GameManger.Instance.GetInputManger().GetMousePostionToScreen();
+        Vector2 mouseOnScreen = GameMagner.Instance.GetInputManger().MousePointToScreen;
 
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
@@ -126,43 +116,16 @@ public class PlayerControl : UnitBase
     }
 
 
-    public  void AttackMotion()
+    public override void Attack()
     {
+        if (!isInputAction) return;
+        comboSystem.Attack(); 
 
-        if (!isInputAction || !isControl) return;
-        rigidbody.velocity = Vector3.zero;
-        modelAni.SetTrigger("Attack");
-        isInputAction = false;
-       // comboSystem.isPushCombo(); 
-    }
-
-
-
-
-    public override void Attack(int hitBox = 0)
-    {
-        base.Attack(hitBox);
-    }
-
-
-
-    public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
-    {
-        if (gameObject.layer == GhostLayer) return;
-        base.HitEvent(damageList, weapon);
-        StartCoroutine(GhosetState(3.0f));
-    }
-
-    IEnumerator GhosetState(float time)
-    {
-        gameObject.layer = GhostLayer;
-        yield return new WaitForSecondsRealtime(time);
-        gameObject.layer = originLayer;
     }
 
     public void ActionMove()
     {
-      //  rigidbody.velocity = transform.forward.normalized * 3;
+        rigidbody.velocity = transform.forward.normalized * 3;
     }
 
 
@@ -173,12 +136,11 @@ public class PlayerControl : UnitBase
 
         Time.timeScale = 0.00f;
         isTimeStopCorutine = true;
- 
+        weaponSensor.HitActionOff();
         StartCoroutine(TimeAction());
 
-        GameManger.Instance.GetCamerManger().TimeAction();
+        GameMagner.Instance.GetCamerManger().TimeAction();
     }
-
     public float TS;
     protected float recoveryTimeScale;
     float t;
@@ -212,9 +174,9 @@ public class PlayerControl : UnitBase
 
 
 
-    public void Desh()
+    public void Rolling()
     {
-        if (isDeshCollTime) return;
+        if (isRollingCollTime) return;
         if (isTimeStopCorutine)
         {
             StopCoroutine(TimeAction());
@@ -224,19 +186,18 @@ public class PlayerControl : UnitBase
 
         comboSystem.ResetCombo();
 
-        isDeshCollTime = true;
+        isRollingCollTime = true;
         isInputAction = false;
         isMove = false;
 
-        modelAni.SetBool("isDeshing", true);
-        modelAni.SetTrigger("Dash");
 
-        SetSkinnedMeshPostionToPostion();
-        StartCoroutine(DeshCoroutine());
+        modelAni.SetTrigger("Rolling");
+
+        StartCoroutine(RollingEvent());
     }
 
 
-    IEnumerator DeshCoroutine()
+    IEnumerator RollingEvent()
     {
         float time = Time.deltaTime;
         Rotation();
@@ -245,21 +206,23 @@ public class PlayerControl : UnitBase
         Vector3 rollinPower = dir * rollingSpeed;
         transform.LookAt(transform.position + dir);
 
-        while (time < DeshTime)
+        while (time < RollingTime)
         {
             rigidbody.velocity = rollinPower;
             time += Time.deltaTime;
             yield return null;
         }
-        modelAni.SetBool("isDeshing", false);
+
         rigidbody.velocity = Vector3.zero;
 
-        //yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f);
 
+
+        isMove = true;
         isInputAction = true;
 
         yield return new WaitForSeconds(RollingCoolTime);
-        isDeshCollTime = false;
+        isRollingCollTime = false;
     }
 
     public void SetTimeStopCorutine(bool value)
@@ -271,13 +234,4 @@ public class PlayerControl : UnitBase
     {
         return isTimeStopCorutine;
     }
-
-    public Transform GetUnitTransfrom()
-    {
-        return unitTransform;
-    }
-
-
-
 }
-

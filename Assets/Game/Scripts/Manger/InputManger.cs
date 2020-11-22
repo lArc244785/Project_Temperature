@@ -4,14 +4,19 @@ using UnityEngine.InputSystem;
 public class InputManger : MonoBehaviour
 {
     PlayerControl pc;
-    Camera mainCam;
-
+    private Vector2 mouseScreenPoint;
+    public Vector2 MousePointToScreen
+    {
+        get
+        {
+            return mouseScreenPoint;
+        }
+    }
 
 
     public void Initializer()
     {
-        pc = GameManger.Instance.GetPlayerControl();
-        mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
+        pc = GameMagner.Instance.GetPlayerControl();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -32,24 +37,18 @@ public class InputManger : MonoBehaviour
         if (context.started)
         {
             //  Debug.Log("Code 1 : OnAttack!!" );
-            pc.modelAni.SetBool("MousePush", true);
-            pc.AttackMotion();
-        }else if (context.canceled)
-        {
-            pc.modelAni.SetBool("MousePush", false);
+            pc.Attack();
         }
     }
 
     public void OnRolling(InputAction.CallbackContext context)
     {
-        pc.Desh();
+        pc.Rolling();
     }
 
-
-
-    public Vector2 GetMousePostionToScreen()
+    private void Update()
     {
-        return (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
+        mouseScreenPoint = (Vector2)Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue());
     }
 
 }

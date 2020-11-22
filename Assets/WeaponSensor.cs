@@ -7,38 +7,48 @@ public class WeaponSensor : MonoBehaviour
     private bool isHitEvent;
     private bool isHitAction;
     PlayerControl pc;
-    WeaponBase weapon;
-    public HitBox[] hitBoxs;
 
-
-    public void Initializer(WeaponBase weapon)
+    private void Start()
     {
-        this.weapon = weapon;
-
-        pc = GameManger.Instance.GetPlayerControl();
-        if(hitBoxs == null)
-        {
-            Debug.LogError("No Weapon HitBox!!!!");
-        }
-
-        foreach(HitBox box in hitBoxs)
-        {
-            box.Intializer(weapon.GetParentUnit());
-        }
-
+        pc = GameMagner.Instance.GetPlayerControl();
     }
 
-
-
-    //타겟을 보냄
-    public List<UnitBase> GetSensorHitUnits(int Index = 0)
+    private void OnTriggerStay(Collider other)
     {
-        List<UnitBase> targetUnits;
 
-        targetUnits = hitBoxs[Index].GetHitBoxInEnmey();
+        if(other.tag == "Enemy")
+        {
+            if (isHitEvent)
+            {
+                isHitEvent = false;
+                print("Enem Hit");
+                if (isHitAction)
+                    pc.WeaponTimeAction();
+            }
 
-        return targetUnits;
+        }
     }
+
+    public void HitEventOn()
+    {
+        isHitEvent = true;
+    }
+    public void HitEvnetOff()
+    {
+        isHitEvent = false;
+    }
+
+    public void HitActionOn()
+    {
+        isHitAction = true;
+    }
+
+    public void HitActionOff()
+    {
+        isHitAction = false;
+    }
+
+   
 
 
 }

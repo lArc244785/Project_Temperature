@@ -10,31 +10,30 @@ public class ComboSystem : MonoBehaviour
     private int currentCombo;
 
     private bool IsComboPossible = true;
-    private int hitBoxSize;
+
 
     private void Start()
     {
-        playerControl = GameManger.Instance.GetPlayerControl();
-        hitBoxSize = playerControl.weaponSensor.hitBoxs.Length;
+        playerControl = GameMagner.Instance.GetPlayerControl();
     }
 
-    public bool isPushCombo()
+    public bool Attack()
     {
         if (!IsComboPossible) return false;
-        bool isComboOn = false;
+        bool isAttack = false;
         playerControl.isMove = false;
         if (currentCombo == 0)
         {
             playerControl.GetRigidbody().velocity = Vector3.zero;
             UnitAni.SetTrigger("Attack");
             currentCombo++;
-            isComboOn = true;
+            isAttack = true;
         }
 
         else if ( currentCombo <= MaxCombo)
         {
             currentCombo++;
-            isComboOn = true;
+            isAttack = true;
         }
 
         UnitAni.SetInteger("AttackCombo", currentCombo);
@@ -42,7 +41,7 @@ public class ComboSystem : MonoBehaviour
         //playerControl.weaponSensor.HitActionOn();
         IsComboPossible = false;
 
-        return isComboOn;
+        return isAttack;
     }
 
     public void MoveAction()
@@ -55,6 +54,7 @@ public class ComboSystem : MonoBehaviour
         currentCombo = 0;
         UnitAni.SetInteger("AttackCombo", currentCombo);
         ComboPossible();
+        WeaponHItEventOff();
     }
 
     public void isMovePossible()
@@ -67,16 +67,14 @@ public class ComboSystem : MonoBehaviour
         IsComboPossible = true;
     }
 
-  public void Attack(int hitBox)
+    public void WeaponHItEventOff()
     {
+        playerControl.weaponSensor.HitEvnetOff();
+    }
 
-       if(hitBox < 0 || hitBox > hitBoxSize)
-        {
-            Debug.LogWarning("HitBox Index Over :" + hitBox);
-            return;
-        }
-
-        playerControl.Attack(hitBox);
+    public void WeaponHitOn() {
+        playerControl.weaponSensor.HitEventOn();
+        playerControl.weaponSensor.HitActionOn();
     }
 
 

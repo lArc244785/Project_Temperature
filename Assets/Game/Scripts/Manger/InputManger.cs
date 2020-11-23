@@ -43,7 +43,7 @@ public class InputManger : MonoBehaviour
 
         }
 
-        Debug.Log(context.performed);
+        //Debug.Log(context.performed);
     }
 
     private void Update()

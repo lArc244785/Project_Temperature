@@ -151,8 +151,11 @@ public class PlayerControl : UnitBase
 
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
+        
+        Debug.Log("Player HIt" + gameObject.layer + "   " + GhostLayer);
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
+        modelAni.SetTrigger("Hit");
         StartCoroutine(GhosetState(GhostTime));
         //MaterialChange(EnumInfo.Materia.Ghost);
         comboSystem.currentComboReset();
@@ -258,7 +261,7 @@ public class PlayerControl : UnitBase
 
         //yield return new WaitForSeconds(0.1f);
 
-        isControl = true;
+        isControlOn();
         isInputAction = true;
         yield return new WaitForSeconds(RollingCoolTime);
         isDeshCollTime = false;

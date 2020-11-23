@@ -76,8 +76,7 @@ Transform:
   m_GameObject: {fileID: 2679684285693889021}
 =======
   m_GameObject: {fileID: 3950237104156126281}
->>>>>>> 12b9d4d90dad310b5ff8f23e870bf197a7587334
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.2, y: -4.698866, z: -2.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -149,15 +148,8 @@ MonoBehaviour:
   isAttackRate: 0
   motionHandler: {fileID: 0}
   SkinnedMesh: {fileID: 0}
-<<<<<<< HEAD
-  meshRender: {fileID: 2679684287087404978}
-=======
-  meshRender: {fileID: 0}
->>>>>>> 12b9d4d90dad310b5ff8f23e870bf197a7587334
+  meshRender: {fileID: 8031697975964160131}
   unitHandler: {fileID: 0}
-  IdleMaterial: {fileID: 2100000, guid: fdfc38dc09a921a4abed29a7ddd3a191, type: 2}
-  HitMaterial: {fileID: 2100000, guid: e4953e5c63b578b4f94cb4f4b05d378d, type: 2}
-  GhostMaterial: {fileID: 2100000, guid: 169cfd7296097b24bbc00ccb38be68c1, type: 2}
   tile: {fileID: 0}
   Range: 2
 <<<<<<< HEAD
@@ -772,6 +764,12 @@ PrefabInstance:
 --- !u!4 &9168623082847251436 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1928086744667919273, guid: 80df42d1444d1b14aac63ee3fb6ab3db,
+    type: 3}
+  m_PrefabInstance: {fileID: 7348905578604574789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8031697975964160131 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 759661866733398214, guid: 80df42d1444d1b14aac63ee3fb6ab3db,
     type: 3}
   m_PrefabInstance: {fileID: 7348905578604574789}
   m_PrefabAsset: {fileID: 0}

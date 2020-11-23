@@ -42,7 +42,7 @@ public class EnemyManger : MonoBehaviour
         {
             foreach(UnitBase unit in enemyList)
             {
-                Debug.Log(Vector3.Distance(unit.GetUnitTransform().position, center));
+                //Debug.Log(Vector3.Distance(unit.GetUnitTransform().position, center));
                 if(Mathf.Abs( Vector3.Distance(unit.GetUnitTransform().position, center)) < Range)
                 {
                     HItBoxinEnemyList.Add(unit);
@@ -52,7 +52,8 @@ public class EnemyManger : MonoBehaviour
         else
         {
 
-            if (Mathf.Abs(Vector3.Distance(pc.GetUnitTransform().position, center)) < Range)
+            if (Mathf.Abs(Vector3.Distance(pc.GetSkinnedMeshPostionToPostion(), center)) < Range &&
+                pc.GetUnitTransform().gameObject.layer == pc.originLayer)
                 HItBoxinEnemyList.Add(pc);
         }
 

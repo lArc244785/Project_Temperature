@@ -19,3 +19,4 @@ MonoBehaviour:
   tickRate: 1
   KnockBackTime: 0.8
   SternTime: 0.5
+  KnockBackPower: 0.4

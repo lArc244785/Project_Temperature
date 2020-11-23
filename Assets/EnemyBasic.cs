@@ -23,8 +23,9 @@ public class EnemyBasic : UnitBase
 
     private float AttackDashTime = 0.5f;
 
-    public Transform hpBar;
-    private UIHpBar uiHpBar;
+    private bool isForWardAttack;
+
+
     // Start is called before the first frame update
 
     //private void Start()
@@ -122,6 +123,7 @@ public class EnemyBasic : UnitBase
     {
        // isControlOff();
         isAttackRate = true;
+        isForWardAttack = true;
         Vector3 movePoint = unitTransform.position + (unitTransform.forward * 2);
         Utility.KillTween(enemyTween);
         enemyTween = DOTween.Sequence();
@@ -133,6 +135,12 @@ public class EnemyBasic : UnitBase
         {
             time += Time.deltaTime;
             Attack();
+            if (!isForWardAttack)
+            {
+                Utility.KillTween(enemyTween);
+                rigidbody.velocity = Vector3.zero;
+                yield break;
+            }
             yield return null;
         }
         yield return new WaitForSeconds(weapon.tickRate);
@@ -147,7 +155,7 @@ public class EnemyBasic : UnitBase
         UnitBase palyer = GameManager.Instance.GetPlayerControl();
         if (palyer.gameObject.layer == palyer.originLayer)
         {
-            Debug.Log("몬스터 공격");
+            //Debug.Log("몬스터 공격");
             base.Attack(hitBox);
         }
     }
@@ -251,7 +259,13 @@ public class EnemyBasic : UnitBase
     }
 
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+            if(isForWardAttack) isForWardAttack = false;
+        }
+    }
 
 
 

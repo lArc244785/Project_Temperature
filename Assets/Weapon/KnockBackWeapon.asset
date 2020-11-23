@@ -15,8 +15,8 @@ MonoBehaviour:
   damageList:
   - DamageType: 0
     damage: 1
-  tick: 1
-  tickRate: 0.5
+  tick: 2
+  tickRate: 1
   KnockBackTime: 0.5
   SternTime: 0.5
   KnockBackPower: 1.5

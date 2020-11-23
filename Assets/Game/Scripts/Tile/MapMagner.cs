@@ -22,7 +22,7 @@ public class MapMagner : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                findChildCount = y * 10 + x;
+                findChildCount = y * height + x;
                 TileBase tile  = transform.GetChild(findChildCount).GetComponent<TileBase>();
                 if (tile == null)
                 {

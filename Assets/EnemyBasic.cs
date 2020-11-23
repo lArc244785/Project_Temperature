@@ -23,6 +23,8 @@ public class EnemyBasic : UnitBase
 
     private float AttackDashTime = 0.5f;
 
+    public Transform hpBar;
+    private UIHpBar uiHpBar;
     // Start is called before the first frame update
 
     //private void Start()
@@ -39,8 +41,21 @@ public class EnemyBasic : UnitBase
         isFind = false;
         target = GameManager.Instance.GetPlayerControl();
         //FindPath(moveTile.point);
+
+        //GameObject hpBarGO = Instantiate(Resources.Load("UIHpBar"), Vector3.zero, Quaternion.identity) as GameObject;
+        //Debug.Log(hpBarGO.name);
+        //Debug.Log(UIManager.Instance.gameObject.name);
+        ////Debug.Log(UIManager.Instance.GetInstance());
+        //hpBarGO.transform.SetParent(UIManager.Instance.uiDynamic.GetAnchorTransform());
+        //hpBarGO.transform.localScale = Vector3.one;
+        //uiHpBar = hpBarGO.GetComponent<UIHpBar>();
+        //uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
     }
 
+    private void Update()
+    {
+        //uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
+    }
 
     private void FixedUpdate()
     {

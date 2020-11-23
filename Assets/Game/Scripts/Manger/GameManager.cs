@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
         DOTween.defaultAutoPlay = AutoPlay.None;
     }
 
+    private void Start()
+    {
+        //Initializer();
+    }
+
     private void Initializer()
     {
         GetPlayerControl();

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public UIInGame uiInGame;
     public UIMainMenu uiMainMenu;
     public UIOption uiOption;
+    public UIDynamic uiDynamic;
 
     private void Awake()
     {
@@ -18,5 +19,13 @@ public class UIManager : MonoBehaviour
 
             DontDestroyOnLoad(this.gameObject);
         }
+    }
+
+    public UIManager GetInstance()
+    {
+        if (Instance == null)
+            Instance = this;
+
+        return Instance;
     }
 }

@@ -119,32 +119,13 @@ public class CamerManger : MonoBehaviour
 
     public void SetOffset()
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
->>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
+
         if (!isMouseOffset) return;
 
         Vector2 screenPoint = GameManager.Instance.GetInputManger().GetMousePostionToScreen();
-        //Debug.Log(screenPoint);
-        if (screenPoint.x > 0.9f  || screenPoint.x  < 0.1f )
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
-=======
-        Vector2 screenPoint = GameMagner.Instance.GetInputManger().MousePointToScreen;
-        //Debug.Log(screenPoint);
+
         if (screenPoint.x > 0.95f  || screenPoint.x  < 0.1f)
->>>>>>> Jun
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
->>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
+
         {
             if(screenPoint.x > 0.1f)
             {

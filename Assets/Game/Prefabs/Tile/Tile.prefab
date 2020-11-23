@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5516501745195986518}
   - component: {fileID: 5516501745195986516}
   - component: {fileID: 5516501745195986517}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GrassTileModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5516501745565492492}
   - component: {fileID: 5516501745565492493}
   - component: {fileID: 5516501745565492494}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2570728182251363304}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

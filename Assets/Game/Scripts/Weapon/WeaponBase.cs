@@ -14,7 +14,7 @@ public class WeaponBase : ScriptableObject
     public float tickRate;
     public float KnockBackTime;
     public float SternTime;
-
+    public float KnockBackPower;
     public virtual void Initializer(Transform wt, UnitBase parent)
     {
         weaponTransfrom = wt;
@@ -50,7 +50,7 @@ public class WeaponBase : ScriptableObject
 
             if (parentUnit.targetLayer == layer)
             {
-                PlayerControl pc = GameManger.Instance.GetPlayerControl();
+                PlayerControl pc = GameManager.Instance.GetPlayerControl();
                 pc.WeaponTimeAction();
             }
         }

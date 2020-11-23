@@ -17,6 +17,11 @@ public class EnemyBasic : UnitBase
 
     private float AttackTime;
 
+    private int HitCount;
+
+    private Sequence enemyTween;
+
+    private float AttackDashTime = 0.5f;
 
     // Start is called before the first frame update
 
@@ -28,23 +33,28 @@ public class EnemyBasic : UnitBase
     {
         base.HandleSpawn();
         path = new Stack<StructInfo.TileInfo>();
-        StructInfo.TileInfo moveTile = GameManger.Instance.GetMapManger().GameMap[0, 0].tileInfo;
+        StructInfo.TileInfo moveTile = GameManager.Instance.GetMapManger().GameMap[0, 0].tileInfo;
         pathFindTool = GetComponent<PathFindTool>();
         pathFindTool.Initialize();
         isFind = false;
-        target = GameManger.Instance.GetPlayerControl();
+        target = GameManager.Instance.GetPlayerControl();
         //FindPath(moveTile.point);
     }
 
 
     private void FixedUpdate()
     {
-        if (!target.isAlive) return;
+        //if (!target.isAlive) return;
         AI();
     }
 
+
+
     private void SetNextMove()
     {
+        if (!isControl) return;
+
+
         if (path.Count == 0)
         {
             moveDir = Vector3.zero;
@@ -54,30 +64,72 @@ public class EnemyBasic : UnitBase
         else
         {
             StructInfo.Point nextPoint = path.Pop().point;
-            moveToTile = GameManger.Instance.GetMapManger().GameMap[nextPoint.y, nextPoint.x];
+            moveToTile = GameManager.Instance.GetMapManger().GameMap[nextPoint.y, nextPoint.x];
             moveToPoint = moveToTile.tileInfo.position;
             moveToPoint.y = unitTransform.position.y;
             moveDir = (moveToPoint - unitTransform.position).normalized;
-           if(!isAttackRate) unitTransform.LookAt(unitTransform.position + moveDir);
+            if (!isAttackRate) {
+                
+                SetLoock(moveToPoint);
+              //  unitTransform.DOLookAt(moveToPoint, 1.0f);
+            }
         }
+    }
 
+    private void SetLoock(Vector3 targetPostion)
+    {
+        Utility.KillTween(enemyTween);
+        enemyTween.Insert(0,unitTransform.DOLookAt(targetPostion, 0.7f));
+        enemyTween.Play();
     }
 
     public void FindPath(StructInfo.Point tNode)
     {
+        if (!isControl) return;
+
         isFind = pathFindTool.PathFind_AStar(tile.tileInfo.point, tNode, path);
-        Debug.Log(isFind);
+        //Debug.Log(isFind);
         if (isFind)
         {
             Vector3 nextMovePoint = path.Pop().position;
 
             SetNextMove();
         }
+        else
+        {
+            Debug.LogError(tile.tileInfo.point + "   " + tNode);
+        }
     }
+
+
+    
+    IEnumerator ForWardAttack()
+    {
+       // isControlOff();
+        isAttackRate = true;
+        Vector3 movePoint = unitTransform.position + (unitTransform.forward * 2);
+        Utility.KillTween(enemyTween);
+        enemyTween = DOTween.Sequence();
+        enemyTween.Insert(0, rigidbody.DOMove(movePoint, AttackDashTime));
+        enemyTween.Play();
+
+        float time = 0;
+        while(time < AttackDashTime)
+        {
+            time += Time.deltaTime;
+            Attack();
+            yield return null;
+        }
+        yield return new WaitForSeconds(weapon.tickRate);
+       // isControlOn();
+        isAttackRate = false;
+        AttackTime = 0;
+    }
+
 
     public override void Attack(int hitBox = 0)
     {
-        UnitBase palyer = GameManger.Instance.GetPlayerControl();
+        UnitBase palyer = GameManager.Instance.GetPlayerControl();
         if (palyer.gameObject.layer == palyer.originLayer)
         {
             Debug.Log("몬스터 공격");
@@ -87,68 +139,82 @@ public class EnemyBasic : UnitBase
 
     public override void HandleDeath()
     {
-        GameManger.Instance.GetEnemyManger().enemyList.Remove(this);
+        GameManager.Instance.GetEnemyManger().enemyList.Remove(this);
         base.HandleDeath();
     }
 
     public void AI()
     {
+        string msg = string.Empty;
+        msg += "AI: " + isControl + "   " + isAttackRate + "\n";
         if (!isControl || isAttackRate)
         {
+            //Debug.Log(msg);
             return;
         }
 
-        //공격범위까지
-        if ((unitTransform.position - target.GetSkinnedMeshPostionToPostion()).sqrMagnitude < Range)
-        {
+        float targetDistance =
+            Mathf.Abs(Vector3.Distance(unitTransform.position,
+            target.GetSkinnedMeshPostionToPostion()));
 
-            unitTransform.LookAt(target.GetUnitTransform().position);
-            unitTransform.rotation = Quaternion.Euler(new Vector3(0, unitTransform.rotation.eulerAngles.y, 0));
+        msg += "플레이어와의 거리: " + targetDistance + " 몬스터의 공격리치: " + Range + "\n";
+        
+        //공격범위까지
+        if (targetDistance < Range)
+        {
+            Vector3 lookPos = target.GetUnitTransform().position;
+            lookPos = new Vector3(lookPos.x, unitTransform.position.y, lookPos.z);
+
+            SetLoock(lookPos);
+           
             AttackTime += Time.deltaTime;
+            msg += "공격 대기 타임: " + AttackTime + "공격 까지의 타임: " + weapon.tick + "\n"; 
             if (AttackTime > weapon.tick)
             {
-                Attack();
-                StartCoroutine(AttackRate());
+                StartCoroutine(ForWardAttack());
             }
             return;
         }
-        else
+        else if (isFind)
         {
             AttackTime = 0;
-        }
-
-
-         if (isFind)
-        {
+            msg += "플레이어까지의 루트 확인: " + isFind + "\n";
+            msg += "플레어에게 이동하는 방향: " + moveDir + "\n";
             moveToPoint.y = unitTransform.position.y;
             //이동
             if ((unitTransform.position - moveToPoint).sqrMagnitude > 0.01f)
             {
-                rigidbody.MovePosition(unitTransform.position + moveDir * speed * Time.deltaTime);
+                Vector3 speedrig = moveDir * speed ;
+                rigidbody.velocity = speedrig;
             }
             else
             {
                 //Debug.Log("NextNode");
                 SetNextMove();
 
-                rigidbody.MovePosition(unitTransform.position + moveDir * speed * Time.deltaTime);
+                Vector3 speedrig = moveDir * speed;
+                rigidbody.velocity = speedrig;
             }
         }
 
 
-         
+        //Debug.Log(msg);
 
     }
+    private bool isHit = false;
+
 
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
         base.HitEvent(damageList, weapon);
-        if(hp > 0)
-        KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
-
+        if (hp > 0)
+        {
+            HitCount++;
+            KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
+        }
     }
-
-    public override void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit)
+    IEnumerator a;
+    public override void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         base.KnockBack(KnockBacktime, SternTime, TargetUnit);
         StartCoroutine(HitSetFind());
@@ -160,10 +226,18 @@ public class EnemyBasic : UnitBase
         {
             yield return null;
         }
-        FindPath(GameManger.Instance.GetMapManger().GetPlayerTile().GetTileInfo().point);
+        HitCount--;
+        if (HitCount > 0) yield break;
+        isAttackRate = false;
+        FindPath(GameManager.Instance.GetMapManger().GetPlayerTile().GetTileInfo().point);
         transform.rotation = Quaternion.identity;
         SetNextMove();
 
     }
+
+
+
+
+
 
 }

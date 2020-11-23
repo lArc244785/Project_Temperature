@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnumInfo 
+public static class EnumInfo 
 {
     public enum DamageType
     {
@@ -14,4 +14,8 @@ public class EnumInfo
         NoCommand ,Attack
     };
 
+    public enum Materia
+    {
+        Idle, Hit, Ghost
+    };
 }

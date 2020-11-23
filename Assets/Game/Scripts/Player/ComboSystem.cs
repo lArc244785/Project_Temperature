@@ -14,47 +14,21 @@ public class ComboSystem : MonoBehaviour
 
     private void Start()
     {
-        playerControl = GameManger.Instance.GetPlayerControl();
+        playerControl = GameManager.Instance.GetPlayerControl();
         hitBoxSize = playerControl.weaponSensor.hitBoxs.Length;
     }
 
-    public bool isPushCombo()
-    {
-        if (!IsComboPossible) return false;
-        bool isComboOn = false;
-        playerControl.isMove = false;
-        if (currentCombo == 0)
-        {
-            playerControl.GetRigidbody().velocity = Vector3.zero;
-            UnitAni.SetTrigger("Attack");
-            currentCombo++;
-            isComboOn = true;
-        }
-
-        else if ( currentCombo <= MaxCombo)
-        {
-            currentCombo++;
-            isComboOn = true;
-        }
-
-        UnitAni.SetInteger("AttackCombo", currentCombo);
-        //playerControl.weaponSensor.HitEventOn();
-        //playerControl.weaponSensor.HitActionOn();
-        IsComboPossible = false;
-
-        return isComboOn;
-    }
-
-    public void MoveAction()
-    {
-        playerControl.ActionMove();
-    }
+   
 
     public void ResetCombo()
     {
+        currentComboReset();
+        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
+    }
+
+    public void currentComboReset()
+    {
         currentCombo = 0;
-        UnitAni.SetInteger("AttackCombo", currentCombo);
-        ComboPossible();
     }
 
     public void isMovePossible()
@@ -67,16 +41,47 @@ public class ComboSystem : MonoBehaviour
         IsComboPossible = true;
     }
 
-  public void Attack(int hitBox)
+    public void AddCombo()
     {
+            currentCombo++;
+            IsComboPossible = false;
+        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
+    }
 
-       if(hitBox < 0 || hitBox > hitBoxSize)
+    public void Attack()
+    {
+        if(currentCombo == 0)
         {
-            Debug.LogWarning("HitBox Index Over :" + hitBox);
-            return;
+            playerControl.GetRigidbody().velocity = Vector3.zero;
+            playerControl.modelAni.SetTrigger("Attack");
+            AddCombo();
         }
+        else
+        {
+            //콤보 입력이 가능한 경우에만 콤보를 이어나갈 수 있게 해주자
+            if (IsComboPossible) AddCombo();
+        }
+    }
 
-        playerControl.Attack(hitBox);
+
+    public int GetCurrentCombo()
+    {
+        return currentCombo;
+    }
+
+    public bool GetIsConnetCombo(int combo)
+    {
+        return currentCombo == combo;
+    }
+
+    public void ComboChack(int combo) 
+    {
+        if (!GetIsConnetCombo(combo))
+        {
+           // playerControl.SetSkinnedMeshPostionToPostion();
+            playerControl.modelAni.SetTrigger("ComboCancle");
+            //ResetCombo();
+        }
     }
 
 

@@ -17,5 +17,6 @@ MonoBehaviour:
     damage: 1
   tick: 1
   tickRate: 0.5
-  KnockBackTime: 0.8
+  KnockBackTime: 0.5
   SternTime: 0.5
+  KnockBackPower: 1.5

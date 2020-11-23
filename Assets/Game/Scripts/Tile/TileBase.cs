@@ -88,14 +88,10 @@ public class TileBase : MonoBehaviour
         if (other.tag == "Unit")
         {
             modelTr.Translate(0, -0.07f, 0);
-            GameManger.Instance.GetMapManger().SetPlayerTile(this);
-            GameManger.Instance.GetEnemyManger().SetPath(this.tileInfo.point);
+
         }
 
-        if (other.tag == "Enemy")
-        {
-            other.transform.GetComponent<EnemyBasic>().tile = this;
-        }
+
     }
 
 
@@ -104,14 +100,10 @@ public class TileBase : MonoBehaviour
         if(collision.collider.tag == "Unit")
         {
             modelTr.Translate(0 , - 0.07f, 0);
-            GameManger.Instance.GetMapManger().SetPlayerTile(this);
-            GameManger.Instance.GetEnemyManger().SetPath(this.tileInfo.point);
+
         }
 
-        if(collision.collider.tag == "Enemy")
-        {
-            collision.transform.GetComponent<EnemyBasic>().tile = this;
-        }
+
     }
 
     private void OnCollisionExit(Collision collision)

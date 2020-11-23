@@ -9,7 +9,7 @@ public class MapMagner : MonoBehaviour
     public int width = 10;
     public int height = 10;
 
-    TileBase playerTile;
+    public TileBase playerTile;
 
 
     // Start is called before the first frame update
@@ -39,7 +39,11 @@ public class MapMagner : MonoBehaviour
 
     public void SetPlayerTile(TileBase tile)
     {
-        playerTile = tile;
+        if (playerTile != tile)
+        {
+            GameManager.Instance.GetEnemyManger().SetPath(tile.tileInfo.point);
+            playerTile = tile;
+        }
     }
 
     public TileBase GetPlayerTile()

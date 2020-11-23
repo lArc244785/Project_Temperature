@@ -12,7 +12,7 @@ public class PathFindTool : MonoBehaviour
 
     public void Initialize()
     {
-        MapMagner mapManger = GameManger.Instance.GetMapManger();
+        MapMagner mapManger = GameManager.Instance.GetMapManger();
         //copyGameMap = (StructInfo.TileInfo[,])mapManger.GameMap.Clone();
         this.width = mapManger.width;
         this.height = mapManger.height;
@@ -33,7 +33,7 @@ public class PathFindTool : MonoBehaviour
 
     private void Reset()
     {
-        MapMagner mm = GameManger.Instance.GetMapManger();
+        MapMagner mm = GameManager.Instance.GetMapManger();
         for (int h = 0; h < height; h++)
         {
             for (int w = 0; w < width; w++)
@@ -42,7 +42,7 @@ public class PathFindTool : MonoBehaviour
                     copyGameMap[h, w].cost = StructInfo.TILEMAX;
                 else
                     copyGameMap[h, w].cost = StructInfo.TILEWALL;
-                //mm.GameMap[h, w].mr.material = mm.GameMap[h, w].nomalMaterial;
+                mm.GameMap[h, w].mr.material = mm.GameMap[h, w].nomalMaterial;
                 copyGameMap[h, w].isVisit = false;
 
             }
@@ -124,22 +124,22 @@ public class PathFindTool : MonoBehaviour
             StructInfo.Point point;
             node = copyGameMap[targetNode.y, targetNode.x];
             path.Push(node);
-            //print("PATH====");
-            //print("sNode: " + startNode.y + "   " + startNode.x + "  tNode: " + targetNode.y + "  " + targetNode.x);
-            //print(node.point.y + " " + node.point.x);
+            print("PATH====");
+            print("sNode: " + startNode.y + "   " + startNode.x + "  tNode: " + targetNode.y + "  " + targetNode.x);
+            print(node.point.y + " " + node.point.x);
 
-            MapMagner mm = GameManger.Instance.GetMapManger();
-           // mm.GameMap[targetNode.y, targetNode.x].mr.material = mm.GameMap[targetNode.y, targetNode.x].pathMaterial;
+            MapMagner mm = GameManager.Instance.GetMapManger();
+            mm.GameMap[targetNode.y, targetNode.x].mr.material = mm.GameMap[targetNode.y, targetNode.x].pathMaterial;
 
             do
             {
                 point = parentNode[node.point.y, node.point.x];
-                //print(point.y + " " + point.x);
+                print(point.y + " " + point.x);
                 node = copyGameMap[point.y, point.x];
-               // mm.GameMap[point.y, point.x].mr.material = mm.GameMap[point.y, point.x].pathMaterial;
+                mm.GameMap[point.y, point.x].mr.material = mm.GameMap[point.y, point.x].pathMaterial;
                 path.Push(node);
             } while (point.x != startNode.x || point.y != startNode.y);
-            //print("====");
+           print("====");
         }
 
         //타일 디버그용

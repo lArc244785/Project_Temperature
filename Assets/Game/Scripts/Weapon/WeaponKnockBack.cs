@@ -8,7 +8,7 @@ public class WeaponKnockBack : WeaponBase
     public override void Initializer(Transform wt, UnitBase parent)
     {
         base.Initializer(wt, parent);
-        SetTarget(GameManger.Instance.GetPlayerControl());
+        SetTarget(GameManager.Instance.GetPlayerControl());
     }
 
     public override void Attack(int hitBox = 0)
@@ -16,12 +16,9 @@ public class WeaponKnockBack : WeaponBase
         base.Attack(hitBox);
         foreach(UnitBase unit in targetUnits)
         {
-            unit.KnockBack(KnockBackTime, SternTime, parentUnit);
+            unit.KnockBack(KnockBackTime, SternTime, parentUnit, KnockBackPower);
         }
 
     }
-
-
-
 
 }

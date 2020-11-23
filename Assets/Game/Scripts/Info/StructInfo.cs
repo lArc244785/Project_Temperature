@@ -59,4 +59,5 @@ public class StructInfo
         public int x, y;
     }
 
+
 }

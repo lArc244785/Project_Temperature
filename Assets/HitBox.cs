@@ -19,7 +19,7 @@ public class HitBox : MonoBehaviour
 
     public List<UnitBase> GetHitBoxInEnmey()
     {
-        return GameManger.Instance.GetEnemyManger().GetHitBoxInEnemy(isPlayerHitBox, transform.position, Range);
+        return GameManager.Instance.GetEnemyManger().GetHitBoxInEnemy(isPlayerHitBox, transform.position, Range);
     }
 
     public void OnDrawGizmos()

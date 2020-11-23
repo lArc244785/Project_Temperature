@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManger : MonoBehaviour
 {
     public List<EnemyBasic> enemyList;
-
+    private PlayerControl pc;
 
     public void Initializer()
     {
@@ -16,11 +16,12 @@ public class EnemyManger : MonoBehaviour
             enemy.HandleSpawn();
             enemyList.Add(enemy);
         }
+        pc = GameManager.Instance.GetPlayerControl();
     }
 
     public void SetPath(StructInfo.Point targetNode)
     {
-        MapMagner mm = GameManger.Instance.GetMapManger();
+        MapMagner mm = GameManager.Instance.GetMapManger();
 
         foreach (TileBase tile in mm.GameMap)
         {
@@ -50,7 +51,9 @@ public class EnemyManger : MonoBehaviour
         }
         else
         {
-            HItBoxinEnemyList.Add(GameManger.Instance.GetPlayerControl());
+
+            if (Mathf.Abs(Vector3.Distance(pc.GetUnitTransform().position, center)) < Range)
+                HItBoxinEnemyList.Add(pc);
         }
 
         return HItBoxinEnemyList;

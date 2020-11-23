@@ -6,12 +6,12 @@ public class InputManger : MonoBehaviour
     PlayerControl pc;
     Camera mainCam;
 
-
+    private bool isMouseButtonPush;
 
     public void Initializer()
     {
-        pc = GameManger.Instance.GetPlayerControl();
-        mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
+        pc = GameManager.Instance.GetPlayerControl();
+        mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -31,14 +31,29 @@ public class InputManger : MonoBehaviour
     {
         if (context.started)
         {
-            //  Debug.Log("Code 1 : OnAttack!!" );
-            pc.modelAni.SetBool("MousePush", true);
-            pc.AttackMotion();
-        }else if (context.canceled)
+            Debug.Log("isInput: " + pc.isInputAction );
+            pc.modelAni.SetBool("IsAttackLoop", true);
+            pc.comboAttack();
+            isMouseButtonPush = true;
+        }
+        else if (context.canceled)
         {
-            pc.modelAni.SetBool("MousePush", false);
+            pc.modelAni.SetBool("IsAttackLoop", false);
+            isMouseButtonPush = false;
+
+        }
+
+        Debug.Log(context.performed);
+    }
+
+    private void Update()
+    {
+        if (isMouseButtonPush)
+        {
+            pc.comboAttack();
         }
     }
+
 
     public void OnRolling(InputAction.CallbackContext context)
     {

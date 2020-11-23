@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class UnitBase : Status
 {
@@ -17,10 +17,11 @@ public class UnitBase : Status
     public Transform modelTransfrom;
     public Animator modelAni;
 
+    [Header("Control")]
     public bool isControl;
     public bool isInputAction = true;
 
-
+    [Header("=====")]
     public int originLayer;
     //Ghost Layer
     public int GhostLayer = 10;
@@ -36,13 +37,19 @@ public class UnitBase : Status
     public bool isAttackRate = false;
 
 
-    public MotionHandler motionHandler;
+    public PlayerMotionHandler motionHandler;
 
     public SkinnedMeshRenderer SkinnedMesh;
+    public MeshRenderer meshRender;
 
     public UnitHandler unitHandler;
 
     protected Sequence sequence;
+
+    [Header("Material")]
+    public Material IdleMaterial;
+    public Material HitMaterial;
+    public Material GhostMaterial;
 
     public virtual void Initializer()
     {
@@ -81,7 +88,7 @@ public class UnitBase : Status
         }
 
 
-        if (motionHandler != null) motionHandler.Initializer(this);
+
 
         if (unitHandler != null) unitHandler.Initializer(this);
 
@@ -91,7 +98,7 @@ public class UnitBase : Status
 
     public virtual void Attack(int hitBox = 0)
     {
-        if (!isControl) return;
+        if (!isControl && !isInputAction) return;
         //AniTrigger
         if (weapon != null)
         {
@@ -119,8 +126,8 @@ public class UnitBase : Status
     {
 
         transform.position = GetSkinnedMeshPostionToPostion();
-        if(modelAni != null)
-        modelAni.SetTrigger("Hit");
+        if (modelAni != null)
+            modelAni.SetTrigger("Hit");
 
         Debug.Log("Hit!!" + Name + "Attack Unit " + weapon.GetParentUnit().name);
 
@@ -140,15 +147,16 @@ public class UnitBase : Status
             }
         }
 
-        isControl = false;
         if (hp <= 0)
         {
             isAlive = false;
             HandleDeath();
         }
+
+        MaterialChange(EnumInfo.Materia.Hit);
     }
 
-    public virtual void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit)
+    public virtual void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         if (isKnockBackOn)
         {
@@ -156,28 +164,29 @@ public class UnitBase : Status
             isKnockBackOn = false;
         }
 
-        StartCoroutine(IE_KnockBack(KnockBacktime, SternTime, TargetUnit));
+        StartCoroutine(IE_KnockBack(KnockBacktime, SternTime, TargetUnit, Power));
     }
 
-    public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit)
+    public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         Utility.KillTween(sequence);
 
         isControl = false;
+        isInputAction = false;
         isKnockBackOn = true;
 
         Vector3 knockBackDir = unitTransform.position - TargetUnit.unitTransform.position;
         knockBackDir.y = 0.0f;
-        knockBackDir = knockBackDir.normalized  * 0.8f;
+        knockBackDir = knockBackDir.normalized * Power;
 
         sequence = DOTween.Sequence();
         Vector3 movePoint = transform.position + knockBackDir;
         sequence.Insert(0, rigidbody.DOMove(movePoint, KnockBacktime));
         sequence.Play();
         float t = 0.0f;
-        while(t < KnockBacktime)
+        while (t < KnockBacktime)
         {
-          if(isMoveDirWall(knockBackDir))
+            if (isMoveDirWall(knockBackDir))
             {
                 StopTween();
                 rigidbody.velocity = Vector3.zero;
@@ -188,6 +197,7 @@ public class UnitBase : Status
         rigidbody.velocity = Vector3.zero;
         yield return new WaitForSecondsRealtime(SternTime);
         isKnockBackOn = false;
+
         isControl = true;
         isInputAction = true;
     }
@@ -204,6 +214,7 @@ public class UnitBase : Status
             yield return new WaitForSeconds(weapon.tickRate);
         }
         isAttackRate = false;
+        
     }
 
 
@@ -247,6 +258,16 @@ public class UnitBase : Status
         isInputAction = false;
     }
 
+    public void isControlOn()
+    {
+        isControl = true;
+    }
+
+    public void isControlOff()
+    {
+        isControl = false;
+    }
+
     public void StopTween()
     {
         Utility.KillTween(sequence);
@@ -255,6 +276,81 @@ public class UnitBase : Status
     private bool isMoveDirWall(Vector3 Dir)
     {
         return Physics.Raycast(transform.position, Dir, 0.8f, 1 << LayerMask.NameToLayer("Wall"));
+    }
+
+    private Sequence materialTween;
+    public void MaterialChange(EnumInfo.Materia materia)
+    {
+        Utility.KillTween(materialTween);
+        materialTween = DOTween.Sequence();
+        isTweenEventing = false;
+        switch (materia)
+        {
+            case EnumInfo.Materia.Idle:
+                if (SkinnedMesh == null)
+                {
+                    meshRender.material = IdleMaterial;
+                }
+                else
+                {
+                    SkinnedMesh.material = IdleMaterial;
+                }
+                break;
+            case EnumInfo.Materia.Hit:
+                if (SkinnedMesh == null)
+                {
+                    meshRender.material = HitMaterial;
+                    materialTween.Insert(
+0, meshRender.material.DOColor(new Color(1, 0.55f, 0.55f), 0.15f).SetLoops(2, LoopType.Yoyo)
+);
+
+                }
+                else
+                {
+                    SkinnedMesh.material = HitMaterial;
+                    materialTween.Insert(
+    0, SkinnedMesh.material.DOColor(new Color(1, 0.55f, 0.55f), 0.15f).SetLoops(2, LoopType.Yoyo)
+);
+                }
+                StartCoroutine(ChangeTween(0.3f, EnumInfo.Materia.Idle));
+                break;
+            case EnumInfo.Materia.Ghost:
+                if (SkinnedMesh == null)
+                {
+                    meshRender.material = GhostMaterial;
+                    materialTween.Insert(
+0, meshRender.material.DOColor(new Color(0.3f, 0.3f, 0.3f), 0.5f).SetLoops(-1, LoopType.Yoyo)
+);
+                }
+                else
+                {
+                    SkinnedMesh.material = GhostMaterial;
+                    materialTween.Insert(
+0, SkinnedMesh.material.DOColor(new Color(0.3f, 0.3f, 0.3f), 0.5f).SetLoops(100, LoopType.Yoyo)
+);
+                }
+                StartCoroutine(ChangeTween(3.0f, EnumInfo.Materia.Idle));
+                break;
+        }
+        materialTween.Play();
+    }
+
+    private bool isTweenEventing = false;
+    protected IEnumerator ChangeTween(float time, EnumInfo.Materia nextMateria)
+    {
+        isTweenEventing = true;
+        float t  = .0f;
+        while(t < time )
+        {
+            t += Time.unscaledDeltaTime;
+            if (!isTweenEventing)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+        MaterialChange(nextMateria);
+        isTweenEventing = false;
     }
 
 

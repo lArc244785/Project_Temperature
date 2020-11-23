@@ -25,8 +25,8 @@ public class UI_DevelopEdit : MonoBehaviour
     }
     public void Initialize()
     {
-        pc = GameManger.Instance.GetPlayerControl();
-        camManger = GameManger.Instance.GetCamerManger();
+        pc = GameManager.Instance.GetPlayerControl();
+        camManger = GameManager.Instance.GetCamerManger();
 
         MoveSpeedValue.text = pc.speed.ToString();
         RollingSpeedValue.text = pc.rollingSpeed.ToString();

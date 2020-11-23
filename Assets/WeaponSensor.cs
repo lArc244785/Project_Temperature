@@ -15,7 +15,7 @@ public class WeaponSensor : MonoBehaviour
     {
         this.weapon = weapon;
 
-        pc = GameManger.Instance.GetPlayerControl();
+        pc = GameManager.Instance.GetPlayerControl();
         if(hitBoxs == null)
         {
             Debug.LogError("No Weapon HitBox!!!!");

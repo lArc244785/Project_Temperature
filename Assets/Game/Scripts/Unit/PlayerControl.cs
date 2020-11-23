@@ -34,6 +34,10 @@ public class PlayerControl : UnitBase
     public float stopTime;
     public float recoveryTime;
 
+    public Animation attackAnimation;
+
+    private float GhostTime = 1.5f;
+
 
 
     public void Start()
@@ -45,6 +49,7 @@ public class PlayerControl : UnitBase
     public override void Initializer()
     {
         base.Initializer();
+        motionHandler.Initializer(this);
     }
 
     public void Update()
@@ -66,8 +71,6 @@ public class PlayerControl : UnitBase
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
-
- 
     }
 
     public void Move()
@@ -75,6 +78,8 @@ public class PlayerControl : UnitBase
 
         if (moveDir.sqrMagnitude > 0.1f)
         {
+            
+
             rigidbody.velocity = moveDir * speed;
             modelAni.SetFloat("Walk" ,1.0f);
             isMove = true;
@@ -105,13 +110,13 @@ public class PlayerControl : UnitBase
 
     private void Rotation()
     {
-        Camera mainCam = GameManger.Instance.GetCamerManger().GetMainCamera();
+        Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
 
         //Get the Screen positions of the object
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
 
         //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = GameManger.Instance.GetInputManger().GetMousePostionToScreen();
+        Vector2 mouseOnScreen = GameManager.Instance.GetInputManger().GetMousePostionToScreen();
 
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
@@ -126,14 +131,12 @@ public class PlayerControl : UnitBase
     }
 
 
-    public  void AttackMotion()
+    public  void comboAttack()
     {
 
-        if (!isInputAction || !isControl) return;
-        rigidbody.velocity = Vector3.zero;
-        modelAni.SetTrigger("Attack");
-        isInputAction = false;
-       // comboSystem.isPushCombo(); 
+        if (!isInputAction) return;
+        
+       comboSystem.Attack(); 
     }
 
 
@@ -150,7 +153,9 @@ public class PlayerControl : UnitBase
     {
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
-        StartCoroutine(GhosetState(3.0f));
+        StartCoroutine(GhosetState(GhostTime));
+        //MaterialChange(EnumInfo.Materia.Ghost);
+        comboSystem.currentComboReset();
     }
 
     IEnumerator GhosetState(float time)
@@ -160,10 +165,7 @@ public class PlayerControl : UnitBase
         gameObject.layer = originLayer;
     }
 
-    public void ActionMove()
-    {
-      //  rigidbody.velocity = transform.forward.normalized * 3;
-    }
+
 
 
 
@@ -176,7 +178,7 @@ public class PlayerControl : UnitBase
  
         StartCoroutine(TimeAction());
 
-        GameManger.Instance.GetCamerManger().TimeAction();
+        GameManager.Instance.GetCamerManger().TimeAction();
     }
 
     public float TS;
@@ -256,8 +258,8 @@ public class PlayerControl : UnitBase
 
         //yield return new WaitForSeconds(0.1f);
 
+        isControl = true;
         isInputAction = true;
-
         yield return new WaitForSeconds(RollingCoolTime);
         isDeshCollTime = false;
     }

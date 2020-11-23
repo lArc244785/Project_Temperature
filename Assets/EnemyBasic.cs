@@ -25,6 +25,10 @@ public class EnemyBasic : UnitBase
 
     private bool isForWardAttack;
 
+    public Transform hpBar;
+
+    private UIHpBar uiHpBar;
+
 
     // Start is called before the first frame update
 
@@ -43,19 +47,16 @@ public class EnemyBasic : UnitBase
         target = GameManager.Instance.GetPlayerControl();
         //FindPath(moveTile.point);
 
-        //GameObject hpBarGO = Instantiate(Resources.Load("UIHpBar"), Vector3.zero, Quaternion.identity) as GameObject;
-        //Debug.Log(hpBarGO.name);
-        //Debug.Log(UIManager.Instance.gameObject.name);
-        ////Debug.Log(UIManager.Instance.GetInstance());
-        //hpBarGO.transform.SetParent(UIManager.Instance.uiDynamic.GetAnchorTransform());
-        //hpBarGO.transform.localScale = Vector3.one;
-        //uiHpBar = hpBarGO.GetComponent<UIHpBar>();
-        //uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
+        GameObject hpBarGO = Instantiate(Resources.Load("UIHpBar"), Vector3.zero, Quaternion.identity) as GameObject;
+        hpBarGO.transform.SetParent(UIManager.Instance.uiDynamic.GetAnchorTransform());
+        hpBarGO.transform.localScale = Vector3.one;
+        uiHpBar = hpBarGO.GetComponent<UIHpBar>();
+        uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
     }
 
     private void Update()
     {
-        //uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
+        uiHpBar.UpdatePositionFromWorldPosition(hpBar.position);
     }
 
     private void FixedUpdate()
@@ -163,6 +164,9 @@ public class EnemyBasic : UnitBase
     public override void HandleDeath()
     {
         GameManager.Instance.GetEnemyManger().enemyList.Remove(this);
+
+        uiHpBar.HandleDestroy();
+
         base.HandleDeath();
     }
 
@@ -234,6 +238,8 @@ public class EnemyBasic : UnitBase
         {
             HitCount++;
             KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
+
+            uiHpBar.SetValue(hp, MAXHP);
         }
     }
     IEnumerator a;

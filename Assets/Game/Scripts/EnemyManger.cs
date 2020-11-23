@@ -25,7 +25,7 @@ public class EnemyManger : MonoBehaviour
 
         foreach (TileBase tile in mm.GameMap)
         {
-            tile.mr.material = tile.nomalMaterial;
+            //tile.mr.material = tile.nomalMaterial;
         }
 
         foreach (EnemyBasic enemy in enemyList)

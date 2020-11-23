@@ -300,6 +300,8 @@ public class UnitBase : Status
     private Sequence materialTween;
     public void MaterialChange(EnumInfo.Materia materia)
     {
+        if (!isAlive)
+            return;
         Utility.KillTween(materialTween);
         materialTween = DOTween.Sequence();
         isTweenEventing = false;

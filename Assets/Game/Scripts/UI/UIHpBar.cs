@@ -12,4 +12,15 @@ public class UIHpBar : MonoBehaviour
     {
         image.rectTransform.anchoredPosition = GameManager.Instance.GetCamerManger().GetMainCamera().WorldToScreenPoint(worldPos);
     }
+
+    public void SetValue(float value, float maxValue)
+    {
+        float fillAmount = value / maxValue;
+        image.fillAmount = fillAmount;
+    }
+
+    public void HandleDestroy()
+    {
+        Destroy(this.gameObject);
+    }
 }

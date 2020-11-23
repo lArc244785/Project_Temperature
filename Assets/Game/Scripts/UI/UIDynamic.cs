@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIDynamic : UIView
+public class UIDynamic : MonoBehaviour
 {
-
+    public RectTransform rootRect;
     public RectTransform anchorRect;
 
     public RectTransform GetAnchorTransform()
@@ -12,10 +12,8 @@ public class UIDynamic : UIView
         return anchorRect;
     }
 
-    public override void Toggle(bool value)
+    public  void Toggle(bool value)
     {
-        base.Toggle(value);
-
         rootRect.gameObject.SetActive(value);
     }
 }

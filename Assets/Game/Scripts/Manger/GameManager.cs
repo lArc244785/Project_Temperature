@@ -22,13 +22,15 @@ public class GameManager : MonoBehaviour
         else {
             Destroy(gameObject);
         }
-        Initializer();
+        //Initializer();
         DOTween.defaultAutoPlay = AutoPlay.None;
     }
 
     private void Start()
     {
-        //Initializer();
+        Initializer();
+
+        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
     private void Initializer()

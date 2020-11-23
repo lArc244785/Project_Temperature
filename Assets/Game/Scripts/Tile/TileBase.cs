@@ -26,6 +26,10 @@ public class TileBase : MonoBehaviour
     public Material pathMaterial;
     public Material nomalMaterial;
 
+    private Tween tween;
+
+    private Vector3 targetPos = new Vector3(0, -0.1f, 0);
+
     public void SetTileIndex(int x, int y)
     {
         tileInfo.SetTile(x, y, transform.position, isWall);
@@ -41,7 +45,6 @@ public class TileBase : MonoBehaviour
 
     private void Start()
     {
-        
         gravityValue = UnityEngine.Random.Range(-10f,-3f);
         gravity = new Vector3(0, gravityValue, 0);
         constantForce.force = gravity;
@@ -83,23 +86,27 @@ public class TileBase : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Unit")
-        {
-            modelTr.Translate(0, -0.07f, 0);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == "Unit")
+    //    {
+    //        modelTr.Translate(0, -0.07f, 0);
 
-        }
+    //    }
 
 
-    }
+    //}
 
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.tag == "Unit")
         {
-            modelTr.Translate(0 , - 0.07f, 0);
+            
+            Utility.KillTween(tween);
+            //if(modelTr.parent.y)
+            //modelTr.Translate(0 , - 0.07f, 0);
+            modelTr.localPosition = Vector3.MoveTowards(modelTr.localPosition, targetPos, 0.1f);
 
         }
 
@@ -112,8 +119,9 @@ public class TileBase : MonoBehaviour
         {
             if (modelTr.localPosition.y < 0)
             {
-                modelTr.DOLocalMove(Vector3.zero, 1f);
+                tween = modelTr.DOLocalMove(Vector3.zero, 1f);
                 //modelTr.Translate(transform.localPosition);
+
             }
         }
     }

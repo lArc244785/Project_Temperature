@@ -140,6 +140,7 @@ MonoBehaviour:
   unitHandler: {fileID: 0}
   tile: {fileID: 0}
   Range: 1.2
+  hpBar: {fileID: 9057036815788289067}
 --- !u!114 &934221805909958751
 MonoBehaviour:
   m_ObjectHideFlags: 0

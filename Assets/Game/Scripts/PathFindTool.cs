@@ -128,8 +128,8 @@ public class PathFindTool : MonoBehaviour
             //print("sNode: " + startNode.y + "   " + startNode.x + "  tNode: " + targetNode.y + "  " + targetNode.x);
            // print(node.point.y + " " + node.point.x);
 
-         //   MapMagner mm = GameManager.Instance.GetMapManger();
-          //  mm.GameMap[targetNode.y, targetNode.x].mr.material = mm.GameMap[targetNode.y, targetNode.x].pathMaterial;
+           //MapMagner mm = GameManager.Instance.GetMapManger();
+           //mm.GameMap[targetNode.y, targetNode.x].mr.material = mm.GameMap[targetNode.y, targetNode.x].pathMaterial;
 
             do
             {

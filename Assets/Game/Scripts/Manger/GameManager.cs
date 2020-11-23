@@ -10,8 +10,26 @@ public class GameManager : MonoBehaviour
     private PlayerControl playerControl;
     private CamerManger camMagner;
     private InputManger inputManger;
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
     private MapMagner mapManger;
     private EnemyManger enemyManger;
+=======
+
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+    private MapMagner mapManger;
+    private EnemyManger enemyManger;
+=======
+
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+=======
+    private MapMagner mapManger;
+    private EnemyManger enemyManger;
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
 
     private void Awake()
     {
@@ -69,6 +87,14 @@ public class GameManager : MonoBehaviour
         return inputManger;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/Game/Scripts/Manger/GameManger.cs
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
     public MapMagner GetMapManger()
     {
         if(mapManger == null)
@@ -89,5 +115,33 @@ public class GameManager : MonoBehaviour
         }
 
         return enemyManger;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
+=======
+    public void SetMainMenu(bool value)
+    {
+        UIManager.Instance.uiMainMenu.Toggle(true);
+        UIManager.Instance.uiInGame.Toggle(false);
+        UIManager.Instance.uiOption.Toggle(false);
+    }
+
+    public void ExitGame()
+    {
+        if(Application.isPlaying)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+>>>>>>> Jun:Assets/Game/Scripts/Manger/GameMagner.cs
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3fa5113e526e5a67d0cd631bb812b482601fc58a
+>>>>>>> e35e025659a8bdbc97900e00d41b13d8c4ff277c
     }
 }

@@ -8,20 +8,34 @@ public class UIInGame : UIView
     public Sprite dayIcon;
     public Sprite nightIcon;
 
-    public Image dayNight;
+    public Image day;
+    public Image night;
 
     public TimeManager timeManager;
 
+    //public void DayNIghtIcon(bool value)
+    //{
+    //    if(value)
+    //    {
+    //        dayNight.sprite = nightIcon;
+    //    }
+    //    else
+    //    {
+    //        dayNight.sprite = dayIcon;
+    //    }
+    //}
+
     public void DayNIghtIcon(bool value)
     {
-        if(value)
+        if (value)
         {
-            dayNight.sprite = nightIcon;
+            night.gameObject.SetActive(value);
+            day.gameObject.SetActive(false);
         }
         else
         {
-            dayNight.sprite = dayIcon;
+            night.gameObject.SetActive(value);
+            day.gameObject.SetActive(true);
         }
     }
-
 }

@@ -59,7 +59,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.012376238
         functionName: HandleIsControlOff
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
@@ -107,7 +107,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 2
         messageOptions: 0
-      - time: 0.53370786
+      - time: 0.5262016
         functionName: HandleComboChack
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,

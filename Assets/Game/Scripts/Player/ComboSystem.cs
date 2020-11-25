@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ComboSystem : MonoBehaviour
@@ -78,8 +79,10 @@ public class ComboSystem : MonoBehaviour
     {
         if (!GetIsConnetCombo(combo))
         {
-           // playerControl.SetSkinnedMeshPostionToPostion();
+
+            //EditorApplication.isPaused = true;
             playerControl.modelAni.SetTrigger("ComboCancle");
+
             //ResetCombo();
         }
     }

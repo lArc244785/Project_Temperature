@@ -21,8 +21,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: Event HandleIsControlOn has a time (1.133333) outside
-      the clip's valid range (0.000000..1.000000). It will never be fired
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -61,15 +60,7 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: HandleSetSkinnedMeshPostionToPostion
-        data: 
-        objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: HandleIsControlOn
+        functionName: MoveActionFinsh
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
           type: 3}

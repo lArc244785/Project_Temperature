@@ -39,10 +39,12 @@ public class WeaponBase : ScriptableObject
     //공격도 손봐야됨
     public virtual void Attack(int hitBox) {
         SetTarget(hitBox);
+
         if (targetUnits.Count > 0)
         {
             foreach (UnitBase unit in targetUnits)
             {
+
                 unit.HitEvent(damageList, this);
             }
 

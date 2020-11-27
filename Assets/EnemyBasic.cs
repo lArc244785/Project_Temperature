@@ -19,7 +19,8 @@ public class EnemyBasic : UnitBase
 
     private int HitCount;
 
-    private Sequence enemyTween;
+    private Sequence rotionTween;
+    private Sequence forwardRigMoveTween;
 
     private float AttackDashTime = 0.5f;
 
@@ -29,13 +30,9 @@ public class EnemyBasic : UnitBase
 
     private UIHpBar uiHpBar;
 
+    private IEnumerator ForwardAttackCorutine;
+    
 
-    // Start is called before the first frame update
-
-    //private void Start()
-    //{
-    //    HandleSpawn();
-    //}
     public override void HandleSpawn()
     {
         base.HandleSpawn();
@@ -69,7 +66,7 @@ public class EnemyBasic : UnitBase
 
     private void SetNextMove()
     {
-        if (!isControl) return;
+
 
 
         if (path.Count == 0)
@@ -77,6 +74,7 @@ public class EnemyBasic : UnitBase
             moveDir = Vector3.zero;
             rigidbody.velocity = Vector3.zero;
             isFind = false;
+            SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0);
         }
         else
         {
@@ -84,20 +82,21 @@ public class EnemyBasic : UnitBase
             moveToTile = GameManager.Instance.GetMapManger().GameMap[nextPoint.y, nextPoint.x];
             moveToPoint = moveToTile.tileInfo.position;
             moveToPoint.y = unitTransform.position.y;
+            Debug.Log("TileMove: " + moveToPoint);
             moveDir = (moveToPoint - unitTransform.position).normalized;
-            if (!isAttackRate) {
-                
-                SetLoock(moveToPoint);
-              //  unitTransform.DOLookAt(moveToPoint, 1.0f);
-            }
+           
+            if(GetTargetDistance() > Range)
+            SetLook(moveToPoint, 0);
         }
     }
 
-    private void SetLoock(Vector3 targetPostion)
+    private void SetLook(Vector3 targetPostion, int ID,float RotionSpeed = 0.5f)
     {
-        Utility.KillTween(enemyTween);
-        enemyTween.Insert(0,unitTransform.DOLookAt(targetPostion, 0.7f));
-        enemyTween.Play();
+        targetPostion = new Vector3(targetPostion.x, unitTransform.position.y, targetPostion.z);
+        Debug.Log("SetLook    " + ID + "targetPosition   " + targetPostion);
+        Utility.KillTween(rotionTween);
+        rotionTween.Insert(0,unitTransform.DOLookAt(targetPostion, RotionSpeed));
+        rotionTween.Play();
     }
 
     public void FindPath(StructInfo.Point tNode)
@@ -109,12 +108,12 @@ public class EnemyBasic : UnitBase
         if (isFind)
         {
             Vector3 nextMovePoint = path.Pop().position;
-
             SetNextMove();
         }
         else
         {
-            Debug.LogError(tile.tileInfo.point + "   " + tNode);
+            Debug.LogWarning(tile.tileInfo.point + "(" + tile.tileInfo.point.y + " , " + tile.tileInfo.point.x + ")"
+                + "   (" + tNode.y + "," + tNode.x+ ")");
         }
     }
 
@@ -122,43 +121,57 @@ public class EnemyBasic : UnitBase
     
     IEnumerator ForWardAttack()
     {
-       // isControlOff();
+        isControlOff();
         isAttackRate = true;
-        isForWardAttack = true;
-        Vector3 movePoint = unitTransform.position + (unitTransform.forward * 2);
-        Utility.KillTween(enemyTween);
-        enemyTween = DOTween.Sequence();
-        enemyTween.Insert(0, rigidbody.DOMove(movePoint, AttackDashTime));
-        enemyTween.Play();
+        Utility.KillTween(rotionTween);
+        Utility.KillTween(forwardRigMoveTween);
 
-        float time = 0;
-        while(time < AttackDashTime)
+        yield return new WaitForSeconds(weapon.tick);
+
+        Vector3 forWardDir = weaponSensor.hitBoxs[0].gameObject.transform.position;
+        forWardDir = new Vector3(forWardDir.x, unitTransform.position.y, forWardDir.z);
+        forWardDir = forWardDir - unitTransform.position;
+        forWardDir = forWardDir.normalized;
+
+        Vector3 movePoint = unitTransform.position + (forWardDir * 2);
+        float forwardDistance = Vector3.Distance(unitTransform.position, movePoint);
+        float CalculationAttackTime = AttackDashTime;
+        float CalculationDistance = .0f;
+        if (isChackWall(forWardDir, forwardDistance))
         {
+            CalculationDistance = raycastHit.distance - ColliderDistance;
+            movePoint = unitTransform.position + (unitTransform.forward * CalculationDistance);
+            CalculationAttackTime = forwardDistance / raycastHit.distance * CalculationAttackTime;
+        }
+
+
+
+        forwardRigMoveTween = DOTween.Sequence();
+        rotionTween.Insert(0, rigidbody.DOMove(movePoint, CalculationAttackTime));
+
+        rotionTween.Play();
+        Attack();
+        float time = 0;
+        while(time < CalculationAttackTime)
+        {
+            yield return null;
             time += Time.deltaTime;
             Attack();
-            if (!isForWardAttack)
-            {
-                Utility.KillTween(enemyTween);
-                rigidbody.velocity = Vector3.zero;
-                yield break;
-            }
-            yield return null;
         }
+
         yield return new WaitForSeconds(weapon.tickRate);
-       // isControlOn();
-        isAttackRate = false;
         AttackTime = 0;
+        ResetPath();
+
     }
 
 
     public override void Attack(int hitBox = 0)
     {
-        UnitBase palyer = GameManager.Instance.GetPlayerControl();
-        if (palyer.gameObject.layer == palyer.originLayer)
-        {
-            //Debug.Log("몬스터 공격");
+        UnitBase player = GameManager.Instance.GetPlayerControl();
+        if(player.gameObject.layer != player.GhostLayer)
             base.Attack(hitBox);
-        }
+
     }
 
     public override void HandleDeath()
@@ -169,7 +182,11 @@ public class EnemyBasic : UnitBase
 
         base.HandleDeath();
     }
-
+    private float GetTargetDistance()
+    {
+        return Mathf.Abs(Vector3.Distance(unitTransform.position,
+            target.GetSkinnedMeshPostionToPostion())); 
+    }
     public void AI()
     {
         string msg = string.Empty;
@@ -180,48 +197,38 @@ public class EnemyBasic : UnitBase
             return;
         }
 
-        float targetDistance =
-            Mathf.Abs(Vector3.Distance(unitTransform.position,
-            target.GetSkinnedMeshPostionToPostion()));
+        float targetDistance = GetTargetDistance();
 
         msg += "플레이어와의 거리: " + targetDistance + " 몬스터의 공격리치: " + Range + "\n";
         
-        //공격범위까지
+        //공격범위에 들어왔을 떄
         if (targetDistance < Range)
         {
-            Vector3 lookPos = target.GetUnitTransform().position;
-            lookPos = new Vector3(lookPos.x, unitTransform.position.y, lookPos.z);
+            if (ForwardAttackCorutine != null)
+                StopForwardAttackCoroutine();
 
-            SetLoock(lookPos);
-           
-            AttackTime += Time.deltaTime;
-            msg += "공격 대기 타임: " + AttackTime + "공격 까지의 타임: " + weapon.tick + "\n"; 
-            if (AttackTime > weapon.tick)
-            {
-                StartCoroutine(ForWardAttack());
-            }
+
+            SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0, 0.1f);
+
+            rigidbody.velocity = Vector3.zero;
+            ForwardAttackCorutine = ForWardAttack();
+            StartCoroutine(ForwardAttackCorutine);
             return;
         }
+        //공격범위가 아닐때
         else if (isFind)
         {
             AttackTime = 0;
             msg += "플레이어까지의 루트 확인: " + isFind + "\n";
             msg += "플레어에게 이동하는 방향: " + moveDir + "\n";
-            moveToPoint.y = unitTransform.position.y;
+          
             //이동
-            if ((unitTransform.position - moveToPoint).sqrMagnitude > 0.01f)
+            if ((unitTransform.position - moveToPoint).sqrMagnitude < 0.01f)
             {
-                Vector3 speedrig = moveDir * speed ;
-                rigidbody.velocity = speedrig;
-            }
-            else
-            {
-                //Debug.Log("NextNode");
                 SetNextMove();
-
+            }
                 Vector3 speedrig = moveDir * speed;
                 rigidbody.velocity = speedrig;
-            }
         }
 
 
@@ -233,16 +240,26 @@ public class EnemyBasic : UnitBase
 
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
+        //UnityEditor.EditorApplication.isPaused = true;
         base.HitEvent(damageList, weapon);
+
+
         if (hp > 0)
         {
+            SetLook(weapon.GetParentUnit().GetSkinnedMeshPostionToPostion(), 2, 0.35f);
+            StopForwardAttackCoroutine();
+
+
             HitCount++;
             KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
+
+
+
 
             uiHpBar.SetValue(hp, MAXHP);
         }
     }
-    IEnumerator a;
+
     public override void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         base.KnockBack(KnockBacktime, SternTime, TargetUnit);
@@ -251,17 +268,27 @@ public class EnemyBasic : UnitBase
 
     IEnumerator HitSetFind()
     {
+        yield return new WaitForFixedUpdate();
         while (!isControl)
         {
             yield return null;
         }
         HitCount--;
         if (HitCount > 0) yield break;
-        isAttackRate = false;
-        FindPath(GameManager.Instance.GetMapManger().GetPlayerTile().GetTileInfo().point);
-        transform.rotation = Quaternion.identity;
-        SetNextMove();
+        ResetPath();
+    }
 
+
+    private void ResetPath()
+    {
+        isAttackRate = false;
+        isControlOn();
+        GameManager.Instance.GetEnemyManger().ReSetPath();
+        if (Range < GetTargetDistance())
+        {
+            SetNextMove();
+            SetLook(moveToPoint, 0);
+        }
     }
 
 
@@ -273,6 +300,13 @@ public class EnemyBasic : UnitBase
         }
     }
 
+    private void StopForwardAttackCoroutine()
+    {
+        if(ForwardAttackCorutine != null)
+        {
+            StopCoroutine(ForwardAttackCorutine);
+        }
+    }
 
 
 }

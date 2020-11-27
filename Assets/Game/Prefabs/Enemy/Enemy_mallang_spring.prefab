@@ -99,13 +99,17 @@ MonoBehaviour:
   GhostLayer: 10
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
-  targetName: 
+    m_Bits: 256
+  targetName: Player
   isAttackRate: 0
   motionHandler: {fileID: 0}
   SkinnedMesh: {fileID: 0}
   meshRender: {fileID: 2041682146129964323}
   unitHandler: {fileID: 0}
+  capsuleCollider: {fileID: 8408543424199550351}
+  WallChackLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   tile: {fileID: 0}
   Range: 1.2
   hpBar: {fileID: 4002631689347480657}

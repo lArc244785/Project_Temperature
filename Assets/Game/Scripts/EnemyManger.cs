@@ -5,33 +5,63 @@ using UnityEngine;
 public class EnemyManger : MonoBehaviour
 {
     public List<EnemyBasic> enemyList;
+    private List<StructInfo.Point> PassTileList;
     private PlayerControl pc;
 
+    private StructInfo.Point oldTargetNode;
+    public bool DebugMode;
     public void Initializer()
     {
         enemyList = new List<EnemyBasic>();
+        PassTileList = new List<StructInfo.Point>();
+
+
         for (int i = 0; i < transform.GetChildCount(); i++)
         {
             EnemyBasic enemy = transform.GetChild(i).GetComponent<EnemyBasic>();
-            enemy.HandleSpawn();
-            enemyList.Add(enemy);
+            if (!DebugMode)
+            {
+                enemy.HandleSpawn();
+                enemyList.Add(enemy);
+            }
+            else
+            {
+                enemy.gameObject.SetActive(false);
+            }
         }
         pc = GameManager.Instance.GetPlayerControl();
     }
 
     public void SetPath(StructInfo.Point targetNode)
     {
+        oldTargetNode = targetNode;
         MapMagner mm = GameManager.Instance.GetMapManger();
 
-        foreach (TileBase tile in mm.GameMap)
-        {
-            //tile.mr.material = tile.nomalMaterial;
-        }
+        mm.ClearRoot();
+
+        PassTileList.Clear();
+
 
         foreach (EnemyBasic enemy in enemyList)
         {
-            enemy.FindPath(targetNode);
+            if (mm.GetAroundTileCount()  <= PassTileList.Count)
+            {
+                PassTileList.Clear();
+            }
+                enemy.FindPath(targetNode);
+
         }
+    }
+
+    public void PathRootCorrection(StructInfo.Point visitNode)
+    {
+        PassTileList.Add(visitNode);
+    }
+
+
+    public void ReSetPath()
+    {
+        SetPath(oldTargetNode);
     }
 
 
@@ -43,7 +73,8 @@ public class EnemyManger : MonoBehaviour
             foreach(UnitBase unit in enemyList)
             {
                 //Debug.Log(Vector3.Distance(unit.GetUnitTransform().position, center));
-                if(Mathf.Abs( Vector3.Distance(unit.GetUnitTransform().position, center)) < Range)
+
+                if(Mathf.Abs( Vector3.Distance(unit.GetSkinnedMeshPostionToPostion(), center)) < Range)
                 {
                     HItBoxinEnemyList.Add(unit);
                 }
@@ -51,14 +82,19 @@ public class EnemyManger : MonoBehaviour
         }
         else
         {
-
-            if (Mathf.Abs(Vector3.Distance(pc.GetSkinnedMeshPostionToPostion(), center)) < Range &&
-                pc.GetUnitTransform().gameObject.layer == pc.originLayer)
+           
+            float targetDistance = Mathf.Abs(Vector3.Distance(pc.GetSkinnedMeshPostionToPostion(), center));
+            if (targetDistance < Range)
+            {
                 HItBoxinEnemyList.Add(pc);
+            }
         }
 
         return HItBoxinEnemyList;
     }
 
-
+    public List<StructInfo.Point> GetPoints()
+    {
+        return PassTileList;
+    }
 }

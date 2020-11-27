@@ -30,10 +30,18 @@ public class PathFindTool : MonoBehaviour
         visitNodeList = new List<StructInfo.Point>();
     }
 
+    public void SetVisit(StructInfo.Point point)
+    {
+        copyGameMap[point.y, point.x].isVisit = true;
+    }
+
 
     private void Reset()
     {
         MapMagner mm = GameManager.Instance.GetMapManger();
+
+
+
         for (int h = 0; h < height; h++)
         {
             for (int w = 0; w < width; w++)
@@ -42,8 +50,15 @@ public class PathFindTool : MonoBehaviour
                     copyGameMap[h, w].cost = StructInfo.TILEMAX;
                 else
                     copyGameMap[h, w].cost = StructInfo.TILEWALL;
-               // mm.GameMap[h, w].mr.material = mm.GameMap[h, w].nomalMaterial;
                 copyGameMap[h, w].isVisit = false;
+                foreach (StructInfo.Point point in GameManager.Instance.GetEnemyManger().GetPoints())
+                {
+                    if (point.y == h && point.x == w)
+                    {
+                        copyGameMap[h, w].isVisit = true;
+                        break;
+                    }
+                }
 
             }
         }
@@ -54,6 +69,9 @@ public class PathFindTool : MonoBehaviour
     public bool PathFind_AStar
         (StructInfo.Point startNode, StructInfo.Point targetNode, Stack<StructInfo.TileInfo> path)
     {
+        if (startNode.x == targetNode.x && startNode.y == targetNode.y) return false;
+
+
         path.Clear();
         Reset();
 
@@ -68,7 +86,7 @@ public class PathFindTool : MonoBehaviour
 
         int nx, ny;
         int cost;
-        for (int i = 0; i < width * height; i++)
+        for (int i = 0; i < width * height / 2; i++)
         {
 
             copyGameMap[curNode.y, curNode.x].isVisit = true;
@@ -88,7 +106,7 @@ public class PathFindTool : MonoBehaviour
                     isOnOrDownWall = false;
                     nx = curNode.x + tx;
                     ny = curNode.y + ty;
-                    if (isMapOver(new StructInfo.Point(nx,ny)) || (tx == 0 && ty == 0)) continue;
+                    if (isMapOver(new StructInfo.Point(nx, ny)) || (tx == 0 && ty == 0)) continue;
                     if (copyGameMap[ny, nx].isVisit == false)
                     {
                         cost = copyGameMap[curNode.y, curNode.x].cost;
@@ -100,20 +118,19 @@ public class PathFindTool : MonoBehaviour
                             {
                                 StructInfo.Point nextNodeLeftOrRight = new StructInfo.Point(curNode.x, ny);
                                 StructInfo.Point nextNodeDown = new StructInfo.Point(nx, curNode.y);
-                                if(copyGameMap[nextNodeLeftOrRight.y, nextNodeLeftOrRight.x].cost == StructInfo.TILEWALL ||
+                                if (copyGameMap[nextNodeLeftOrRight.y, nextNodeLeftOrRight.x].cost == StructInfo.TILEWALL ||
                                     copyGameMap[nextNodeDown.y, nextNodeDown.x].cost == StructInfo.TILEWALL)
-                                isOnOrDownWall = true;
+                                    isOnOrDownWall = true;
                             }
 
-                   
-                                copyGameMap[ny, nx].cost = !isOnOrDownWall ?cost : copyGameMap[curNode.y, curNode.x].cost + 24;
-                                parentNode[ny, nx] = curNode;
-                           
-                            }
+                            copyGameMap[ny, nx].cost = !isOnOrDownWall ? cost : copyGameMap[curNode.y, curNode.x].cost + 24;
+                            parentNode[ny, nx] = curNode;
 
                         }
+
                     }
-                
+                }
+
             }
             curNode = Chosse(targetNode);
         }
@@ -124,22 +141,25 @@ public class PathFindTool : MonoBehaviour
             StructInfo.Point point;
             node = copyGameMap[targetNode.y, targetNode.x];
             path.Push(node);
-           // print("PATH====");
+            // print("PATH====");
             //print("sNode: " + startNode.y + "   " + startNode.x + "  tNode: " + targetNode.y + "  " + targetNode.x);
-           // print(node.point.y + " " + node.point.x);
+            // print(node.point.y + " " + node.point.x);
 
-           //MapMagner mm = GameManager.Instance.GetMapManger();
-           //mm.GameMap[targetNode.y, targetNode.x].mr.material = mm.GameMap[targetNode.y, targetNode.x].pathMaterial;
+            MapMagner mm = GameManager.Instance.GetMapManger();
+            mm.SetPathTile(targetNode);
+
+            //목표 노드의 부모 노드를 방문설정을 하여서 마지막 경로가 겹치지 않게 설정
+            GameManager.Instance.GetEnemyManger().PathRootCorrection(parentNode[targetNode.y, targetNode.x]);
 
             do
             {
                 point = parentNode[node.point.y, node.point.x];
-              //  print(point.y + " " + point.x);
+                //  print(point.y + " " + point.x);
                 node = copyGameMap[point.y, point.x];
-              // mm.GameMap[point.y, point.x].mr.material = mm.GameMap[point.y, point.x].pathMaterial;
+                mm.SetPathTile(point);
                 path.Push(node);
             } while (point.x != startNode.x || point.y != startNode.y);
-           //print("====");
+            //print("====");
         }
 
         //타일 디버그용
@@ -152,6 +172,8 @@ public class PathFindTool : MonoBehaviour
         //    }
         //}
         //Debug.Log("====AAA=====");
+
+
 
         return isFind;
     }

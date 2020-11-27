@@ -1,8 +1,6 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerControl : UnitBase
 {
@@ -40,6 +38,7 @@ public class PlayerControl : UnitBase
 
 
 
+
     public void Start()
     {
         Initializer();
@@ -50,7 +49,20 @@ public class PlayerControl : UnitBase
     {
         base.Initializer();
         motionHandler.Initializer(this);
+
     }
+
+    public void OnDrawGizmos()
+    {
+        if (capsuleCollider == null) return;
+        ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
+        Vector3 testDrawDistance = new Vector3(transform.position.x, transform.position.y, transform.position.z - ColliderDistance);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, testDrawDistance);
+
+    }
+
+
 
     public void Update()
     {
@@ -60,14 +72,12 @@ public class PlayerControl : UnitBase
         {
 
             Rotation();
-           Move();
+            Move();
 
         }
 
-        weaponSensor.transform.position = new Vector3(
-            SkinnedMesh.bounds.center.x,
-            weaponSensor.transform.position.y, 
-            SkinnedMesh.bounds.center.z);
+            UpdateSensorPos();
+
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
@@ -78,13 +88,13 @@ public class PlayerControl : UnitBase
 
         if (moveDir.sqrMagnitude > 0.1f)
         {
-            
+
 
             rigidbody.velocity = moveDir * speed;
-            modelAni.SetFloat("Walk" ,1.0f);
+            modelAni.SetFloat("Walk", 1.0f);
             isMove = true;
         }
-        else 
+        else
         {
             modelAni.SetFloat("Walk", 0.0f);
             isMove = false;
@@ -99,9 +109,9 @@ public class PlayerControl : UnitBase
 
     IEnumerator SkipFram()
     {
-        isChaking = false; 
+        isChaking = false;
         yield return new WaitForFixedUpdate();
-        if(moveDir.sqrMagnitude < 0.1f && isInputAction)
+        if (moveDir.sqrMagnitude < 0.1f && isInputAction)
         {
             modelAni.SetFloat("Walk", 0.0f);
             rigidbody.velocity = Vector3.zero;
@@ -119,24 +129,20 @@ public class PlayerControl : UnitBase
         Vector2 mouseOnScreen = GameManager.Instance.GetInputManger().GetMousePostionToScreen();
 
         //Get the angle between the points
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
         transform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
 
     }
 
-    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
-    {
-        return Mathf.Atan2(b.x - a.x, b.y - a.y) * Mathf.Rad2Deg;
-    }
 
 
-    public  void comboAttack()
+    public void comboAttack()
     {
 
         if (!isInputAction) return;
-        
-       comboSystem.Attack(); 
+      
+        comboSystem.Attack();
     }
 
 
@@ -147,11 +153,17 @@ public class PlayerControl : UnitBase
         base.Attack(hitBox);
     }
 
-
+    private void UpdateSensorPos()
+    {
+        weaponSensor.transform.position = new Vector3(
+        SkinnedMesh.bounds.center.x,
+        weaponSensor.transform.position.y,
+        SkinnedMesh.bounds.center.z);
+    }
 
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
-        
+
         Debug.Log("Player HIt" + gameObject.layer + "   " + GhostLayer);
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
@@ -178,7 +190,7 @@ public class PlayerControl : UnitBase
 
         Time.timeScale = 0.00f;
         isTimeStopCorutine = true;
- 
+
         StartCoroutine(TimeAction());
 
         GameManager.Instance.GetCamerManger().TimeAction();
@@ -194,7 +206,7 @@ public class PlayerControl : UnitBase
         float scale = stopTimeScale;
         Time.timeScale = scale;
         recoveryTimeScale = 1 / recoveryTime;
- 
+
         yield return new WaitForSecondsRealtime(stopTime);
         Time.timeScale = 1.0f;
 

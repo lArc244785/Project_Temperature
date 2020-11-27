@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934221804673210986}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: WeaponHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934221805381303692}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 934221805909958751}
   - component: {fileID: 934221805909958744}
   - component: {fileID: 4507011541960848885}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Enemy_mallang_basic
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  MAXHP: 5
+  MAXHP: 9999
   isAlive: 1
   speed: 2
   temperature: 36.5
@@ -131,13 +131,17 @@ MonoBehaviour:
   GhostLayer: 10
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
-  targetName: 
+    m_Bits: 256
+  targetName: Player
   isAttackRate: 0
   motionHandler: {fileID: 0}
   SkinnedMesh: {fileID: 0}
   meshRender: {fileID: 4266675680790480210}
   unitHandler: {fileID: 0}
+  capsuleCollider: {fileID: 4507011541960848885}
+  WallChackLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   tile: {fileID: 0}
   Range: 1.2
   hpBar: {fileID: 9057036815788289067}
@@ -194,7 +198,7 @@ GameObject:
   - component: {fileID: 934221805934896175}
   - component: {fileID: 934221805934896168}
   - component: {fileID: 5654282375993851955}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: WeaponSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9057036815788289067}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HPBarTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,6 +288,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: mallang_basic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263857835484268819, guid: 80df42d1444d1b14aac63ee3fb6ab3db,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1928086744667919273, guid: 80df42d1444d1b14aac63ee3fb6ab3db,
         type: 3}
@@ -420,6 +429,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HitBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311845301624664468, guid: ba01cae70e09b9f43bb6cf4572434087,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7737707534488020520, guid: ba01cae70e09b9f43bb6cf4572434087,
         type: 3}

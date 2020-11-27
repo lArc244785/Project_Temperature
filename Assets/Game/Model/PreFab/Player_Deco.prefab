@@ -694,9 +694,10 @@ MonoBehaviour:
   SkinnedMesh: {fileID: 6995577685888633945}
   meshRender: {fileID: 0}
   unitHandler: {fileID: 1460186607161938694}
-  IdleMaterial: {fileID: 2100000, guid: fdfc38dc09a921a4abed29a7ddd3a191, type: 2}
-  HitMaterial: {fileID: 2100000, guid: e4953e5c63b578b4f94cb4f4b05d378d, type: 2}
-  GhostMaterial: {fileID: 2100000, guid: 169cfd7296097b24bbc00ccb38be68c1, type: 2}
+  capsuleCollider: {fileID: 0}
+  WallChackLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   moveDir: {x: 0, y: 0, z: 0}
   oldMoveDir: {x: 0, y: 0, z: 0}
   isMove: 1

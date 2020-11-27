@@ -54,5 +54,11 @@ public class PlayerMotionHandler : MonoBehaviour
         pc.comboSystem.ComboChack(combo);
     }
 
+    public void MoveActionFinsh()
+    {
+        pc.SetSkinnedMeshPostionToPostion();
+        HandleIsControlOn();
+    }
+
 
 }

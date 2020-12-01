@@ -13,12 +13,13 @@ public class WeaponKnockBack : WeaponBase
 
     public override void Attack(int hitBox = 0)
     {
+
         base.Attack(hitBox);
-        foreach(UnitBase unit in targetUnits)
+
+        foreach (UnitBase unit in targetUnits)
         {
             unit.KnockBack(KnockBackTime, SternTime, parentUnit, KnockBackPower);
         }
-
     }
 
 }

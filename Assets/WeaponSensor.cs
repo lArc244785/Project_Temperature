@@ -34,7 +34,7 @@ public class WeaponSensor : MonoBehaviour
     public List<UnitBase> GetSensorHitUnits(int Index = 0)
     {
         List<UnitBase> targetUnits;
-
+        Debug.Log(weapon.GetParentUnit().name);
         targetUnits = hitBoxs[Index].GetHitBoxInEnmey();
 
         return targetUnits;

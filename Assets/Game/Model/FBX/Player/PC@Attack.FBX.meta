@@ -59,7 +59,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.012376238
+      - time: 0
         functionName: HandleIsControlOff
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
@@ -83,7 +83,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.31460676
+      - time: 0.3086896
         functionName: HandleComboChack
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
@@ -124,15 +124,7 @@ ModelImporter:
         intParameter: 2
         messageOptions: 0
       - time: 1
-        functionName: HandleIsControlOn
-        data: 
-        objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: HandleSetSkinnedMeshPostionToPostion
+        functionName: MoveActionFinsh
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
           type: 3}

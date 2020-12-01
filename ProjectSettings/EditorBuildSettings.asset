@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Game/Sences/Jun/MainMenu.unity
     guid: f56be863539452a4a94635c04254118a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Game/Sences/Jun/Jun_map.unity
     guid: cf41f59764b31294da12c6b1890e7414
+  - enabled: 1
+    path: Assets/Game/Sences/Wook/AStarTest.unity
+    guid: da59787ee70426145aa319c833624cf1
   m_configObjects: {}

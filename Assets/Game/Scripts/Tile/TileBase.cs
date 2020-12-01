@@ -23,8 +23,8 @@ public class TileBase : MonoBehaviour
 
     public MeshRenderer mr;
 
-    public Material pathMaterial;
-    public Material nomalMaterial;
+
+    public Material originMaterial;
 
     private Tween tween;
 
@@ -33,6 +33,16 @@ public class TileBase : MonoBehaviour
     public void SetTileIndex(int x, int y)
     {
         tileInfo.SetTile(x, y, transform.position, isWall);
+    }
+
+    public void SetTileMaterial(Material material)
+    {
+        mr.material = material;
+    }
+
+    public void ClearTileMaterial()
+    {
+        mr.material = originMaterial;
     }
 
 
@@ -48,6 +58,8 @@ public class TileBase : MonoBehaviour
         gravityValue = UnityEngine.Random.Range(-10f,-3f);
         gravity = new Vector3(0, gravityValue, 0);
         constantForce.force = gravity;
+
+        originMaterial = mr.material;
 
         if (test ==true)
         {

@@ -27,7 +27,7 @@ public class UnitBase : Status
     public int GhostLayer = 10;
 
 
-    protected bool isKnockBackOn;
+
 
     [Header("=Target=")]
     public LayerMask targetLayer;
@@ -46,7 +46,14 @@ public class UnitBase : Status
 
     protected Sequence sequence;
 
- 
+    public CapsuleCollider capsuleCollider;
+
+    protected bool isKnockBackOn;
+    protected IEnumerator KnockBackCorutine;
+    protected Sequence KnockBackTween;
+    protected float ColliderDistance;
+
+    public LayerMask WallChackLayer;
 
     public virtual void Initializer()
     {
@@ -73,6 +80,7 @@ public class UnitBase : Status
         }
         if (weapon != null)
         {
+            weapon = Instantiate(weapon);
             weapon.Initializer(weaponTransfrom, this);
             if (weaponSensor != null)
             {
@@ -84,13 +92,13 @@ public class UnitBase : Status
             Debug.LogWarning("Code 100: weapon Null");
         }
 
-
-
-
         if (unitHandler != null) unitHandler.Initializer(this);
 
+        
+        ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
 
     }
+
 
 
     public virtual void Attack(int hitBox = 0)
@@ -124,8 +132,9 @@ public class UnitBase : Status
 
     public virtual void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
-
+        
         SetSkinnedMeshPostionToPostion();
+
         if (modelAni != null)
             modelAni.SetTrigger("Hit");
 
@@ -158,58 +167,61 @@ public class UnitBase : Status
 
     public virtual void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
+
         if (isKnockBackOn)
         {
             isKnockBackOn = false;
         }
-        
 
+        if (KnockBackCorutine != null)
+        {
+            StopCoroutine(KnockBackCorutine);
 
-        StartCoroutine(IE_KnockBack(KnockBacktime, SternTime, TargetUnit, Power));
+        }
+
+        KnockBackCorutine = IE_KnockBack(KnockBacktime, SternTime, TargetUnit, Power);
+
+        StartCoroutine(KnockBackCorutine);
     }
 
     public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
-        yield return new WaitForFixedUpdate();
-
-        Utility.KillTween(sequence);
-        rigidbody.velocity = Vector3.zero;
+        StopKnockBackTween();
         isControlOff();
+        rigidbody.velocity = Vector3.zero;
         isInputAction = false;
         isKnockBackOn = true;
 
         Vector3 knockBackDir = unitTransform.position - TargetUnit.unitTransform.position;
         knockBackDir.y = 0.0f;
-        knockBackDir = knockBackDir.normalized * Power;
+        knockBackDir = knockBackDir.normalized ;
 
 
-        sequence = DOTween.Sequence();
-        Vector3 movePoint = GetSkinnedMeshPostionToPostion() + knockBackDir;
-        Debug.Log("KN" + knockBackDir);
-        Debug.Log(gameObject.name + "  " + unitTransform.position + "   " + TargetUnit.unitTransform.position + " " + knockBackDir);
-        sequence.Insert(0, rigidbody.DOMove(movePoint, KnockBacktime));
-        sequence.Play();
-        float t = 0.0f;
-        while (t < KnockBacktime)
+        Vector3 movePoint = GetSkinnedMeshPostionToPostion() + (knockBackDir * Power);
+        float knockBackDistance = Vector3.Distance(transform.position, movePoint);
+        //원래 이동 방향에 벽이 있일 경우 재 수정
+        if(isChackWall(knockBackDir, knockBackDistance))
         {
-            if (isMoveDirWall(knockBackDir) )
-            {
-                StopTween();
-                rigidbody.velocity = Vector3.zero;
-            }
-            if (!isKnockBackOn)
-            {
-                StopTween();
-                rigidbody.velocity = Vector3.zero;
-                yield break;
-            }
-            t += Time.deltaTime;
+            float fixMoveScalar = raycastHit.distance - capsuleCollider.radius;
+            if (fixMoveScalar < 0) fixMoveScalar = 0.0f;
+             movePoint = GetSkinnedMeshPostionToPostion() + (knockBackDir * fixMoveScalar);
         }
 
-        rigidbody.velocity = Vector3.zero;
-        yield return new WaitForSecondsRealtime(SternTime);
-        isKnockBackOn = false;
+        KnockBackTween = DOTween.Sequence();
+        KnockBackTween.Insert(0, rigidbody.DOMove(movePoint, KnockBacktime));
+        KnockBackTween.Play();
+        
+        
+        float t = 0.0f;
 
+        yield return new WaitForSeconds(KnockBacktime);
+
+        rigidbody.velocity = Vector3.zero;
+
+        yield return new WaitForSecondsRealtime(SternTime);
+
+
+        isKnockBackOn = false;
         isControlOn();
         isInputAction = true;
     }
@@ -241,15 +253,19 @@ public class UnitBase : Status
         return unitTransform;
     }
 
+    //SkineedMesh로 움직이는 애니메이션이 끝났을 때 Player.Postion을 SkineedMesh위치로  Update
     public void SetSkinnedMeshPostionToPostion()
     {
         if (SkinnedMesh == null) return;
 
+        capsuleCollider.enabled = false;
 
         unitTransform.position = weaponSensor.transform.position = new Vector3(
             SkinnedMesh.bounds.center.x,
             unitTransform.position.y,
             SkinnedMesh.bounds.center.z);
+
+        capsuleCollider.enabled = true;
     }
 
     public Vector3 GetSkinnedMeshPostionToPostion()
@@ -261,6 +277,7 @@ public class UnitBase : Status
             SkinnedMesh.bounds.center.z);
     }
 
+    
 
 
     public void isInputActionOn()
@@ -291,11 +308,17 @@ public class UnitBase : Status
     {
         Utility.KillTween(sequence);
     }
-
-    private bool isMoveDirWall(Vector3 Dir)
+    
+    public void StopKnockBackTween()
     {
-        return Physics.Raycast(transform.position, Dir, 0.8f, 1 << LayerMask.NameToLayer("Wall"));
+        Utility.KillTween(KnockBackTween);
     }
+
+
+    //private bool isMoveDirWall(Vector3 Dir)
+    //{
+    //    return Physics.Raycast(transform.position, Dir, 0.8f,  LayerMask.NameToLayer("Wall"));
+    //}
 
     private Sequence materialTween;
     public void MaterialChange(EnumInfo.Materia materia)
@@ -374,5 +397,11 @@ public class UnitBase : Status
         isTweenEventing = false;
     }
 
+
+    protected RaycastHit raycastHit;
+    protected bool isChackWall(Vector3 dir, float distance)
+    {
+        return Physics.Raycast(transform.position,  dir, out raycastHit, distance, WallChackLayer);
+    }
 
 }

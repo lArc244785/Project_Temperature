@@ -5,37 +5,35 @@ using UnityEngine.UI;
 
 public class UIInGame : UIView
 {
-    public Sprite dayIcon;
-    public Sprite nightIcon;
+    public GameObject DayPanel;
+    public GameObject NightPanel;
 
-    public Image day;
-    public Image night;
+    public Image dayIcon;
+    public Image nightIcon;
 
     public TimeManager timeManager;
 
-    //public void DayNIghtIcon(bool value)
-    //{
-    //    if(value)
-    //    {
-    //        dayNight.sprite = nightIcon;
-    //    }
-    //    else
-    //    {
-    //        dayNight.sprite = dayIcon;
-    //    }
-    //}
-
-    public void DayNIghtIcon(bool value)
+    public void UpdateDayNightIcon(bool isNight)
     {
-        if (value)
+        if(isNight)
         {
-            night.gameObject.SetActive(value);
-            day.gameObject.SetActive(false);
+            nightIcon.fillAmount = .0f;
+
+            NightPanel.SetActive(true);
+            DayPanel.SetActive(false);
+
+            //dayIcon.fillAmount += 0.00625f * Time.deltaTime;
+            //test
+            dayIcon.fillAmount += 0.0625f * Time.deltaTime;
         }
         else
         {
-            night.gameObject.SetActive(value);
-            day.gameObject.SetActive(true);
+            dayIcon.fillAmount = .0f;
+
+            DayPanel.SetActive(true);
+            NightPanel.SetActive(false);
+
+            nightIcon.fillAmount += 0.0625f * Time.deltaTime;
         }
     }
 }

@@ -55,7 +55,7 @@ public class TimeManager : MonoBehaviour
 
         SkyboxBlend();
 
-        UIManager.Instance.uiInGame.DayNIghtIcon(isNight);
+        UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
     }
 
     public void Timer()
@@ -149,5 +149,10 @@ public class TimeManager : MonoBehaviour
                     mat[3].SetFloat("_Blend", 0);
             }
         }
+    }
+
+    public void DayNightIconControl()
+    {
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,19 +19,29 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else {
+        if (Instance == null)
+        {
+            Instance = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
             Destroy(gameObject);
         }
         //Initializer();
         DOTween.defaultAutoPlay = AutoPlay.None;
+
+        UIManager.Instance.uiInGame.nightIcon.fillAmount = .5f;
+        UIManager.Instance.uiInGame.dayIcon.fillAmount = .0f;
     }
 
     private void Start()
     {
         Initializer();
 
-        UIManager.Instance.uiMainMenu.Toggle(false);
+        //SetMainMenu(true);
+        SetInGameUI(true);
     }
 
     private void Initializer()
@@ -41,6 +52,22 @@ public class GameManager : MonoBehaviour
         GetMapManger();
         GetEnemyManger();
     }
+
+    public void StartStage(string stageName)
+    {
+        StartCoroutine(ProcessStage(stageName));
+    }
+
+    private IEnumerator ProcessStage(string stageName)
+    {
+        SetMainMenuUI(false);
+        AsyncOperation sceneLoadAsync = SceneManager.LoadSceneAsync(stageName, LoadSceneMode.Single);
+        yield return sceneLoadAsync;
+        SetInGameUI(true);
+
+        yield break;
+    }
+
 
 
     public PlayerControl GetPlayerControl()
@@ -102,11 +129,26 @@ public class GameManager : MonoBehaviour
         return enemyManger;
     }
 
-    public void SetMainMenu(bool value)
+    public void SetMainMenuUI(bool value)
     {
         UIManager.Instance.uiMainMenu.Toggle(true);
         UIManager.Instance.uiInGame.Toggle(false);
         UIManager.Instance.uiOption.Toggle(false);
+        UIManager.Instance.uiDynamic.Toggle(false);
+
+        if (value)
+            UIManager.Instance.isOverUI = value;
+    }
+
+    public void SetInGameUI(bool value)
+    {
+        UIManager.Instance.uiMainMenu.Toggle(false);
+        UIManager.Instance.uiInGame.Toggle(true);
+        UIManager.Instance.uiOption.Toggle(false);
+        UIManager.Instance.uiDynamic.Toggle(true);
+
+        if (value)
+            UIManager.Instance.isOverUI = value;
     }
 
     public void ExitGame()

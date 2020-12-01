@@ -39,12 +39,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5100959241751687204}
-  - component: {fileID: 5100959241751687207}
   - component: {fileID: 5100959241751687205}
   - component: {fileID: 5100959241751687202}
   - component: {fileID: 8408543424199550351}
+  - component: {fileID: 1614380889}
   m_Layer: 8
-  m_Name: Enemy_mallang_spring
+  m_Name: ForWardEnemy_Model_Mallang
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,51 +68,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5100959241751687207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5100959241751687206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15ad0cb340f86e34e8830f19da635376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  MAXHP: 5
-  isAlive: 1
-  speed: 2
-  temperature: 36.5
-  HotTemperatuer: 50
-  ColdTemperatuer: -50
-  Name: Enemy
-  weaponTransfrom: {fileID: 5100959241751687204}
-  weapon: {fileID: 11400000, guid: 0cd41f9bc08e4be4f9372312db9a7a88, type: 2}
-  weaponSensor: {fileID: 5100959241793533010}
-  modelTransfrom: {fileID: 5100959242313543158}
-  modelAni: {fileID: 0}
-  isControl: 0
-  isInputAction: 1
-  originLayer: 0
-  GhostLayer: 10
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  targetName: Player
-  isAttackRate: 0
-  motionHandler: {fileID: 0}
-  SkinnedMesh: {fileID: 0}
-  meshRender: {fileID: 2041682146129964323}
-  unitHandler: {fileID: 0}
-  capsuleCollider: {fileID: 8408543424199550351}
-  WallChackLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  tile: {fileID: 0}
-  Range: 1.2
-  hpBar: {fileID: 4002631689347480657}
 --- !u!114 &5100959241751687205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +110,51 @@ CapsuleCollider:
   m_Height: 0.92206144
   m_Direction: 1
   m_Center: {x: 0, y: 0.03896928, z: 0}
+--- !u!114 &1614380889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5100959241751687206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed74ad1ac3756d94d852300bfe610fc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  MAXHP: 9999
+  isAlive: 1
+  speed: 2
+  temperature: 36.5
+  HotTemperatuer: 50
+  ColdTemperatuer: -50
+  Name: ForWardEnemy
+  weaponTransfrom: {fileID: 5100959241751687204}
+  weapon: {fileID: 11400000, guid: 0cd41f9bc08e4be4f9372312db9a7a88, type: 2}
+  weaponSensor: {fileID: 5100959241793533010}
+  modelTransfrom: {fileID: 873328636592821836}
+  modelAni: {fileID: 0}
+  isControl: 0
+  isInputAction: 1
+  originLayer: 0
+  GhostLayer: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  targetName: Player
+  isAttackRate: 0
+  motionHandler: {fileID: 0}
+  SkinnedMesh: {fileID: 0}
+  meshRender: {fileID: 2041682146129964323}
+  unitHandler: {fileID: 0}
+  capsuleCollider: {fileID: 8408543424199550351}
+  WallChackLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  tile: {fileID: 0}
+  Range: 1.2
+  hpBar: {fileID: 4002631689347480657}
 --- !u!1 &5100959241793533012
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  enemy: {fileID: 5100959241751687207}
+  enemy: {fileID: 1614380889}
 --- !u!1 &5100959242313543145
 GameObject:
   m_ObjectHideFlags: 0

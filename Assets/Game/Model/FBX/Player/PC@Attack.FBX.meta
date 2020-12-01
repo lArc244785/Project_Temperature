@@ -83,7 +83,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.31460676
+      - time: 0.3086896
         functionName: HandleComboChack
         data: 
         objectReferenceParameter: {fileID: 3703563736299645216, guid: 94ed136d4e3c1fb47991f1f1c5b95298,

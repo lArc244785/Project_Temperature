@@ -4,12 +4,28 @@ using UnityEngine;
 
 public class NomalAmmo : AmmoBase
 {
+    Vector3 targetPos;
+    Vector3 currentPos;
+    Vector3 currentPosVellocity;
 
-    public override void Initialize(UnitBase targetUnitBaic, WeaponBase weaponBase)
+    private Transform Model;
+    private Transform tr;
+
+    public float speed = 1.0f;
+    public override void Initialize(UnitBase targetUnitBase, WeaponBase weaponBase)
     {
-        base.Initialize(targetUnitBaic, weaponBase);
+        base.Initialize(targetUnitBase, weaponBase);
     }
 
+    private void Start()
+    {
+        tr = gameObject.transform;
+        SetTarget();
+
+        Model = gameObject.transform.FindChild("Model");
+        currentPos = Model.position;
+        currentPosVellocity = currentPos;
+    }
 
     public void Update()
     {
@@ -17,7 +33,25 @@ public class NomalAmmo : AmmoBase
 
             curTick += Time.deltaTime;
         if (curTick >= lifeTick) HandleDestory();
+
+        SetTarget();
+        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVellocity, speed);
+        Model.position = currentPos;
+        Model.localPosition = new Vector3(Model.localPosition.x, 0, Model.localPosition.z);
+
     }
+
+
+    private void SetTarget()
+    {
+        targetPos = targetUnitBase.GetSkinnedMeshPostionToPostion();
+        targetPos.y = tr.position.y;
+
+    }
+
+
+
+
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -25,12 +59,19 @@ public class NomalAmmo : AmmoBase
 
         if (((1 << other.gameObject.layer) & hitLayerMask) != 0)
         {
-            var hitUnitBase = other.GetComponent<UnitBase>();
-            if(hitUnitBase != null)
+            var hitUnitHandler = other.GetComponent<UnitHandler>();
+
+            if(hitUnitHandler != null)
             {
-                hitUnitBase.HitEvent(weponBase.damageList, weponBase);
+                var hitUnit = hitUnitHandler.GetUnit();
+                hitUnit.HitEvent(weponBase.damageList, weponBase);
                 HandleHit();
             }
+            else
+            {
+                //몬스터
+            }
+
         }
     }
 

@@ -19,10 +19,11 @@ public class AmmoBase : MonoBehaviour
     protected WeaponBase weponBase;
 
 
-    public virtual void Initialize(UnitBase targetUnitBaic, WeaponBase weaponBase)
+    public virtual void Initialize(UnitBase targetUnitBase, WeaponBase weaponBase)
     {
         this.targetUnitBase = targetUnitBase;
         this.weponBase = weaponBase;
+        backGroundLayer = LayerMask.GetMask("Wall");
 
         curTick = 0.0f;
         lifeTick = weaponBase.ShotBulletLifeTick;

@@ -95,7 +95,7 @@ public class ParabolaEnemy : EnemyBasic
         isControlOff();
         isAttackRate = true;
         Utility.KillTween(rotionTween);
-
+        weapon.SetShootAttackPath();
         yield return new WaitForSeconds(weapon.tick);
         weapon.Attack(0);
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37267506, g: 0.6103284, b: 0.8626851, a: 1}
+  m_IndirectSpecularColor: {r: 0.45855647, g: 0.5579845, b: 0.7382636, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -72,7 +72,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 1
+    m_BakeBackend: 2
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 512
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: eed588938b5372b45a3f6e85118e31f4,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -1456,6 +1457,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 84140272}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &85414593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85414594}
+  m_Layer: 9
+  m_Name: WeaponFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &85414594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85414593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5100959242924548150}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &89510431
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22885,12 +22916,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1742723976}
   - {fileID: 1479993188}
   - {fileID: 828938381}
   - {fileID: 749527080}
   - {fileID: 1271390692}
   - {fileID: 1771208468}
+  - {fileID: 1742723976}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25235,7 +25266,7 @@ PrefabInstance:
     - target: {fileID: 5100959241751687204, guid: 9dd381c70746fd5498ef7ee477a41224,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5100959241751687204, guid: 9dd381c70746fd5498ef7ee477a41224,
         type: 3}
@@ -30865,6 +30896,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5311845301624664468, guid: ba01cae70e09b9f43bb6cf4572434087,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7737707534488020520, guid: ba01cae70e09b9f43bb6cf4572434087,
         type: 3}
       propertyPath: Range
@@ -30895,7 +30931,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4002631690254986307}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HPBarTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30914,7 +30950,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5100959242924548150}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5100959242552351233
 GameObject:
@@ -30925,7 +30961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5100959242552351234}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: WeaponHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30939,13 +30975,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5100959242552351233}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 303228389}
-  m_Father: {fileID: 5100959242924548150}
-  m_RootOrder: 2
+  m_Father: {fileID: 5100959243033437255}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5100959242924548144
 Rigidbody:
@@ -30976,7 +31012,7 @@ GameObject:
   - component: {fileID: 5100959242924548144}
   - component: {fileID: 8408543425439593885}
   - component: {fileID: 5100959242924548149}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ParabolaEnemy_Model_Mallang
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -31003,7 +31039,7 @@ MonoBehaviour:
   HotTemperatuer: 50
   ColdTemperatuer: -50
   Name: 
-  weaponTransfrom: {fileID: 5100959242924548150}
+  weaponTransfrom: {fileID: 85414594}
   weapon: {fileID: 11400000, guid: ce06dca85195ccd4799ac76d2a85a93f, type: 2}
   weaponSensor: {fileID: 5100959243033437248}
   modelTransfrom: {fileID: 483297337}
@@ -31041,8 +31077,8 @@ Transform:
   m_Children:
   - {fileID: 5100959243486477796}
   - {fileID: 5100959243033437255}
-  - {fileID: 5100959242552351234}
   - {fileID: 4002631690254986307}
+  - {fileID: 85414594}
   m_Father: {fileID: 137558915}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31083,8 +31119,8 @@ GameObject:
   - component: {fileID: 5100959243033437255}
   - component: {fileID: 5100959243033437248}
   - component: {fileID: 307706518096117851}
-  m_Layer: 8
-  m_Name: WeaponSensor
+  m_Layer: 9
+  m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31100,7 +31136,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5100959242552351234}
   m_Father: {fileID: 5100959242924548150}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31128,7 +31165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5100959243486477796}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31201,6 +31238,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: mallang_spring
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797687624588047438, guid: a88b92768358c1547a766a08a0890612,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8590070813660026267, guid: a88b92768358c1547a766a08a0890612,
         type: 3}

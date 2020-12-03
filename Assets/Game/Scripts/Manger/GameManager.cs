@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
         SetInGameUI(true);
     }
 
+    private void Update()
+    {
+        UIManager.Instance.uiInGame.UpdateTemperature();
+    }
+
     private void Initializer()
     {
         GetPlayerControl();

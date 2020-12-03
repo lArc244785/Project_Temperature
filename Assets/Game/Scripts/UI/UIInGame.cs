@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIInGame : UIView
 {
@@ -12,6 +13,13 @@ public class UIInGame : UIView
     public Image nightIcon;
 
     public TimeManager timeManager;
+
+    public TextMeshProUGUI temperature;
+
+    public void UpdateTemperature()
+    {
+        temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
+    }
 
     public void UpdateDayNightIcon(bool isNight)
     {

@@ -95,7 +95,7 @@ public class UnitBase : Status
         if (unitHandler != null) unitHandler.Initializer(this);
 
         
-        //ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
+        ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
 
     }
 

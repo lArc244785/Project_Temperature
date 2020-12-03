@@ -22,6 +22,19 @@ public class ParabolaEnemy : EnemyBasic
     {
         //UnityEditor.EditorApplication.isPaused = true;
         base.HitEvent(damageList, weapon);
+
+
+        if (hp > 0)
+        {
+            SetLook(weapon.GetParentUnit().GetSkinnedMeshPostionToPostion(), 2, 0.35f);
+            StopParabolaAttackCoroutine();
+
+
+            HitCount++;
+            KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
+
+            uiHpBar.SetValue(hp, MAXHP);
+        }
     }
 
     private void Update()
@@ -53,11 +66,8 @@ public class ParabolaEnemy : EnemyBasic
         //공격범위에 들어왔을 떄
         if (targetDistance < Range)
         {
-            if (ParabolaAttackCoroutine != null)
-                StopParabolaAttackCoroutine();
-
-
-            SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0, 0.1f);
+            //if (ParabolaAttackCoroutine != null)
+            //    StopParabolaAttackCoroutine();
 
             rigidbody.velocity = Vector3.zero;
             ParabolaAttackCoroutine = ParabolaAttack();
@@ -92,11 +102,21 @@ public class ParabolaEnemy : EnemyBasic
 
     IEnumerator ParabolaAttack()
     {
-        isControlOff();
+        ControlOff();
         isAttackRate = true;
+
+        float t = 0.0f;
+        while (t < weapon.tick)
+        {
+            SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0, 0.1f);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+
+        //yield return new WaitForSeconds(weapon.tick);
         Utility.KillTween(rotionTween);
         weapon.SetShootAttackPath();
-        yield return new WaitForSeconds(weapon.tick);
         weapon.Attack(0);
 
         yield return new WaitForSeconds(weapon.tickRate);

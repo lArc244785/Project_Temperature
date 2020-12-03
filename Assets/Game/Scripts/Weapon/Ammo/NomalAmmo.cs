@@ -12,6 +12,10 @@ public class NomalAmmo : AmmoBase
     private Transform tr;
 
     public float speed = 1.0f;
+    private float DownSpeed = 1.0f;
+
+    private bool isTrackingMode = false;
+    public float range;
     public override void Initialize(UnitBase targetUnitBase, WeaponBase weaponBase)
     {
         base.Initialize(targetUnitBase, weaponBase);
@@ -20,11 +24,8 @@ public class NomalAmmo : AmmoBase
     private void Start()
     {
         tr = gameObject.transform;
-        SetTarget();
-
         Model = gameObject.transform.FindChild("Model");
-        currentPos = Model.position;
-        currentPosVellocity = currentPos;
+
     }
 
     public void Update()
@@ -34,10 +35,12 @@ public class NomalAmmo : AmmoBase
             curTick += Time.deltaTime;
         if (curTick >= lifeTick) HandleDestory();
 
-        SetTarget();
-        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVellocity, speed);
-        Model.position = currentPos;
-        Model.localPosition = new Vector3(Model.localPosition.x, 0, Model.localPosition.z);
+        //if (isTrackingMode)
+        //{
+        //    SetTarget();
+        //    currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVellocity, speed);
+        //    tr.position = currentPos;
+        //}
 
     }
 
@@ -45,8 +48,7 @@ public class NomalAmmo : AmmoBase
     private void SetTarget()
     {
         targetPos = targetUnitBase.GetSkinnedMeshPostionToPostion();
-        targetPos.y = tr.position.y;
-
+        targetPos = new Vector3(targetPos.x, 0.0f, targetPos.z);
     }
 
 
@@ -57,6 +59,21 @@ public class NomalAmmo : AmmoBase
     {
         base.OnTriggerEnter(other);
 
+            if (((1 << other.gameObject.layer) & backGroundLayer) != 0)
+            {
+            if(((1<< other.gameObject.layer) & LayerMask.GetMask("Tile")) != 0)
+            {
+                SetTarget();
+                if (Vector3.Distance(tr.position, targetPos) <= range)
+                {
+                    targetUnitBase.HitEvent(weponBase.damageList, weponBase);
+                    targetUnitBase.KnockBack(weponBase.KnockBackTime, weponBase.SternTime, weponBase.GetParentUnit(), weponBase.KnockBackPower);
+                }
+            }
+                HandleDestory();
+            }
+        
+
         if (((1 << other.gameObject.layer) & hitLayerMask) != 0)
         {
             var hitUnitHandler = other.GetComponent<UnitHandler>();
@@ -65,6 +82,7 @@ public class NomalAmmo : AmmoBase
             {
                 var hitUnit = hitUnitHandler.GetUnit();
                 hitUnit.HitEvent(weponBase.damageList, weponBase);
+                hitUnit.KnockBack(weponBase.KnockBackTime, weponBase.SternTime, weponBase.GetParentUnit(), weponBase.KnockBackPower);
                 HandleHit();
             }
             else
@@ -76,5 +94,13 @@ public class NomalAmmo : AmmoBase
     }
 
 
+    public void TrackingModeOn()
+    {
+        SetTarget();
+        currentPos = tr.position;
+       // currentPosVellocity = currentPos;
+
+        isTrackingMode = true;
+    }
 
 }

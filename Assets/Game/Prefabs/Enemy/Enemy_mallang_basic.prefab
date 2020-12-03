@@ -143,7 +143,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   tile: {fileID: 0}
-  Range: 1.2
+  Range: 10
   hpBar: {fileID: 9057036815788289067}
 --- !u!114 &934221805909958751
 MonoBehaviour:

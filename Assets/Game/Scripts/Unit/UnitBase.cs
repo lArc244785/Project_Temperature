@@ -60,7 +60,7 @@ public class UnitBase : Status
         originLayer = gameObject.layer;
 
         hp = MAXHP;
-        isControlOn();
+        ControlOn();
 
         unitTransform = transform;
 
@@ -187,7 +187,7 @@ public class UnitBase : Status
     public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         StopKnockBackTween();
-        isControlOff();
+        ControlOff();
         rigidbody.velocity = Vector3.zero;
         isInputAction = false;
         isKnockBackOn = true;
@@ -222,7 +222,7 @@ public class UnitBase : Status
 
 
         isKnockBackOn = false;
-        isControlOn();
+        ControlOn();
         isInputAction = true;
     }
 
@@ -290,14 +290,14 @@ public class UnitBase : Status
         isInputAction = false;
     }
 
-    public void isControlOn()
+    public virtual void ControlOn()
     {
         isControl = true;
         if (modelAni != null)
             modelAni.SetBool("isControl", true);
     }
 
-    public void isControlOff()
+    public virtual void ControlOff()
     {
         isControl = false;
         if(modelAni != null)

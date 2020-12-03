@@ -36,8 +36,9 @@ public class PlayerControl : UnitBase
 
     private float GhostTime = 1.5f;
 
+    private bool isRotion;
 
-
+    private IEnumerator RotaionFreamOnOff;
 
     public void Start()
     {
@@ -49,7 +50,7 @@ public class PlayerControl : UnitBase
     {
         base.Initializer();
         motionHandler.Initializer(this);
-
+        RotaionOn();
     }
 
     public void OnDrawGizmos()
@@ -68,15 +69,13 @@ public class PlayerControl : UnitBase
     {
         TS = Time.timeScale;
         //print("AA");
-        if (isInputAction && isControl)
+        if ( isControl)
         {
-
-            Rotation();
             Move();
-
         }
+        Rotation();
 
-            UpdateSensorPos();
+        UpdateSensorPos();
 
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
@@ -107,19 +106,12 @@ public class PlayerControl : UnitBase
         }
     }
 
-    IEnumerator SkipFram()
-    {
-        isChaking = false;
-        yield return new WaitForFixedUpdate();
-        if (moveDir.sqrMagnitude < 0.1f && isInputAction)
-        {
-            modelAni.SetFloat("Walk", 0.0f);
-            rigidbody.velocity = Vector3.zero;
-        }
-    }
+
 
     private void Rotation()
     {
+       
+
         Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
 
         //Get the Screen positions of the object
@@ -131,8 +123,15 @@ public class PlayerControl : UnitBase
         //Get the angle between the points
         float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
-        transform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-
+        if (isControl)
+        {
+            unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+        }
+        else
+        {
+            Debug.Log("Rotoin");
+            SkinnedMesh.gameObject.transform.rotation = Quaternion.Euler(new Vector3(-90f, angle, 0f));
+        }
     }
 
 
@@ -151,6 +150,7 @@ public class PlayerControl : UnitBase
     public override void Attack(int hitBox = 0)
     {
         base.Attack(hitBox);
+        RotaionOnOffCoroutine(1);
     }
 
     private void UpdateSensorPos()
@@ -181,7 +181,50 @@ public class PlayerControl : UnitBase
     }
 
 
+    public override void ControlOff()
+    {
+        base.ControlOff();
+        isRotion = false;
+    }
 
+    public override void ControlOn()
+    {
+        base.ControlOn();
+        isRotion = true;
+    }
+
+
+
+
+    public void RotaionOn()
+    {
+        isRotion = true;
+    }
+
+    public void RotaionOff()
+    {
+        isRotion = false;
+    }
+
+    public void RotaionOnOffCoroutine(int fream)
+    {
+        if(RotaionFreamOnOff != null)
+        {
+            StopCoroutine(RotaionFreamOnOff);
+        }
+        RotaionFreamOnOff = RotionFreameOn(fream);
+        StartCoroutine(RotaionFreamOnOff);
+    }
+
+    IEnumerator RotionFreameOn(int fream)
+    {
+        RotaionOn();
+        for (int i = 0; i < fream; i++)
+        {
+            yield return null;
+        }
+        RotaionOff();
+    }
 
 
     public void WeaponTimeAction()
@@ -231,7 +274,7 @@ public class PlayerControl : UnitBase
 
     public void Desh()
     {
-        if (isDeshCollTime) return;
+        if (isDeshCollTime || !isInputAction) return;
         if (isTimeStopCorutine)
         {
             StopCoroutine(TimeAction());
@@ -273,7 +316,7 @@ public class PlayerControl : UnitBase
 
         //yield return new WaitForSeconds(0.1f);
 
-        isControlOn();
+        ControlOn();
         isInputAction = true;
         yield return new WaitForSeconds(RollingCoolTime);
         isDeshCollTime = false;

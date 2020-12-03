@@ -18,8 +18,9 @@ public class WeaponParabola : WeaponBase
     //인자값 사용은 나중에 생각하자
     public override void Attack(int shootBullet)
     {
+        if (targetUnits.Count < 1) return;
         //총알생성
-        GameObject bullet = Instantiate(BulletPrefab.gameObject, weaponTransfrom.position, weaponTransfrom.rotation);
+        GameObject bullet = Instantiate(BulletPrefab.gameObject, weaponTransfrom.position, Quaternion.identity);
         //총알에게 발사위치와 공격포인트를 넘겨준다.
         nomalAmmo = bullet.GetComponent<NomalAmmo>();
         nomalAmmo.Initialize(targetUnits[0], this);
@@ -29,35 +30,37 @@ public class WeaponParabola : WeaponBase
             pathPoints[i] = bullet.transform.position + i * ratio;
             pathPoints[i].y += tractory.Evaluate((float)i / pointCount);
         }
-        bullet.transform.LookAt(pathPoints[1]);
+        
+        //bullet.transform.LookAt(pathPoints[1]);
 
         Path path = new Path(PathType.CatmullRom, pathPoints, 1);
 
         Utility.KillTween(nomalAmmo.ammoMoveTween);
-        nomalAmmo.ammoMoveTween = nomalAmmo.transform.DOPath(path, 8).SetLookAt(0.01f).
-            SetSpeedBased(true).SetEase(Ease.OutQuad).OnComplete(() => OnAmmoReachedDestination(nomalAmmo));
+        nomalAmmo.ammoMoveTween = nomalAmmo.transform.DOPath(path, pointCount - 2)./*SetLookAt(1.0f).*/
+            SetSpeedBased(true).SetEase(Ease.OutQuad).OnComplete(() => nomalAmmo.TrackingModeOn());
 
 
         nomalAmmo.ammoMoveTween.Play();
-        nomalAmmo = null;
+
+    }
+
+    public void Test()
+    {
+        Debug.Log("Complet");
     }
 
     public override void SetShootAttackPath()
     {
         base.SetShootAttackPath();
-        SetTarget(0);
-        if (targetUnits.Count == 0)
-        {
-            Debug.LogWarning(parentUnit.name + " HitBox Range No Enemy");
-            return;
-        }
+        targetUnits.Clear();
+        targetUnits.Add(GameManager.Instance.GetPlayerControl());
 
         Vector3 XZOne = new Vector3(1, 0, 1);
         Vector3 targetPos = Utility.VectorProduct(targetUnits[0].GetSkinnedMeshPostionToPostion(), XZOne);
         Vector3 weaponPos = Utility.VectorProduct(weaponTransfrom.position, XZOne);
+        targetPos += targetUnits[0].GetRigidbody().velocity.normalized * 2.0f;
 
-
-        Vector3 dir = targetPos - weaponPos;
+        Vector3 dir = targetPos - weaponPos ;
         ratio = dir / (pointCount - 1);
 
     }

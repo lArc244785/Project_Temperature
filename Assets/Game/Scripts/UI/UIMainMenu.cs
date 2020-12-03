@@ -7,6 +7,7 @@ public class UIMainMenu : UIView
 {
     public void StartGame()
     {
+        //GameManager.Instance.StartStage("Jun_map");
         AsyncOperation sceneLoadAsync = SceneManager.LoadSceneAsync("Jun_map", LoadSceneMode.Single);
     }
 

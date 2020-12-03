@@ -43,6 +43,10 @@ public class TimeManager : MonoBehaviour
         currentMainIntensity = .8f;
         sunsetLight.intensity = 0;
 
+        for(int i =0; i<mat.Length; i++)
+        {
+            mat[i].SetFloat("_Blend", 0.0f);
+        }
 
         isNight = false;
     }
@@ -55,7 +59,7 @@ public class TimeManager : MonoBehaviour
 
         SkyboxBlend();
 
-        UIManager.Instance.uiInGame.DayNIghtIcon(isNight);
+        UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
     }
 
     public void Timer()
@@ -69,7 +73,7 @@ public class TimeManager : MonoBehaviour
         //360 = 1day 300sec = 6degree
         mainLight.transform.Rotate(Vector3.right, 10 * degreePerSecond*Time.deltaTime);
 
-        if (mainLight.transform.eulerAngles.x > 270)
+        if (mainLight.transform.eulerAngles.x >= 270)
         {
             isNight = true;
 
@@ -149,5 +153,10 @@ public class TimeManager : MonoBehaviour
                     mat[3].SetFloat("_Blend", 0);
             }
         }
+    }
+
+    public void DayNightIconControl()
+    {
+
     }
 }

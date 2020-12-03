@@ -43,6 +43,10 @@ public class TimeManager : MonoBehaviour
         currentMainIntensity = .8f;
         sunsetLight.intensity = 0;
 
+        for(int i =0; i<mat.Length; i++)
+        {
+            mat[i].SetFloat("_Blend", 0.0f);
+        }
 
         isNight = false;
     }

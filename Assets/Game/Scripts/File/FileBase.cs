@@ -18,11 +18,6 @@ public class FileBase
         yield break;
     }
 
-    public virtual IEnumerator WriteBytes(string dataName, byte[] data)
-    {
-        yield break;
-    }
-
     public virtual string GetDataLocation()
     {
         return string.Empty;

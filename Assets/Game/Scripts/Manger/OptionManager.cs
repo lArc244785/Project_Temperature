@@ -27,17 +27,24 @@ public class OptionManager : MonoBehaviour
 
     IEnumerator ProcessStartGame()
     {
-        GetDefaultOptionData();
-        
-        yield return StartCoroutine(SaveOptionData());
+        yield return StartCoroutine(fileManager.IsExist("Option.dat"));
+        if(fileManager.IsExist_Result)
+        {
+            yield return StartCoroutine(LoadOptionData());
+        }
+        else
+        {
+            GetDefaultOptionData();
+            yield return StartCoroutine(SaveOptionData());
+        }
 
         yield break;
     }
 
     public void ApplyOption(OptionData data)
     {
-        //apply here and save to disk
         currentOptionData = new OptionData(data);
+        //apply here and save to disk
     }
 
     public IEnumerator SaveOptionData()
@@ -46,6 +53,17 @@ public class OptionManager : MonoBehaviour
 
         yield return StartCoroutine(fileManager.WriteText("Option.dat", dataString));
         yield break;   
+    }
+
+    public IEnumerator LoadOptionData()
+    {
+        yield return StartCoroutine(fileManager.ReadText("Option.dat"));
+        if (!string.IsNullOrEmpty(fileManager.ReadText_Result))
+        {
+            var loadedOptionData = JsonUtility.FromJson<OptionData>(fileManager.ReadText_Result);
+            ApplyOption(loadedOptionData);
+        }
+            
     }
 
     public OptionData GetCurrentOptionData()

@@ -69,7 +69,7 @@ public class TimeManager : MonoBehaviour
         //360 = 1day 300sec = 6degree
         mainLight.transform.Rotate(Vector3.right, 10 * degreePerSecond*Time.deltaTime);
 
-        if (mainLight.transform.eulerAngles.x > 270)
+        if (mainLight.transform.eulerAngles.x >= 270)
         {
             isNight = true;
 

@@ -16,7 +16,7 @@ public class UIOption : UIView
 
     private void Update()
     {
-        if(isToggle)
+        if (isToggle)
             OptionManager.Instance.ApplyOption(optionData);
     }
 
@@ -60,6 +60,7 @@ public class UIOption : UIView
 
     public void ExitGame()
     {
+        StartCoroutine(OptionManager.Instance.SaveOptionData());
         //GameMagner.Instance.ExitGame();
         if (Application.isPlaying)
         {

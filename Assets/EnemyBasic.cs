@@ -47,7 +47,7 @@ public class EnemyBasic : UnitBase
         target = GameManager.Instance.GetPlayerControl();
         //FindPath(moveTile.point);
 
-        GameObject hpBarGO = Instantiate(Resources.Load("UIHpBar"), Vector3.zero, Quaternion.identity) as GameObject;
+        GameObject hpBarGO = Instantiate(Resources.Load("UIHPBar"), Vector3.zero, Quaternion.identity) as GameObject;
         hpBarGO.transform.SetParent(UIManager.Instance.uiDynamic.GetAnchorTransform());
         hpBarGO.transform.localScale = Vector3.one;
         uiHpBar = hpBarGO.GetComponent<UIHpBar>();

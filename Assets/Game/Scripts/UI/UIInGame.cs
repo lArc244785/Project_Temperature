@@ -12,13 +12,18 @@ public class UIInGame : UIView
     public Image dayIcon;
     public Image nightIcon;
 
+    public Slider temperatureSlider;
+
     public TimeManager timeManager;
 
     public TextMeshProUGUI temperature;
-
+    private float temperatureValue;
     public void UpdateTemperature()
     {
-      //  temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
+        temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
+
+        temperatureValue = (GameManager.Instance.GetPlayerControl().temperature - 23.0f) * 0.037f;
+        temperatureSlider.value = temperatureValue;
     }
 
     public void UpdateDayNightIcon(bool isNight)

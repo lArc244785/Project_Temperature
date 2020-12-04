@@ -9,8 +9,14 @@ public class TileSensor : MonoBehaviour
 
     private void Update()
     {
+        FindTile();
+    }
+
+    public void FindTile()
+    {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit,5.0f, LayerMask.GetMask("Tile")) ){
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 5.0f, LayerMask.GetMask("Tile")))
+        {
             TileBase tileBase = hit.transform.GetComponent<TileBase>();
             if (isPlayer)
             {

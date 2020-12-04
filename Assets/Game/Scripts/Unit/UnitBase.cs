@@ -55,6 +55,8 @@ public class UnitBase : Status
 
     public LayerMask WallChackLayer;
 
+    public TileSensor tileSensor;
+
     public virtual void Initializer()
     {
         originLayer = gameObject.layer;

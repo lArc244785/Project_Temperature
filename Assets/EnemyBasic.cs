@@ -101,8 +101,12 @@ public class EnemyBasic : UnitBase
     public virtual void FindPath(StructInfo.Point tNode)
     {
         if (!isControl) return;
-
+        Debug.Log("===========");
+        Debug.Log(gameObject);
+        Debug.Log(tile);
+        tileSensor.FindTile();
         isFind = pathFindTool.PathFind_AStar(tile.tileInfo.point, tNode, path);
+        Debug.Log("===========");
         //Debug.Log(isFind);
         if (isFind)
         {

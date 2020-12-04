@@ -71,10 +71,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934221805909958750}
-  - component: {fileID: 934221805909958749}
   - component: {fileID: 934221805909958751}
   - component: {fileID: 934221805909958744}
   - component: {fileID: 4507011541960848885}
+  - component: {fileID: 2904599493357361639}
   m_Layer: 9
   m_Name: Enemy_mallang_basic
   m_TagString: Enemy
@@ -100,51 +100,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &934221805909958749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934221805909958748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15ad0cb340f86e34e8830f19da635376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  MAXHP: 9999
-  isAlive: 1
-  speed: 2
-  temperature: 36.5
-  HotTemperatuer: 50
-  ColdTemperatuer: -50
-  Name: Enemy
-  weaponTransfrom: {fileID: 934221805909958750}
-  weapon: {fileID: 11400000, guid: 0cd41f9bc08e4be4f9372312db9a7a88, type: 2}
-  weaponSensor: {fileID: 934221805934896168}
-  modelTransfrom: {fileID: 934221805381303692}
-  modelAni: {fileID: 0}
-  isControl: 0
-  isInputAction: 1
-  originLayer: 0
-  GhostLayer: 10
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  targetName: Player
-  isAttackRate: 0
-  motionHandler: {fileID: 0}
-  SkinnedMesh: {fileID: 0}
-  meshRender: {fileID: 4266675680790480210}
-  unitHandler: {fileID: 0}
-  capsuleCollider: {fileID: 4507011541960848885}
-  WallChackLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  tile: {fileID: 0}
-  Range: 1.2
-  hpBar: {fileID: 9057036815788289067}
 --- !u!114 &934221805909958751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +142,52 @@ CapsuleCollider:
   m_Height: 0.92206144
   m_Direction: 1
   m_Center: {x: 0, y: 0.03896928, z: 0}
+--- !u!114 &2904599493357361639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934221805909958748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed74ad1ac3756d94d852300bfe610fc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  MAXHP: 9999
+  isAlive: 1
+  speed: 2
+  temperature: 36.5
+  HotTemperatuer: 50
+  ColdTemperatuer: -50
+  Name: Enemy_mallang_basic
+  weaponTransfrom: {fileID: 934221805909958750}
+  weapon: {fileID: 11400000, guid: 0cd41f9bc08e4be4f9372312db9a7a88, type: 2}
+  weaponSensor: {fileID: 934221805934896168}
+  modelTransfrom: {fileID: 0}
+  modelAni: {fileID: 0}
+  isControl: 0
+  isInputAction: 1
+  originLayer: 0
+  GhostLayer: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  targetName: Player
+  isAttackRate: 0
+  motionHandler: {fileID: 0}
+  SkinnedMesh: {fileID: 0}
+  meshRender: {fileID: 4266675680790480210}
+  unitHandler: {fileID: 0}
+  capsuleCollider: {fileID: 4507011541960848885}
+  WallChackLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  tileSensor: {fileID: 5654282375993851955}
+  tile: {fileID: 0}
+  Range: 1.2
+  hpBar: {fileID: 9057036815788289067}
 --- !u!1 &934221805934896174
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  enemy: {fileID: 934221805909958749}
+  enemy: {fileID: 2904599493357361639}
 --- !u!1 &5953002055263740977
 GameObject:
   m_ObjectHideFlags: 0

@@ -100,7 +100,7 @@ public class ForWardEnemy : EnemyBasic
         }
 
 
-        Debug.Log(msg);
+        //Debug.Log(msg);
     }
 
 

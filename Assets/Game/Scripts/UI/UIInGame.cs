@@ -18,7 +18,7 @@ public class UIInGame : UIView
 
     public void UpdateTemperature()
     {
-        temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
+      //  temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
     }
 
     public void UpdateDayNightIcon(bool isNight)

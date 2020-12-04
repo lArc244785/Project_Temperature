@@ -694,10 +694,11 @@ MonoBehaviour:
   SkinnedMesh: {fileID: 6995577685888633945}
   meshRender: {fileID: 0}
   unitHandler: {fileID: 1460186607161938694}
-  capsuleCollider: {fileID: 0}
+  capsuleCollider: {fileID: 1460186607161938695}
   WallChackLayer:
     serializedVersion: 2
     m_Bits: 1024
+  tileSensor: {fileID: 2141416935}
   moveDir: {x: 0, y: 0, z: 0}
   oldMoveDir: {x: 0, y: 0, z: 0}
   isMove: 1

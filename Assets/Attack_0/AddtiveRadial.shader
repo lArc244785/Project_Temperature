@@ -5,6 +5,7 @@
 		_MainTex ("_MainTex", 2D) = "white" {}
 		_MaskTex  ("_MaskTex", 2D) = "white" {}
 		_Intensity  ("_Intensity  ", Float) = 0
+		_Color ("_Color",Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -50,6 +51,7 @@
 			sampler2D _MaskTex;
 			float4 _MainTex_ST;
 			float4 _MaskTex_ST;
+			float4 _Color;
 			float _Intensity;
 			
 			v2f vert (appdata v)
@@ -70,6 +72,7 @@
                 fixed4 c = tex2D(_MainTex,i.uv);
 				fixed4 m =tex2D(_MaskTex,uv+_MaskTex_ST.zw);
                 c *= m;
+				c *= _Color;
                 return c;
 			}
 			ENDCG

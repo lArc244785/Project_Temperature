@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1167273176}
-  m_IndirectSpecularColor: {r: 0.38413787, g: 0.59636706, b: 0.8350176, a: 1}
+  m_IndirectSpecularColor: {r: 0.5041096, g: 0.54975915, b: 0.7018549, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -26674,6 +26674,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3703563736299645245, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
+        type: 3}
+      propertyPath: Slash
+      value: 
+      objectReference: {fileID: 1049564797008370, guid: afa0bf71c5db9d54e80fd85ee0fe7df9,
+        type: 3}
+    - target: {fileID: 3703563736299645245, guid: 94ed136d4e3c1fb47991f1f1c5b95298,
+        type: 3}
+      propertyPath: slashTransform
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94ed136d4e3c1fb47991f1f1c5b95298, type: 3}
 --- !u!4 &1872683747 stripped
@@ -27920,6 +27931,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3d299dfe73dba844ac9f55618434191, type: 3}
+--- !u!114 &1956011886 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3072319737515701490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1956860062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
@@ -30225,6 +30248,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3072319735596480034, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3072319735610427953, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -30270,6 +30298,11 @@ PrefabInstance:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 2019273947}
+    - target: {fileID: 3072319735968196461, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: temperatureIcon
+      value: 
+      objectReference: {fileID: 1956011886}
     - target: {fileID: 3072319736129557382, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -30480,26 +30513,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6385961656899201432, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    - target: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: m_AnchorMin.x
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: m_FillMethod
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6385961656899201432, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    - target: {fileID: 3819067590546210017, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6385961656899201432, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 57d0e08f9fb8d334cb6a1be6e894ffb9,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9099885644830172994, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
-        type: 3}
-      propertyPath: m_Value
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c423c981923c3a4cafa26f1f8db8ec3, type: 3}
 --- !u!1001 &3115106252153145083

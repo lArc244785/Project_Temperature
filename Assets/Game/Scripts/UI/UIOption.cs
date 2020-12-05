@@ -54,9 +54,12 @@ public class UIOption : UIView
             canvasGroup.interactable = false;
             OptionData data = OptionManager.Instance.GetCurrentOptionData();
             SetData(data);
-            BGMSlider.value = originalBGMVolume;
-            SFXSlider.value = originalSFXVolume;
             canvasGroup.interactable = true;
+            if(isBGMMute)
+            {
+                BGMSlider.value = originalBGMVolume;
+                SFXSlider.value = originalSFXVolume;
+            }
         }
         base.Toggle(value);
     }
@@ -66,7 +69,9 @@ public class UIOption : UIView
         optionData = data;
 
         BGMSlider.value = optionData.BGMVolume;
+        //BGMFill.fillAmount = BGMSlider.value;
         SFXSlider.value = optionData.SFXVolume;
+        //SFXFill.fillAmount = SFXSlider.value;
     }
 
     public void MuteBGM()

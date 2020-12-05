@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UIInGame : UIView
 {
@@ -12,18 +13,36 @@ public class UIInGame : UIView
     public Image dayIcon;
     public Image nightIcon;
 
-    public Slider temperatureSlider;
+    //public Slider temperatureSlider;
+    public Image temperatureIcon;
+    private Color originalColor;
+
 
     public TimeManager timeManager;
 
     public TextMeshProUGUI temperature;
     private float temperatureValue;
+
+    private void Start()
+    {
+        originalColor = temperatureIcon.color;
+    }
+
     public void UpdateTemperature()
     {
         temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
+        if (GameManager.Instance.GetPlayerControl().temperature > 40.0f)
+        {
+            temperatureIcon.DOColor(Color.red, 1.0f);
+            Debug.Log("test");
+        }
+        else if (GameManager.Instance.GetPlayerControl().temperature < 32.0f)
+            temperatureIcon.DOColor(Color.blue, 1.0f);
+        else
+            temperatureIcon.DOColor(originalColor, 1.0f);
 
         temperatureValue = (GameManager.Instance.GetPlayerControl().temperature - 23.0f) * 0.037f;
-        temperatureSlider.value = temperatureValue;
+        temperatureIcon.fillAmount = temperatureValue;
     }
 
     public void UpdateDayNightIcon(bool isNight)

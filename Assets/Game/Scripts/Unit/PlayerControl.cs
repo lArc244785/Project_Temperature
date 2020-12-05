@@ -36,7 +36,8 @@ public class PlayerControl : UnitBase
 
     private float GhostTime = 1.5f;
 
-
+    public GameObject Slash;
+    public Transform slashTransform;
 
 
     public void Start()

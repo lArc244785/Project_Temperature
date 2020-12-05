@@ -710,6 +710,8 @@ MonoBehaviour:
   stopTime: 0.1
   recoveryTime: 0.2
   attackAnimation: {fileID: 0}
+  Slash: {fileID: 1049564797008370, guid: afa0bf71c5db9d54e80fd85ee0fe7df9, type: 3}
+  slashTransform: {fileID: 0}
   TS: 0
 --- !u!54 &3703563736299645219
 Rigidbody:

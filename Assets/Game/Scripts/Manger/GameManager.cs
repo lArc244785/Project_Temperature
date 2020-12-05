@@ -12,9 +12,15 @@ public class GameManager : MonoBehaviour
     private InputManger inputManger;
     private MapMagner mapManger;
     private EnemyManger enemyManger;
+    private SpawnManager spawnManager;
+    private TimeManager timeManager;
 
+    public int stage;
+    public int wave;
+    public int currentWave;
 
-
+    public bool isWaveSetting = true;
+    public bool isGameClear = false;
 
     private void Awake()
     {
@@ -35,12 +41,28 @@ public class GameManager : MonoBehaviour
 
     private void Initializer()
     {
+        
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
         GetMapManger();
         GetEnemyManger();
+
+        SetStage(1, 2);
+
     }
+    //씬안에 데이터를 넘겨주는 녀석이 호출해주면 됩니다.
+    public void SetStage(int stage, int stageWave)
+    {
+        this.stage = stage;
+      wave = stageWave;
+        currentWave = 0;
+        GetSpawnManager();
+        spawnManager.NextWaveSpawn();
+        isWaveSetting = false;
+        isGameClear = false;
+    }
+
 
 
     public PlayerControl GetPlayerControl()
@@ -102,12 +124,36 @@ public class GameManager : MonoBehaviour
         return enemyManger;
     }
 
+    public SpawnManager GetSpawnManager()
+    {
+        if(spawnManager == null)
+        {
+            spawnManager = GameObject.FindObjectOfType<SpawnManager>();
+            spawnManager.Initializer(stage);
+        }
+        return spawnManager;
+    }
+
+    public TimeManager GetTimeManager()
+    {
+        if(timeManager == null)
+        {
+            timeManager = GameObject.FindObjectOfType<TimeManager>();
+        }
+        return timeManager;
+    }
+
+
+
     public void SetMainMenu(bool value)
     {
         UIManager.Instance.uiMainMenu.Toggle(true);
         UIManager.Instance.uiInGame.Toggle(false);
         UIManager.Instance.uiOption.Toggle(false);
     }
+
+
+
 
     public void ExitGame()
     {
@@ -118,6 +164,25 @@ public class GameManager : MonoBehaviour
 #else
             Application.Quit();
 #endif
+        }
+    }
+
+    public void GameClear()
+    {
+        Debug.Log("StageClear");
+        isGameClear = true;
+    }
+
+    public void NextWave()
+    {
+        GameManager.Instance.currentWave++;
+        if (currentWave >= wave)
+        {
+            GameClear();
+        }
+        else
+        {
+            spawnManager.NextWaveSpawn();
         }
     }
 }

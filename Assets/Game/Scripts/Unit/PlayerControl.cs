@@ -13,6 +13,7 @@ public class PlayerControl : UnitBase
     private bool isChaking;
 
 
+
     public float RollingCoolTime;
     public float DeshTime = 1.0f;
     private bool isDeshCollTime;
@@ -36,14 +37,16 @@ public class PlayerControl : UnitBase
 
     private float GhostTime = 1.5f;
 
-    private bool isRotion;
+    public bool isRotion;
 
     private IEnumerator RotaionFreamOnOff;
+
+    public Transform AttackPivot;
 
     public void Start()
     {
         Initializer();
-
+        isRotion = true;
     }
 
     public override void Initializer()
@@ -72,10 +75,14 @@ public class PlayerControl : UnitBase
         if ( isControl)
         {
             Move();
+
         }
-        Rotation();
+
 
         UpdateSensorPos();
+
+
+            Rotation();
 
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
@@ -87,15 +94,18 @@ public class PlayerControl : UnitBase
 
         if (moveDir.sqrMagnitude > 0.1f)
         {
-
-
             rigidbody.velocity = moveDir * speed;
+            AddTemperature(0.01f);
             modelAni.SetFloat("Walk", 1.0f);
             isMove = true;
         }
         else
         {
             modelAni.SetFloat("Walk", 0.0f);
+            if(currentTemperature > temperature)
+            {
+                AddTemperature(-0.01f);
+            }
             isMove = false;
         }
 
@@ -110,7 +120,7 @@ public class PlayerControl : UnitBase
 
     private void Rotation()
     {
-       
+        if (!isRotion) return;
 
         Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
 
@@ -125,12 +135,18 @@ public class PlayerControl : UnitBase
 
         if (isControl)
         {
+            unitTransform.parent = null;
+            AttackPivot.parent = unitTransform;
             unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
         }
         else
         {
-            Debug.Log("Rotoin");
-            SkinnedMesh.gameObject.transform.rotation = Quaternion.Euler(new Vector3(-90f, angle, 0f));
+            unitTransform.parent = null;
+            AttackPivot.parent = null;
+            AttackPivot.position = GetSkinnedMeshPostionToPostion();
+            unitTransform.parent = AttackPivot;
+            AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            unitTransform.localRotation = Quaternion.identity;
         }
     }
 
@@ -149,7 +165,10 @@ public class PlayerControl : UnitBase
 
     public override void Attack(int hitBox = 0)
     {
+        
         base.Attack(hitBox);
+        AddTemperature(1.0f);
+
         RotaionOnOffCoroutine(1);
     }
 
@@ -192,9 +211,6 @@ public class PlayerControl : UnitBase
         base.ControlOn();
         isRotion = true;
     }
-
-
-
 
     public void RotaionOn()
     {
@@ -281,6 +297,7 @@ public class PlayerControl : UnitBase
             Time.timeScale = 1.0f;
         }
 
+        AddTemperature(0.5f);
 
         comboSystem.ResetCombo();
 

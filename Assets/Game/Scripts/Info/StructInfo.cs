@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[SerializeField]
 public class StructInfo
 {
     public const int TILEMAX = 9999;
@@ -49,6 +49,7 @@ public class StructInfo
         }
 
     }
+
     public struct Point
     {
         public Point(int x, int y)
@@ -58,6 +59,8 @@ public class StructInfo
         }
         public int x, y;
     }
+
+
 
 
 }

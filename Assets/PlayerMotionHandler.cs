@@ -41,6 +41,7 @@ public class PlayerMotionHandler : MonoBehaviour
     {
         pc.GetRigidbody().velocity = Vector3.zero;
         pc.ControlOff();
+
     }
 
 
@@ -59,6 +60,8 @@ public class PlayerMotionHandler : MonoBehaviour
         pc.SetSkinnedMeshPostionToPostion();
         HandleIsControlOn();
     }
+
+
 
 
 }

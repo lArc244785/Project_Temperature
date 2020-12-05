@@ -46,7 +46,7 @@ public class ComboSystem : MonoBehaviour
     {
             currentCombo++;
             IsComboPossible = false;
-        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
+
     }
 
     public void Attack()
@@ -60,7 +60,10 @@ public class ComboSystem : MonoBehaviour
         else
         {
             //콤보 입력이 가능한 경우에만 콤보를 이어나갈 수 있게 해주자
-            if (IsComboPossible) AddCombo();
+            if (IsComboPossible)
+            {
+                AddCombo();
+            }
         }
     }
 

@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class EnemyManger : MonoBehaviour
 {
-    public List<EnemyBasic> enemyList;
-    private List<StructInfo.Point> PassTileList;
+    public List<EnemyBasic> enemyList= new List<EnemyBasic>();
+    private List<StructInfo.Point> PassTileList = new List<StructInfo.Point>();
     private PlayerControl pc;
 
     private StructInfo.Point oldTargetNode;
     public bool DebugMode;
+
     public void Initializer()
     {
-        enemyList = new List<EnemyBasic>();
-        PassTileList = new List<StructInfo.Point>();
+        pc = GameManager.Instance.GetPlayerControl();
+    }
 
+    public void HandleSetting()
+    {
+        enemyList.Clear();
 
         for (int i = 0; i < transform.GetChildCount(); i++)
         {
@@ -29,7 +33,7 @@ public class EnemyManger : MonoBehaviour
                 enemy.gameObject.SetActive(false);
             }
         }
-        pc = GameManager.Instance.GetPlayerControl();
+
     }
 
     public void SetPath(StructInfo.Point targetNode)

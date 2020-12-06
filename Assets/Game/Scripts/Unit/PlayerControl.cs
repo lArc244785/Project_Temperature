@@ -171,7 +171,7 @@ public class PlayerControl : UnitBase
         
         base.Attack(hitBox);
         bpmSystem.AddBPM(3.0f);
-
+        weaponSensor.hitBoxs[hitBox].ImfactOn();
         RotaionOnOffCoroutine(1);
     }
 

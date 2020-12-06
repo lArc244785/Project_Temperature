@@ -13,6 +13,10 @@ public class UIInGame : UIView
     public Image dayIcon;
     public Image nightIcon;
 
+    public RectTransform clockHand;
+    private float degreePerSecond;
+    private float daySecond;
+
     //public Slider temperatureSlider;
     public Image temperatureIcon;
     private Color originalColor;
@@ -47,7 +51,8 @@ public class UIInGame : UIView
 
     public void UpdateDayNightIcon(bool isNight)
     {
-        if(isNight)
+        clockHand.Rotate(Vector3.back, 20 * timeManager.degreePerSecond * Time.deltaTime);
+        if (isNight)
         {
             nightIcon.fillAmount = .0f;
 

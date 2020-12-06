@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1167273176}
-  m_IndirectSpecularColor: {r: 0.5041096, g: 0.54975915, b: 0.7018549, a: 1}
+  m_IndirectSpecularColor: {r: 0.38093835, g: 0.5997637, b: 0.8419298, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -27931,23 +27931,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3d299dfe73dba844ac9f55618434191, type: 3}
---- !u!114 &1956011886 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3072319737515701490}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1956860062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
     type: 3}
   m_PrefabInstance: {fileID: 2146012585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1957446076 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5845335387555842527, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3072319737515701490}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1961299720 stripped
 Transform:
@@ -30248,11 +30242,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3072319735596480034, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
-        type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3072319735610427953, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -30300,9 +30289,9 @@ PrefabInstance:
       objectReference: {fileID: 2019273947}
     - target: {fileID: 3072319735968196461, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: temperatureIcon
+      propertyPath: clockHand
       value: 
-      objectReference: {fileID: 1956011886}
+      objectReference: {fileID: 1957446076}
     - target: {fileID: 3072319736129557382, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -30513,22 +30502,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    - target: {fileID: 5845335387555842527, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: m_Type
-      value: 3
+      propertyPath: m_LocalRotation.z
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3787424714664003687, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    - target: {fileID: 5845335387555842527, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: m_FillMethod
+      propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3819067590546210017, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+    - target: {fileID: 5845335387555842527, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 57d0e08f9fb8d334cb6a1be6e894ffb9,
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246515519998481906, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
+      propertyPath: m_Maskable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703096701305456936, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c423c981923c3a4cafa26f1f8db8ec3, type: 3}
 --- !u!1001 &3115106252153145083

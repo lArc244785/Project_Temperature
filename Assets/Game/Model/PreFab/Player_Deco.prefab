@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 3703563736299645244}
   - component: {fileID: 3703563736299645245}
   - component: {fileID: 3703563736299645219}
+  - component: {fileID: 943092091}
   m_Layer: 8
   m_Name: Player_Deco
   m_TagString: Unit
@@ -762,6 +763,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
+--- !u!114 &943092091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703563736299645216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1135dfd978bfa8469e01c68aa8717a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3703563736719888515
 GameObject:
   m_ObjectHideFlags: 0

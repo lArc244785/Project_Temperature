@@ -216,6 +216,7 @@ MonoBehaviour:
   WallChackLayer:
     serializedVersion: 2
     m_Bits: 1024
+  tileSensor: {fileID: 7565455635472981812}
   tile: {fileID: 0}
   Range: 3
   hpBar: {fileID: 6572125091834344236}

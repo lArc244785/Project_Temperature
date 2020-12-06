@@ -54,7 +54,8 @@ public class UnitBase : Status
 
     public LayerMask WallChackLayer;
 
-    private TemperatureSystem temperatureSystem;
+    protected TemperatureSystem temperatureSystem;
+    public TileSensor tileSensor;
 
     public virtual void Initializer()
     {
@@ -98,12 +99,8 @@ public class UnitBase : Status
         
         ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
 
-        temperatureSystem = gameObject.GetComponent<TemperatureSystem>();
-        if(temperatureSystem != null)
-        {
-            currentTemperature = temperature;
-            temperatureSystem.Initializer(this);
-        }
+        currentTemperature = temperature;
+
     }
 
 
@@ -414,11 +411,7 @@ public class UnitBase : Status
         return Physics.Raycast(transform.position,  dir, out raycastHit, distance, WallChackLayer);
     }
 
-    protected void AddTemperature(float temper)
-    {
-        if(temperatureSystem != null)
-        temperatureSystem.addTemperature(temper);
-    }
+
 
     public virtual void OnInputAction()
     {
@@ -430,6 +423,20 @@ public class UnitBase : Status
         isInputAction = false;
     }
 
+    public void AddSecondeTemperature(float t)
+    {
+        currentTemperature += t * Time.deltaTime;
 
+        print("temp:" + currentTemperature + " : " + t);
+    } 
+    public float GetTemperature()
+    {
+        return currentTemperature;
+    }
+
+    public void AddTemperature(float t)
+    {
+        currentTemperature += t;
+    }
 
 }

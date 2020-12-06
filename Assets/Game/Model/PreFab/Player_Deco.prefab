@@ -663,7 +663,6 @@ GameObject:
   - component: {fileID: 3703563736299645244}
   - component: {fileID: 3703563736299645245}
   - component: {fileID: 3703563736299645219}
-  - component: {fileID: 1036410956}
   m_Layer: 8
   m_Name: Player_Deco
   m_TagString: Unit
@@ -744,6 +743,7 @@ MonoBehaviour:
   stopTime: 0.1
   recoveryTime: 0.2
   attackAnimation: {fileID: 0}
+  isRotion: 0
   AttackPivot: {fileID: 307038210}
   TS: 0
 --- !u!54 &3703563736299645219
@@ -762,20 +762,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!114 &1036410956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3703563736299645216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979c1f92416329048954819ea135f645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nightDown: 1
-  dayUp: 0.05
 --- !u!1 &3703563736719888515
 GameObject:
   m_ObjectHideFlags: 0

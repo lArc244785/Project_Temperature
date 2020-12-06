@@ -31,6 +31,7 @@ public class TimeManager : MonoBehaviour
     private float daySecond;
 
     private float timer = 0f;
+    public int hour;
 
     public bool isNight;
 
@@ -59,12 +60,26 @@ public class TimeManager : MonoBehaviour
 
         SkyboxBlend();
 
+        ResultHour();
+
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
     }
 
     public void Timer()
     {
         timer += Time.deltaTime;
+    }
+
+    public void ResultHour()
+    {
+        for (int i = 1; i <= 24; i++)
+        {
+            if(mainLight.transform.rotation.eulerAngles.x > i * 15)
+            {
+                hour = i;
+                return;
+            }
+        }
     }
 
     public void MainLIghtControl()

@@ -4,46 +4,80 @@ using UnityEngine;
 
 public class TemperatureSystem : MonoBehaviour
 {
-   private UnitBase unit;
+   private UnitBase player;
     private TimeManager time;
 
-    public float nightDown;
-    public float dayUp;
 
-    public void Initializer(UnitBase unit)
+    private float[] timeTemperature;
+
+
+
+    public void Initializer()
     {
-        this.unit = unit;
+        this.player = GameManager.Instance.GetPlayerControl();
         time = GameManager.Instance.GetTimeManager();
+        timeTemperature = new float[24];
+        
+        SetTimeTemperature(12, 15, 30, 50);
+        SetTimeTemperature(15, 18, 50, 20);
+        SetTimeTemperature(18, 23, 20, 5);
+        SetTimeTemperature(0, 6, 5, -10);
+        SetTimeTemperature(6, 9, -10, 10);
+        SetTimeTemperature(9, 12, 10, 30);
+
     }
+
+    private void SetTimeTemperature(int startIndex, int endIndex, float startTemperature, float endTemperature)
+    {
+        if(timeTemperature.Length < startIndex || timeTemperature.Length < endIndex)
+        {
+            Debug.LogError("TimeTemperSet Error: " + startIndex + " , " + endIndex);
+        }
+
+        int range = endIndex - startIndex;
+
+        float nextAddTemperature = (endTemperature - startTemperature) / range;
+
+        int count = 0;
+        for ( int i =  startIndex ;    i <= endIndex;   i ++)
+        {
+            timeTemperature[i] = startTemperature + (nextAddTemperature * count++);
+        }
+
+    }
+
 
     private void Update()
     {
-        NatureTemperature();
+        Temperature();
     }
 
-    private void NatureTemperature()
+    private void Temperature()
     {
-        //낮
-        if (!time.isNight)
+        float windChill = timeTemperature[time.hour] - player.GetTemperature();
+        windChill = Mathf.Abs(windChill);
+        
+        if(windChill <= 10)
         {
-            unit.currentTemperature += dayUp * Time.deltaTime;
-
+            player.AddSecondeTemperature(0.1f);
         }
-        //밤
+        else if(windChill <= 29)
+        {
+            player.AddSecondeTemperature(0.3f);
+        }
         else
         {
-            unit.currentTemperature -= nightDown * Time.deltaTime;
+            player.AddSecondeTemperature(0.5f);
         }
-        ChakTemperature();
     }
 
     private void ChakTemperature()
     {
-        if (unit.currentTemperature > unit.HotTemperatuer)
+        if (player.currentTemperature > player.HotTemperatuer)
         {
             Debug.Log("감당 가능한 온도를 넘었습니다.");
         }
-        else if(unit.currentTemperature < unit.ColdTemperatuer)
+        else if(player.currentTemperature < player.ColdTemperatuer)
         {
             Debug.Log("온도가 너무 낮습니다.");
 
@@ -57,7 +91,7 @@ public class TemperatureSystem : MonoBehaviour
 
     public void addTemperature(float temper)
     {
-        unit.currentTemperature += temper;
+        player.currentTemperature += temper;
     }
 
 

@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 8746283050783382868}
   - component: {fileID: 4318393547348212047}
   m_Layer: 8
-  m_Name: WeaponSensor
+  m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,6 +218,7 @@ MonoBehaviour:
   isAlive: 1
   speed: 2
   temperature: 36.5
+  currentTemperature: 0
   HotTemperatuer: 50
   ColdTemperatuer: -50
   Name: ForWardEnemy
@@ -226,6 +227,7 @@ MonoBehaviour:
   weaponSensor: {fileID: 8746283050783382868}
   modelTransfrom: {fileID: 3726054396185116490}
   modelAni: {fileID: 0}
+  animationSpeed: 0
   isControl: 0
   isInputAction: 1
   originLayer: 0
@@ -243,6 +245,7 @@ MonoBehaviour:
   WallChackLayer:
     serializedVersion: 2
     m_Bits: 1024
+  tileSensor: {fileID: 4318393547348212047}
   tile: {fileID: 0}
   Range: 1.2
   hpBar: {fileID: 587439578917950807}

@@ -43,6 +43,9 @@ public class PlayerControl : UnitBase
 
     public Transform AttackPivot;
 
+    private BPMSystem bpmSystem;
+
+
     public void Start()
     {
         Initializer();
@@ -54,6 +57,9 @@ public class PlayerControl : UnitBase
         base.Initializer();
         motionHandler.Initializer(this);
         RotaionOn();
+        bpmSystem = GetComponent<BPMSystem>();
+        bpmSystem.Initializer(this);
+        temperatureSystem = GameManager.Instance.GetTemperatureSystem();
     }
 
     public void OnDrawGizmos()
@@ -75,15 +81,13 @@ public class PlayerControl : UnitBase
         if ( isControl)
         {
             Move();
-
         }
 
 
         UpdateSensorPos();
+        Rotation();
 
-
-            Rotation();
-
+        //bpmSystem.BPMTemperature();
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
@@ -97,15 +101,15 @@ public class PlayerControl : UnitBase
             rigidbody.velocity = moveDir * speed;
             AddTemperature(0.01f);
             modelAni.SetFloat("Walk", 1.0f);
+            bpmSystem.WalkBPMCoroutineOn();
+            bpmSystem.RecoveryBPMCoroutineOff();
             isMove = true;
         }
         else
         {
             modelAni.SetFloat("Walk", 0.0f);
-            if(currentTemperature > temperature)
-            {
-                AddTemperature(-0.01f);
-            }
+            bpmSystem.WalkBPMCoroutineOff();
+            bpmSystem.RecoveryBPMCoroutineOn();
             isMove = false;
         }
 
@@ -167,7 +171,7 @@ public class PlayerControl : UnitBase
     {
         
         base.Attack(hitBox);
-        AddTemperature(1.0f);
+        bpmSystem.AddBPM(3.0f);
 
         RotaionOnOffCoroutine(1);
     }
@@ -204,6 +208,8 @@ public class PlayerControl : UnitBase
     {
         base.ControlOff();
         isRotion = false;
+        bpmSystem.WalkBPMCoroutineOff();
+        bpmSystem.RecoveryBPMCoroutineOff();
     }
 
     public override void ControlOn()
@@ -310,6 +316,8 @@ public class PlayerControl : UnitBase
 
         SetSkinnedMeshPostionToPostion();
         StartCoroutine(DeshCoroutine());
+
+        bpmSystem.AddBPM(5.0f);
     }
 
 
@@ -353,6 +361,7 @@ public class PlayerControl : UnitBase
     {
         return unitTransform;
     }
+
 
 
 

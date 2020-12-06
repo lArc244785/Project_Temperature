@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private EnemyManger enemyManger;
     private SpawnManager spawnManager;
     private TimeManager timeManager;
+    private TemperatureSystem temperatureSystem;
+
 
     public int stage;
     public int wave;
@@ -136,11 +138,21 @@ public class GameManager : MonoBehaviour
 
     public TimeManager GetTimeManager()
     {
-        if(timeManager == null)
+        if (timeManager == null)
         {
             timeManager = GameObject.FindObjectOfType<TimeManager>();
         }
         return timeManager;
+    }
+
+    public TemperatureSystem GetTemperatureSystem()
+    {
+        if(temperatureSystem == null)
+        {
+            temperatureSystem = GameObject.FindObjectOfType<TemperatureSystem>();
+            temperatureSystem.Initializer();
+        }
+        return temperatureSystem;
     }
 
 

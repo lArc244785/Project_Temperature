@@ -4,12 +4,29 @@ using UnityEngine;
 
 public class NomalAmmo : AmmoBase
 {
+    Vector3 targetPos;
+    Vector3 currentPos;
+    Vector3 currentPosVellocity;
 
-    public override void Initialize(UnitBase targetUnitBaic, WeaponBase weaponBase)
+    private Transform Model;
+    private Transform tr;
+
+    public float speed = 1.0f;
+    private float DownSpeed = 1.0f;
+
+    private bool isTrackingMode = false;
+    public float range;
+    public override void Initialize(UnitBase targetUnitBase, WeaponBase weaponBase)
     {
-        base.Initialize(targetUnitBaic, weaponBase);
+        base.Initialize(targetUnitBase, weaponBase);
     }
 
+    private void Start()
+    {
+        tr = gameObject.transform;
+        Model = gameObject.transform.FindChild("Model");
+
+    }
 
     public void Update()
     {
@@ -17,23 +34,73 @@ public class NomalAmmo : AmmoBase
 
             curTick += Time.deltaTime;
         if (curTick >= lifeTick) HandleDestory();
+
+        //if (isTrackingMode)
+        //{
+        //    SetTarget();
+        //    currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVellocity, speed);
+        //    tr.position = currentPos;
+        //}
+
     }
+
+
+    private void SetTarget()
+    {
+        targetPos = targetUnitBase.GetSkinnedMeshPostionToPostion();
+        targetPos = new Vector3(targetPos.x, 0.0f, targetPos.z);
+    }
+
+
+
+
 
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 
+            if (((1 << other.gameObject.layer) & backGroundLayer) != 0)
+            {
+            if(((1<< other.gameObject.layer) & LayerMask.GetMask("Tile")) != 0)
+            {
+                SetTarget();
+                if (Vector3.Distance(tr.position, targetPos) <= range)
+                {
+                    targetUnitBase.HitEvent(weponBase.damageList, weponBase);
+                    targetUnitBase.KnockBack(weponBase.KnockBackTime, weponBase.SternTime, weponBase.GetParentUnit(), weponBase.KnockBackPower);
+                }
+            }
+                HandleDestory();
+            }
+        
+
         if (((1 << other.gameObject.layer) & hitLayerMask) != 0)
         {
-            var hitUnitBase = other.GetComponent<UnitBase>();
-            if(hitUnitBase != null)
+            var hitUnitHandler = other.GetComponent<UnitHandler>();
+
+            if(hitUnitHandler != null)
             {
-                hitUnitBase.HitEvent(weponBase.damageList, weponBase);
+                var hitUnit = hitUnitHandler.GetUnit();
+                hitUnit.HitEvent(weponBase.damageList, weponBase);
+                hitUnit.KnockBack(weponBase.KnockBackTime, weponBase.SternTime, weponBase.GetParentUnit(), weponBase.KnockBackPower);
                 HandleHit();
             }
+            else
+            {
+                //몬스터
+            }
+
         }
     }
 
 
+    public void TrackingModeOn()
+    {
+        SetTarget();
+        currentPos = tr.position;
+       // currentPosVellocity = currentPos;
+
+        isTrackingMode = true;
+    }
 
 }

@@ -13,6 +13,7 @@ public class PlayerControl : UnitBase
     private bool isChaking;
 
 
+
     public float RollingCoolTime;
     public float DeshTime = 1.0f;
     private bool isDeshCollTime;
@@ -36,20 +37,23 @@ public class PlayerControl : UnitBase
 
     private float GhostTime = 1.5f;
 
+    public bool isRotion;
 
+    private IEnumerator RotaionFreamOnOff;
 
+    public Transform AttackPivot;
 
     public void Start()
     {
         Initializer();
-
+        isRotion = true;
     }
 
     public override void Initializer()
     {
         base.Initializer();
         motionHandler.Initializer(this);
-
+        RotaionOn();
     }
 
     public void OnDrawGizmos()
@@ -68,15 +72,17 @@ public class PlayerControl : UnitBase
     {
         TS = Time.timeScale;
         //print("AA");
-        if (isInputAction && isControl)
+        if ( isControl)
         {
-
-            Rotation();
             Move();
 
         }
 
-            UpdateSensorPos();
+
+        UpdateSensorPos();
+
+
+            Rotation();
 
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
@@ -88,15 +94,18 @@ public class PlayerControl : UnitBase
 
         if (moveDir.sqrMagnitude > 0.1f)
         {
-
-
             rigidbody.velocity = moveDir * speed;
+            AddTemperature(0.01f);
             modelAni.SetFloat("Walk", 1.0f);
             isMove = true;
         }
         else
         {
             modelAni.SetFloat("Walk", 0.0f);
+            if(currentTemperature > temperature)
+            {
+                AddTemperature(-0.01f);
+            }
             isMove = false;
         }
 
@@ -107,19 +116,12 @@ public class PlayerControl : UnitBase
         }
     }
 
-    IEnumerator SkipFram()
-    {
-        isChaking = false;
-        yield return new WaitForFixedUpdate();
-        if (moveDir.sqrMagnitude < 0.1f && isInputAction)
-        {
-            modelAni.SetFloat("Walk", 0.0f);
-            rigidbody.velocity = Vector3.zero;
-        }
-    }
+
 
     private void Rotation()
     {
+        if (!isRotion) return;
+
         Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
 
         //Get the Screen positions of the object
@@ -131,8 +133,21 @@ public class PlayerControl : UnitBase
         //Get the angle between the points
         float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
-        transform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-
+        if (isControl)
+        {
+            unitTransform.parent = null;
+            AttackPivot.parent = unitTransform;
+            unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+        }
+        else
+        {
+            unitTransform.parent = null;
+            AttackPivot.parent = null;
+            AttackPivot.position = GetSkinnedMeshPostionToPostion();
+            unitTransform.parent = AttackPivot;
+            AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            unitTransform.localRotation = Quaternion.identity;
+        }
     }
 
 
@@ -150,7 +165,11 @@ public class PlayerControl : UnitBase
 
     public override void Attack(int hitBox = 0)
     {
+        
         base.Attack(hitBox);
+        AddTemperature(1.0f);
+
+        RotaionOnOffCoroutine(1);
     }
 
     private void UpdateSensorPos()
@@ -181,7 +200,47 @@ public class PlayerControl : UnitBase
     }
 
 
+    public override void ControlOff()
+    {
+        base.ControlOff();
+        isRotion = false;
+    }
 
+    public override void ControlOn()
+    {
+        base.ControlOn();
+        isRotion = true;
+    }
+
+    public void RotaionOn()
+    {
+        isRotion = true;
+    }
+
+    public void RotaionOff()
+    {
+        isRotion = false;
+    }
+
+    public void RotaionOnOffCoroutine(int fream)
+    {
+        if(RotaionFreamOnOff != null)
+        {
+            StopCoroutine(RotaionFreamOnOff);
+        }
+        RotaionFreamOnOff = RotionFreameOn(fream);
+        StartCoroutine(RotaionFreamOnOff);
+    }
+
+    IEnumerator RotionFreameOn(int fream)
+    {
+        RotaionOn();
+        for (int i = 0; i < fream; i++)
+        {
+            yield return null;
+        }
+        RotaionOff();
+    }
 
 
     public void WeaponTimeAction()
@@ -231,13 +290,14 @@ public class PlayerControl : UnitBase
 
     public void Desh()
     {
-        if (isDeshCollTime) return;
+        if (isDeshCollTime || !isInputAction) return;
         if (isTimeStopCorutine)
         {
             StopCoroutine(TimeAction());
             Time.timeScale = 1.0f;
         }
 
+        AddTemperature(0.5f);
 
         comboSystem.ResetCombo();
 
@@ -273,7 +333,7 @@ public class PlayerControl : UnitBase
 
         //yield return new WaitForSeconds(0.1f);
 
-        isControlOn();
+        ControlOn();
         isInputAction = true;
         yield return new WaitForSeconds(RollingCoolTime);
         isDeshCollTime = false;

@@ -71,4 +71,11 @@ public class WeaponBase : ScriptableObject
     {
         return parentUnit;
     }
+
+    public virtual void SetShootAttackPath()
+    {
+
+    }
+
+
 }

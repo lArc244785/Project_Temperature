@@ -18,4 +18,10 @@ public static class EnumInfo
     {
         Idle, Hit, Ghost
     };
+
+    public enum PrefabEnemy
+    {
+        MallangBasic = 0, MallangSpring = 1,
+        EggDragon=2
+    };
 }

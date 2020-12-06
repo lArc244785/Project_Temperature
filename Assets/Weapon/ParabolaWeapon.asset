@@ -18,7 +18,7 @@ MonoBehaviour:
   tick: 1
   tickRate: 0.5
   KnockBackTime: 0.5
-  SternTime: 0.5
+  SternTime: 0
   KnockBackPower: 1.5
   isShotType: 1
   ShotBulletLifeTick: 10
@@ -30,29 +30,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
+      inSlope: 9.230611
+      outSlope: 9.230611
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.10715156
     - serializedVersion: 3
       time: 0.5
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: 3
+      inSlope: 0.039869905
+      outSlope: -0.043909278
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.08289057
+      outWeight: 0.07551522
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 34
+      time: 0.99834436
+      value: -2
+      inSlope: -12.709891
+      outSlope: -10.212842
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.08444555
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

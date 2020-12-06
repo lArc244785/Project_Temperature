@@ -16,6 +16,7 @@ public class UnitBase : Status
     [Header("Model")]
     public Transform modelTransfrom;
     public Animator modelAni;
+    public float animationSpeed;
 
     [Header("Control")]
     public bool isControl;
@@ -25,8 +26,6 @@ public class UnitBase : Status
     public int originLayer;
     //Ghost Layer
     public int GhostLayer = 10;
-
-
 
 
     [Header("=Target=")]
@@ -55,14 +54,14 @@ public class UnitBase : Status
 
     public LayerMask WallChackLayer;
 
-    public TileSensor tileSensor;
+    private TemperatureSystem temperatureSystem;
 
     public virtual void Initializer()
     {
         originLayer = gameObject.layer;
 
         hp = MAXHP;
-        isControlOn();
+        ControlOn();
 
         unitTransform = transform;
 
@@ -99,6 +98,12 @@ public class UnitBase : Status
         
         ColliderDistance = (capsuleCollider.gameObject.transform.lossyScale.x * capsuleCollider.radius) + 0.1f;
 
+        temperatureSystem = gameObject.GetComponent<TemperatureSystem>();
+        if(temperatureSystem != null)
+        {
+            currentTemperature = temperature;
+            temperatureSystem.Initializer(this);
+        }
     }
 
 
@@ -150,10 +155,10 @@ public class UnitBase : Status
                     hp = Mathf.Lerp(hp - damage.damage, MAXHP, 0);
                     break;
                 case EnumInfo.DamageType.Hot:
-                    temperature += damage.damage;
+                    AddTemperature(damage.damage);
                     break;
                 case EnumInfo.DamageType.Cold:
-                    temperature -= damage.damage;
+                    AddTemperature(-damage.damage);
                     break;
             }
         }
@@ -189,7 +194,7 @@ public class UnitBase : Status
     public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
         StopKnockBackTween();
-        isControlOff();
+        ControlOff();
         rigidbody.velocity = Vector3.zero;
         isInputAction = false;
         isKnockBackOn = true;
@@ -224,7 +229,7 @@ public class UnitBase : Status
 
 
         isKnockBackOn = false;
-        isControlOn();
+        ControlOn();
         isInputAction = true;
     }
 
@@ -292,14 +297,17 @@ public class UnitBase : Status
         isInputAction = false;
     }
 
-    public void isControlOn()
+
+
+
+    public virtual void ControlOn()
     {
         isControl = true;
         if (modelAni != null)
             modelAni.SetBool("isControl", true);
     }
 
-    public void isControlOff()
+    public virtual void ControlOff()
     {
         isControl = false;
         if(modelAni != null)
@@ -405,5 +413,23 @@ public class UnitBase : Status
     {
         return Physics.Raycast(transform.position,  dir, out raycastHit, distance, WallChackLayer);
     }
+
+    protected void AddTemperature(float temper)
+    {
+        if(temperatureSystem != null)
+        temperatureSystem.addTemperature(temper);
+    }
+
+    public virtual void OnInputAction()
+    {
+        isInputAction = true;
+    }
+
+    public virtual void OffInputAction()
+    {
+        isInputAction = false;
+    }
+
+
 
 }

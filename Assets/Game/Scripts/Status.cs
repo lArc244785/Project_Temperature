@@ -12,6 +12,7 @@ public class Status : MonoBehaviour
     public float speed = 10.0f;
 
     public float temperature = 36.5f;
+    public float currentTemperature = 0;
     public float HotTemperatuer = 50.0f;
     public float ColdTemperatuer = -50.0f;
 

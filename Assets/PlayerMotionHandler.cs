@@ -33,14 +33,15 @@ public class PlayerMotionHandler : MonoBehaviour
 
     public void HandleIsControlOn()
     {
-        pc.isControlOn();
+        pc.ControlOn();
         pc.comboSystem.ResetCombo();
     }
 
     public void HandleIsControlOff()
     {
         pc.GetRigidbody().velocity = Vector3.zero;
-        pc.isControlOff();
+        pc.ControlOff();
+
     }
 
 
@@ -59,6 +60,8 @@ public class PlayerMotionHandler : MonoBehaviour
         pc.SetSkinnedMeshPostionToPostion();
         HandleIsControlOn();
     }
+
+
 
 
 }

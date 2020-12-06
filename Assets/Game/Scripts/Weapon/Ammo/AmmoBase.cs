@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+[SerializeField]
 public class AmmoBase : MonoBehaviour
 {
     public Tween ammoMoveTween;
 
-    protected LayerMask backGroundLayer;
+    public LayerMask backGroundLayer;
     public LayerMask hitLayerMask;
 
     protected float lifeTick;
@@ -19,10 +19,11 @@ public class AmmoBase : MonoBehaviour
     protected WeaponBase weponBase;
 
 
-    public virtual void Initialize(UnitBase targetUnitBaic, WeaponBase weaponBase)
+    public virtual void Initialize(UnitBase targetUnitBase, WeaponBase weaponBase)
     {
         this.targetUnitBase = targetUnitBase;
         this.weponBase = weaponBase;
+
 
         curTick = 0.0f;
         lifeTick = weaponBase.ShotBulletLifeTick;
@@ -41,10 +42,7 @@ public class AmmoBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(((1 << other.gameObject.layer) & backGroundLayer) != 0)
-        {
-            HandleDestory();
-        }
+
     }
 
 }

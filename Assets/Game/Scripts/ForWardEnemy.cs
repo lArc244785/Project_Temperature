@@ -35,9 +35,6 @@ public class ForWardEnemy : EnemyBasic
             HitCount++;
             KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
 
-
-
-
             uiHpBar.SetValue(hp, MAXHP);
         }
     }
@@ -72,8 +69,8 @@ public class ForWardEnemy : EnemyBasic
         //공격범위에 들어왔을 떄
         if (targetDistance < Range)
         {
-            if (ForwardAttackCorutine != null)
-                StopForwardAttackCoroutine();
+            //if (ForwardAttackCorutine != null)
+            //    StopForwardAttackCoroutine();
 
 
             SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0, 0.1f);
@@ -112,12 +109,17 @@ public class ForWardEnemy : EnemyBasic
 
     IEnumerator ForWardAttack()
     {
-        isControlOff();
+        ControlOff();
         isAttackRate = true;
         Utility.KillTween(rotionTween);
         Utility.KillTween(forwardRigMoveTween);
-
-        yield return new WaitForSeconds(weapon.tick);
+        float t = 0.0f;
+        while(t < weapon.tick)
+        {
+            SetLook(GameManager.Instance.GetPlayerControl().GetSkinnedMeshPostionToPostion(), 0, 0.1f);
+            t += Time.deltaTime;
+            yield return null;
+        }
 
         Vector3 forWardDir = weaponSensor.hitBoxs[0].gameObject.transform.position;
         forWardDir = new Vector3(forWardDir.x, unitTransform.position.y, forWardDir.z);

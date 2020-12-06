@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,64 +12,55 @@ public class GameManager : MonoBehaviour
     private InputManger inputManger;
     private MapMagner mapManger;
     private EnemyManger enemyManger;
+    private SpawnManager spawnManager;
+    private TimeManager timeManager;
 
+    public int stage;
+    public int wave;
+    public int currentWave;
 
-
+    public bool isWaveSetting = true;
+    public bool isGameClear = false;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
+        if (Instance == null) Instance = this;
+        else {
             Destroy(gameObject);
         }
         //Initializer();
         DOTween.defaultAutoPlay = AutoPlay.None;
-
-        UIManager.Instance.uiInGame.nightIcon.fillAmount = .5f;
-        UIManager.Instance.uiInGame.dayIcon.fillAmount = .0f;
     }
 
     private void Start()
     {
         Initializer();
 
-        //SetMainMenu(true);
-        SetInGameUI(true);
-    }
-
-    private void Update()
-    {
-        UIManager.Instance.uiInGame.UpdateTemperature();
+        UIManager.Instance.uiMainMenu.Toggle(false);
     }
 
     private void Initializer()
     {
+        
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
         GetMapManger();
         GetEnemyManger();
+
+        SetStage(1, 2);
+
     }
-
-    public void StartStage(string stageName)
+    //씬안에 데이터를 넘겨주는 녀석이 호출해주면 됩니다.
+    public void SetStage(int stage, int stageWave)
     {
-        StartCoroutine(ProcessStage(stageName));
-    }
-
-    private IEnumerator ProcessStage(string stageName)
-    {
-        SetMainMenuUI(false);
-        AsyncOperation sceneLoadAsync = SceneManager.LoadSceneAsync(stageName, LoadSceneMode.Single);
-        yield return sceneLoadAsync;
-        SetInGameUI(true);
-
-        yield break;
+        this.stage = stage;
+      wave = stageWave;
+        currentWave = 0;
+        GetSpawnManager();
+        spawnManager.NextWaveSpawn();
+        isWaveSetting = false;
+        isGameClear = false;
     }
 
 
@@ -134,27 +124,36 @@ public class GameManager : MonoBehaviour
         return enemyManger;
     }
 
-    public void SetMainMenuUI(bool value)
+    public SpawnManager GetSpawnManager()
+    {
+        if(spawnManager == null)
+        {
+            spawnManager = GameObject.FindObjectOfType<SpawnManager>();
+            spawnManager.Initializer(stage);
+        }
+        return spawnManager;
+    }
+
+    public TimeManager GetTimeManager()
+    {
+        if(timeManager == null)
+        {
+            timeManager = GameObject.FindObjectOfType<TimeManager>();
+        }
+        return timeManager;
+    }
+
+
+
+    public void SetMainMenu(bool value)
     {
         UIManager.Instance.uiMainMenu.Toggle(true);
         UIManager.Instance.uiInGame.Toggle(false);
         UIManager.Instance.uiOption.Toggle(false);
-        UIManager.Instance.uiDynamic.Toggle(false);
-
-        if (value)
-            UIManager.Instance.isOverUI = value;
     }
 
-    public void SetInGameUI(bool value)
-    {
-        UIManager.Instance.uiMainMenu.Toggle(false);
-        UIManager.Instance.uiInGame.Toggle(true);
-        UIManager.Instance.uiOption.Toggle(false);
-        UIManager.Instance.uiDynamic.Toggle(true);
 
-        if (value)
-            UIManager.Instance.isOverUI = value;
-    }
+
 
     public void ExitGame()
     {
@@ -165,6 +164,25 @@ public class GameManager : MonoBehaviour
 #else
             Application.Quit();
 #endif
+        }
+    }
+
+    public void GameClear()
+    {
+        Debug.Log("StageClear");
+        isGameClear = true;
+    }
+
+    public void NextWave()
+    {
+        GameManager.Instance.currentWave++;
+        if (currentWave >= wave)
+        {
+            GameClear();
+        }
+        else
+        {
+            spawnManager.NextWaveSpawn();
         }
     }
 }

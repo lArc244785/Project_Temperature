@@ -30,6 +30,7 @@ public class UIInGame : UIView
     private void Start()
     {
         originalColor = temperatureIcon.color;
+        nightIcon.fillAmount = 0.5f;
     }
 
     public void UpdateTemperature()

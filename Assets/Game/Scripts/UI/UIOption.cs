@@ -7,12 +7,38 @@ public class UIOption : UIView
 {
     public CanvasGroup canvasGroup;
 
+    public Image BGMFill;
+    public Image SFXFill;
+
+    private Color originalBGMColor;
+    private Color originalSFXColor;
+
     public Slider BGMSlider;
     public Slider SFXSlider;
 
     private OptionData optionData;
 
+    public Button BGMButton;
+    public Button SFXButton;
+
+    public Sprite BGMMute;
+    public Sprite BGMOn;
+    public Sprite SFXMute;
+    public Sprite SFXOn;
+
+    private float originalBGMVolume;
+    private float originalSFXVolume;
+
+    private bool isBGMMute;
+    private bool isSFXMute;
+
     private bool isToggle;
+
+    private void Start()
+    {
+        isBGMMute = false;
+        isSFXMute = false;
+    }
 
     private void Update()
     {
@@ -29,6 +55,11 @@ public class UIOption : UIView
             OptionData data = OptionManager.Instance.GetCurrentOptionData();
             SetData(data);
             canvasGroup.interactable = true;
+            if(isBGMMute)
+            {
+                BGMSlider.value = originalBGMVolume;
+                SFXSlider.value = originalSFXVolume;
+            }
         }
         base.Toggle(value);
     }
@@ -38,17 +69,65 @@ public class UIOption : UIView
         optionData = data;
 
         BGMSlider.value = optionData.BGMVolume;
+        //BGMFill.fillAmount = BGMSlider.value;
         SFXSlider.value = optionData.SFXVolume;
+        //SFXFill.fillAmount = SFXSlider.value;
+    }
+
+    public void MuteBGM()
+    {
+        if(!isBGMMute)
+        {
+            BGMSlider.interactable = false;
+            originalBGMVolume = optionData.BGMVolume;
+            originalBGMColor = BGMFill.color;
+            optionData.BGMVolume = 0;
+            BGMButton.image.sprite = BGMMute;
+            BGMFill.color = Color.gray;
+            isBGMMute = true;
+        }
+        else
+        {
+            optionData.BGMVolume = originalBGMVolume;
+            BGMButton.image.sprite = BGMOn;
+            isBGMMute = false;
+            BGMSlider.interactable = true;
+            BGMFill.color = originalBGMColor;
+        }
+    }
+
+    public void MuteSFX()
+    {
+        if (!isSFXMute)
+        {
+            SFXSlider.interactable = false;
+            originalSFXVolume = optionData.SFXVolume;
+            originalSFXColor = SFXFill.color;
+            optionData.SFXVolume = 0;
+            SFXButton.image.sprite = SFXMute;
+            SFXFill.color = Color.gray;
+            isSFXMute = true;
+        }
+        else
+        {
+            optionData.SFXVolume = originalSFXVolume;
+            SFXButton.image.sprite = SFXOn;
+            isSFXMute = false;
+            SFXSlider.interactable = true;
+            SFXFill.color = originalSFXColor;
+        }
     }
 
     public void ApplyBGMSlider()
     {
         optionData.BGMVolume = BGMSlider.value;
+        BGMFill.fillAmount = BGMSlider.value;
     }
 
     public void ApplySFXSlider()
     {
         optionData.SFXVolume = SFXSlider.value;
+        SFXFill.fillAmount = SFXSlider.value;
     }
 
     public void ReturnToGame()

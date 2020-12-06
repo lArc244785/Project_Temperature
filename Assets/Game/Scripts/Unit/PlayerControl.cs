@@ -45,7 +45,6 @@ public class PlayerControl : UnitBase
 
     private BPMSystem bpmSystem;
 
-
     public void Start()
     {
         Initializer();

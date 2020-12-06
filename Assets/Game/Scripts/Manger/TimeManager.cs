@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
     private float targetSunsetIntensity;
     private float currentSunsetIntensityVelocity;
 
-    private float degreePerSecond;
+    public float degreePerSecond;
     private float daySecond;
 
     private float timer = 0f;

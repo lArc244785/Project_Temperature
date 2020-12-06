@@ -427,7 +427,7 @@ public class UnitBase : Status
     {
         currentTemperature += t * Time.deltaTime;
 
-        print("temp:" + currentTemperature + " : " + t);
+        //print("temp:" + currentTemperature + " : " + t);
     } 
     public float GetTemperature()
     {

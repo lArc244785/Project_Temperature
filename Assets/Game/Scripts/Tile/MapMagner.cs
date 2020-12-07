@@ -136,10 +136,12 @@ public class MapMagner : MonoBehaviour
             {
                 StartCoroutine(wave10[i].Fall());
             }
+            Wall0.SetActive(false);
+            Wall1.SetActive(true);
             yield return new WaitForSeconds(2f);
+
         }
-        Wall0.SetActive(false);
-        Wall1.SetActive(true);
+
         yield break;
     }
 }

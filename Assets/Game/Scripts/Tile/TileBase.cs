@@ -30,6 +30,11 @@ public class TileBase : MonoBehaviour
 
     private Vector3 targetPos = new Vector3(0, -0.1f, 0);
 
+    public bool isStage5;
+    public bool isStage6;
+    public bool isStage10;
+
+
     public void SetTileIndex(int x, int y)
     {
         tileInfo.SetTile(x, y, transform.position, isWall);
@@ -55,6 +60,7 @@ public class TileBase : MonoBehaviour
 
     private void Start()
     {
+
         gravityValue = UnityEngine.Random.Range(-10f,-3f);
         gravity = new Vector3(0, gravityValue, 0);
         constantForce.force = gravity;
@@ -69,8 +75,28 @@ public class TileBase : MonoBehaviour
     }
 
     private void Update()
-    { 
+    {
 
+    }
+
+    IEnumerator FallForWave()
+    {
+        if (GameManager.Instance.currentWave + 1 == 5 && isStage5)
+        {
+            StartCoroutine(Fall());
+        }
+
+        if (GameManager.Instance.currentWave + 1 == 6 && isStage6)
+        {
+            StartCoroutine(Fall());
+        }
+
+        if (GameManager.Instance.currentWave + 1 == 10 && isStage10)
+        {
+            StartCoroutine(Fall());
+        }
+
+        yield break;
     }
 
     IEnumerator Fall()
@@ -78,11 +104,17 @@ public class TileBase : MonoBehaviour
         rigidbody.isKinematic = false;
         collider.isTrigger = true;
 
-        Invoke("Death", 2f);
+        isWall = true;
 
         yield return new WaitForSeconds(.1f);
 
         collider.isTrigger = false;
+
+        yield return new WaitForSeconds(2f);
+
+        Death();
+
+        yield break;
 
     }
 

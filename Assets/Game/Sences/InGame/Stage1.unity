@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4621346, g: 0.5570805, b: 0.73502326, a: 1}
+  m_IndirectSpecularColor: {r: 0.37267506, g: 0.6103284, b: 0.8626851, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -843,6 +843,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (216)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -2123,6 +2128,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (215)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3379,6 +3389,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (210)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3827,6 +3842,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (224)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4216,6 +4236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (212)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -7099,6 +7124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (219)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8908,6 +8938,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (223)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10464,6 +10499,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (220)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11093,6 +11133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (221)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -13828,6 +13873,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (211)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -20161,6 +20211,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (217)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20555,6 +20610,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (218)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -22286,6 +22346,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (213)
       objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23530,6 +23595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (222)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}
@@ -26452,6 +26522,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (214)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516501745565492494, guid: e3d299dfe73dba844ac9f55618434191,
+        type: 3}
+      propertyPath: isStage5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
         type: 3}

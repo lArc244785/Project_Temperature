@@ -135,6 +135,11 @@ public class UIOption : UIView
         canvasGroup.interactable = false;
         StartCoroutine(OptionManager.Instance.SaveOptionData());
         Toggle(false);
+
+        if(!UIManager.Instance.uiInGame.isToggle)
+        {
+            //UIManager.Instance.uiInGame.
+        }
     }
 
     public void ExitGame()

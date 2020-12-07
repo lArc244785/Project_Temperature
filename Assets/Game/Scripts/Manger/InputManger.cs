@@ -81,6 +81,15 @@ public class InputManger : MonoBehaviour
 
     public void OnOption(InputAction.CallbackContext context)
     {
-        UIManager.Instance.uiOption.Toggle(true);
+        if (context.started)
+        {
+            UIManager.Instance.uiOption.Toggle(true);
+            //UIManager.Instance.uiInGame.gameObject.SetActive(false);
+            //UIManager.Instance.uiInGame.gameObject.SetActive(false);
+            //UIManager.Instance.uiInGame.Toggle(false);
+            //UIManager.Instance.uiDynamic.Toggle(false);
+
+            //UIManager.Instance.uiInGame.isToggle = false;
+        }
     }
 }

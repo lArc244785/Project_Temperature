@@ -21,11 +21,12 @@ public class UIInGame : UIView
     public Image temperatureIcon;
     private Color originalColor;
 
-
     public TimeManager timeManager;
 
     public TextMeshProUGUI temperature;
     private float temperatureValue;
+
+    public bool isToggle;
 
     private void Start()
     {

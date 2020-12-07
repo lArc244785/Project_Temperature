@@ -49,9 +49,11 @@ public class WeaponBase : ScriptableObject
 
             if (targetUnits.Count > 0)
             {
+                parentUnit.AttackSuccessOn();
+
+
                 foreach (UnitBase unit in targetUnits)
                 {
-
                     unit.HitEvent(damageList, this);
                 }
 
@@ -62,6 +64,8 @@ public class WeaponBase : ScriptableObject
                     PlayerControl pc = GameManager.Instance.GetPlayerControl();
                     pc.WeaponTimeAction();
                 }
+
+
             }
         }
         

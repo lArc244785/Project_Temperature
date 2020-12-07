@@ -110,6 +110,7 @@ public class ForWardEnemy : EnemyBasic
     IEnumerator ForWardAttack()
     {
         ControlOff();
+        AttackSuccessOff();
         isAttackRate = true;
         Utility.KillTween(rotionTween);
         Utility.KillTween(forwardRigMoveTween);
@@ -129,15 +130,14 @@ public class ForWardEnemy : EnemyBasic
         Vector3 movePoint = unitTransform.position + (forWardDir * 2);
         float forwardDistance = Vector3.Distance(unitTransform.position, movePoint);
         float CalculationAttackTime = AttackDashTime;
-        float CalculationDistance = .0f;
+        float CalculationDistance = .0f;        
+        
         if (isChackWall(forWardDir, forwardDistance))
         {
             CalculationDistance = raycastHit.distance - ColliderDistance;
             movePoint = unitTransform.position + (unitTransform.forward * CalculationDistance);
             CalculationAttackTime = forwardDistance / raycastHit.distance * CalculationAttackTime;
         }
-
-
 
         forwardRigMoveTween = DOTween.Sequence();
         rotionTween.Insert(0, rigidbody.DOMove(movePoint, CalculationAttackTime));
@@ -148,8 +148,11 @@ public class ForWardEnemy : EnemyBasic
         while (time < CalculationAttackTime)
         {
             yield return null;
+            if (!isAttackSuccess)
+            {
+                Attack();
+            }
             time += Time.deltaTime;
-            Attack();
         }
 
         yield return new WaitForSeconds(weapon.tickRate);

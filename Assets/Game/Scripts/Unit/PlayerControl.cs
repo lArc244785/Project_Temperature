@@ -298,7 +298,7 @@ public class PlayerControl : UnitBase
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
         modelAni.SetTrigger("Hit");
-        StartCoroutine(GhosetState(GhostTime));
+       // StartCoroutine(GhosetState(GhostTime));
         //MaterialChange(EnumInfo.Materia.Ghost);
         comboSystem.currentComboReset();
     }

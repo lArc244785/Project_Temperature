@@ -57,6 +57,8 @@ public class UnitBase : Status
     protected TemperatureSystem temperatureSystem;
     public TileSensor tileSensor;
 
+    protected bool isAttackSuccess;
+
     public virtual void Initializer()
     {
         originLayer = gameObject.layer;
@@ -190,6 +192,12 @@ public class UnitBase : Status
 
     public IEnumerator IE_KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)
     {
+        if(KnockBacktime == 0.0f)
+        {
+            ControlOn();
+            yield break;
+        }
+
         StopKnockBackTween();
         ControlOff();
         rigidbody.velocity = Vector3.zero;
@@ -437,5 +445,18 @@ public class UnitBase : Status
     {
         currentTemperature += t;
     }
+
+
+
+    public void AttackSuccessOn()
+    {
+        isAttackSuccess = true;
+    }
+
+    public void AttackSuccessOff()
+    {
+        isAttackSuccess = false;
+    }
+
 
 }

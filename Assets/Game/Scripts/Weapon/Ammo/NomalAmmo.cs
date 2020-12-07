@@ -59,6 +59,12 @@ public class NomalAmmo : AmmoBase
     {
         base.OnTriggerEnter(other);
 
+        
+        if(other.gameObject.tag == "Wall")
+        {
+            HandleDestory();
+        }
+
             if (((1 << other.gameObject.layer) & backGroundLayer) != 0)
             {
             if(((1<< other.gameObject.layer) & LayerMask.GetMask("Tile")) != 0)

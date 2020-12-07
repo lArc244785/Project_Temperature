@@ -75,6 +75,8 @@ public class TimeManager : MonoBehaviour
     public void ResultHour()
     {
         hour += 10 * 0.075f * Time.deltaTime;
+        if (hour == 24)
+            hour = 0;
     }
 
     public void MainLIghtControl()

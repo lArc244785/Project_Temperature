@@ -16,17 +16,23 @@ public class SpawnManager : MonoBehaviour
 
     public void Initializer(int StageNum)
     {
-       // CreateWaveSpawnList(StageNum);
+        CreateWaveSpawnList(StageNum);
     }
+
+    private void Start()
+    {
+        StartCoroutine(NextWaveSpawn());
+    }
+
 
     private void Update()
     {
-        //if (GameManager.Instance.isWaveSetting || GameManager.Instance.isGameClear) return;
+        if (GameManager.Instance.isWaveSetting || GameManager.Instance.isGameClear) return;
 
-        //if (waveList[GameManager.Instance.currentWave].ChackWaveEnmeysDie())
-        //{
-        //    GameManager.Instance.NextWave();
-        //}
+        if (waveList[GameManager.Instance.currentWave].ChackWaveEnmeysDie())
+        {
+            GameManager.Instance.NextWave();
+        }
     }
 
     public IEnumerator NextWaveSpawn()

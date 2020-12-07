@@ -136,10 +136,10 @@ public class UIOption : UIView
         StartCoroutine(OptionManager.Instance.SaveOptionData());
         Toggle(false);
 
-        if(!UIManager.Instance.uiInGame.isToggle)
-        {
-            //UIManager.Instance.uiInGame.
-        }
+        //if(!UIManager.Instance.uiInGame.isToggle)
+        //{
+        //    //UIManager.Instance.uiInGame.
+        //}
     }
 
     public void ExitGame()

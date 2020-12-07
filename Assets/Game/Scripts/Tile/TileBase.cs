@@ -105,6 +105,9 @@ public class TileBase : MonoBehaviour
         collider.isTrigger = true;
 
         isWall = true;
+        tileInfo.SetWallCost();
+
+
 
         yield return new WaitForSeconds(.1f);
 

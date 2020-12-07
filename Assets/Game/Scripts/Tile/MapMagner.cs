@@ -20,6 +20,9 @@ public class MapMagner : MonoBehaviour
 
     private int aroundTileCount;
 
+
+    public GameObject Wall0,Wall1;
+
     // Start is called before the first frame update
     public void Initializer()
     {
@@ -135,7 +138,8 @@ public class MapMagner : MonoBehaviour
             }
             yield return new WaitForSeconds(2f);
         }
-
+        Wall0.SetActive(false);
+        Wall1.SetActive(true);
         yield break;
     }
 }

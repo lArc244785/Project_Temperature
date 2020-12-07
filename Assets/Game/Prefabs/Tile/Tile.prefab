@@ -167,15 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c95319995d01a4d94696e95931ced1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelTr: {fileID: 5516501745195986518}
+  modelTr: {fileID: 2570728182251363304}
   rigidbody: {fileID: 5516501745565492531}
   constantForce: {fileID: 5516501745565492493}
   collider: {fileID: 5516501745565492492}
   test: 0
   isWall: 0
   mr: {fileID: 5516501745195986517}
-  pathMaterial: {fileID: 2100000, guid: 98581eb951c6a0a48aff20d4527f37b5, type: 2}
-  nomalMaterial: {fileID: 2100000, guid: 7ecfb683f0a14994a86fa409de2dad30, type: 2}
+  originMaterial: {fileID: 0}
 --- !u!1 &5857091521064240403
 GameObject:
   m_ObjectHideFlags: 0

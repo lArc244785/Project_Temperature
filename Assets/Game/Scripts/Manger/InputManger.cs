@@ -79,4 +79,8 @@ public class InputManger : MonoBehaviour
         return (Vector2)mainCam.ScreenToViewportPoint(Mouse.current.position.ReadValue());
     }
 
+    public void OnOption(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.uiOption.Toggle(true);
+    }
 }

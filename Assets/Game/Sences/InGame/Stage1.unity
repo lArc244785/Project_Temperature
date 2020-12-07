@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37267506, g: 0.6103284, b: 0.8626851, a: 1}
+  m_IndirectSpecularColor: {r: 0.36750716, g: 0.5924908, b: 0.826883, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -32983,6 +32983,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1443243424}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1123777128 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2664508067475993625, guid: bd15577dcadec664fba9e2085f351ebc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1755169960}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492619fb295c82647975cc8d1052d976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1123973423 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4484145122249469317, guid: ac12da2fa35a64a4498d77006e352123,
@@ -52053,6 +52065,61 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
+      value: 74b7a8aa-0f51-4094-989a-eff6a27d8845
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
+      value: Player/ScrollWheel[/Mouse/scroll]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionId
+      value: f6ec7713-8848-4f4b-b9fb-d272785462c0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionName
+      value: Player/Exit[/Keyboard/escape]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1123777128}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnOption
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664508067475993626, guid: bd15577dcadec664fba9e2085f351ebc,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2664508067475993627, guid: bd15577dcadec664fba9e2085f351ebc,
         type: 3}

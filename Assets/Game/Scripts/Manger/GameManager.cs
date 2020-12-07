@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
       wave = stageWave;
         currentWave = 0;
         GetSpawnManager();
-        spawnManager.NextWaveSpawn();
+        StartCoroutine(spawnManager.NextWaveSpawn());
         isWaveSetting = false;
         isGameClear = false;
     }

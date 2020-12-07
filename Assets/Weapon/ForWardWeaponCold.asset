@@ -17,8 +17,8 @@ MonoBehaviour:
     damage: 1
   tick: 1
   tickRate: 0.5
-  KnockBackTime: 0.5
-  SternTime: 0.5
-  KnockBackPower: 1.5
+  KnockBackTime: 0
+  SternTime: 0
+  KnockBackPower: 0
   isShotType: 0
   ShotBulletLifeTick: 0

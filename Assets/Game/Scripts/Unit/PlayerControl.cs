@@ -280,7 +280,7 @@ public class PlayerControl : UnitBase
         base.Attack(hitBox);
         bpmSystem.AddBPM(3.0f);
         weaponSensor.hitBoxs[hitBox].Fx_attackOn();
-        RotaionOnOffCoroutine(1);
+        //RotaionOnOffCoroutine(1);
     }
 
     private void UpdateSensorPos()

@@ -79,27 +79,27 @@ public class TileBase : MonoBehaviour
 
     }
 
-    IEnumerator FallForWave()
-    {
-        if (GameManager.Instance.currentWave + 1 == 5 && isStage5)
-        {
-            StartCoroutine(Fall());
-        }
+    //public IEnumerator FallForWave()
+    //{
+    //    if (GameManager.Instance.currentWave + 1 == 5 && isStage5)
+    //    {
+    //        StartCoroutine(Fall());
+    //    }
 
-        if (GameManager.Instance.currentWave + 1 == 6 && isStage6)
-        {
-            StartCoroutine(Fall());
-        }
+    //    if (GameManager.Instance.currentWave + 1 == 6 && isStage6)
+    //    {
+    //        StartCoroutine(Fall());
+    //    }
 
-        if (GameManager.Instance.currentWave + 1 == 10 && isStage10)
-        {
-            StartCoroutine(Fall());
-        }
+    //    if (GameManager.Instance.currentWave + 1 == 10 && isStage10)
+    //    {
+    //        StartCoroutine(Fall());
+    //    }
 
-        yield break;
-    }
+    //    yield break;
+    //}
 
-    IEnumerator Fall()
+    public IEnumerator Fall()
     {
         rigidbody.isKinematic = false;
         collider.isTrigger = true;

@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaveSettingCoroutine()
     {
         //맵 타일 떨어지는거
-
+        yield return mapManger.Wave();
         //맵 재설정
 
         //몬스터 스폰

@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
 
 public class MapMagner : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class MapMagner : MonoBehaviour
 
     public TileBase playerTile;
 
+    public TileBase[] wave5;
+    public TileBase[] wave6;
+    public TileBase[] wave10;
 
     public bool isDebugMode;
     public Material rootMaterial;
@@ -100,5 +105,37 @@ public class MapMagner : MonoBehaviour
     public int GetAroundTileCount()
     {
         return aroundTileCount;
+    }
+
+    public IEnumerator Wave()
+    {
+        if (GameManager.Instance.currentWave + 1 == 5) 
+        {
+            for(int i=0; i<wave5.Length; i++)
+            {
+                StartCoroutine(wave5[i].Fall());
+            }
+            yield return new WaitForSeconds(2f);
+        }
+        
+        if (GameManager.Instance.currentWave + 1 == 6)
+        {
+            for (int i = 0; i < wave6.Length; i++)
+            {
+                StartCoroutine(wave6[i].Fall());
+            }
+            yield return new WaitForSeconds(2f);
+        }
+
+        if (GameManager.Instance.currentWave + 1 == 10)
+        {
+            for (int i = 0; i < wave10.Length; i++)
+            {
+                StartCoroutine(wave10[i].Fall());
+            }
+            yield return new WaitForSeconds(2f);
+        }
+
+        yield break;
     }
 }

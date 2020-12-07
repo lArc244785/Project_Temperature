@@ -54,7 +54,7 @@ public class TemperatureSystem : MonoBehaviour
 
     private void Temperature()
     {
-        float windChill = timeTemperature[time.hour] - player.GetTemperature();
+        float windChill = timeTemperature[(int)time.hour] - player.GetTemperature();
         windChill = Mathf.Abs(windChill);
         
         if(windChill <= 10)

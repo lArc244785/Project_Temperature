@@ -92,4 +92,6 @@ MonoBehaviour:
   mainLight: {fileID: 0}
   nightLight: {fileID: 0}
   sunsetLight: {fileID: 0}
+  degreePerSecond: 0
+  hour: 0
   isNight: 0

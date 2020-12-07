@@ -19,10 +19,6 @@ public class SpawnManager : MonoBehaviour
         CreateWaveSpawnList(StageNum);
     }
 
-    private void Start()
-    {
-        StartCoroutine(NextWaveSpawn());
-    }
 
 
     private void Update()

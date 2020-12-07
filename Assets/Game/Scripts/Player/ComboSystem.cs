@@ -56,6 +56,7 @@ public class ComboSystem : MonoBehaviour
         {
             playerControl.GetRigidbody().velocity = Vector3.zero;
             playerControl.modelAni.SetTrigger("Attack");
+
             AddCombo();
         }
         else
@@ -89,6 +90,7 @@ public class ComboSystem : MonoBehaviour
 
             //ResetCombo();
         }
+        playerControl.RotaionOnOffCoroutine(1);
     }
 
 

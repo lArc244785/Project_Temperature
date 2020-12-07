@@ -45,13 +45,13 @@ public class UIInGame : UIView
         temperature.text = GameManager.Instance.GetPlayerControl().GetTemperature().ToString("F1");
         if (GameManager.Instance.GetPlayerControl().GetTemperature() > 40.0f)
         {
-            temperatureIcon.DOColor(Color.red, 1.0f);
+            temperatureIcon.DOColor(Color.red, 5.0f);
             Debug.Log("test");
         }
         else if (GameManager.Instance.GetPlayerControl().GetTemperature() < 32.0f)
-            temperatureIcon.DOColor(Color.blue, 1.0f);
+            temperatureIcon.DOColor(Color.blue, 5.0f);
         else
-            temperatureIcon.DOColor(originalColor, 1.0f);
+            temperatureIcon.DOColor(originalColor, 5.0f);
 
         temperatureValue = (GameManager.Instance.GetPlayerControl().GetTemperature() - 23.0f) * 0.037f;
         temperatureIcon.fillAmount = temperatureValue;

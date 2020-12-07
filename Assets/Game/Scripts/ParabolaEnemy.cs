@@ -8,10 +8,10 @@ public class ParabolaEnemy : EnemyBasic
     protected bool isParabolaAttack;
     protected IEnumerator ParabolaAttackCoroutine;
 
-    public void Start()
-    {
-        HandleSpawn();
-    }
+    //public void Start()
+    //{
+    //    HandleSpawn();
+    //}
 
     public override void HandleSpawn()
     {
@@ -22,6 +22,7 @@ public class ParabolaEnemy : EnemyBasic
     {
         base.HandleDeath();
     }
+
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
         //UnityEditor.EditorApplication.isPaused = true;
@@ -37,7 +38,7 @@ public class ParabolaEnemy : EnemyBasic
             HitCount++;
             KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
 
-            //uiHpBar.SetValue(hp, MAXHP);
+            uiHpBar.SetValue(hp, MAXHP);
         }
     }
 

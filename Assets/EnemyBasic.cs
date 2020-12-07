@@ -113,11 +113,12 @@ public class EnemyBasic : UnitBase
 
     public override void HandleDeath()
     {
+        uiHpBar.HandleDestroy();
+
         GameManager.Instance.GetEnemyManger().enemyList.Remove(this);
 
         unitTransform.parent = GameManager.Instance.GetSpawnManager().DiedEnmey.transform;
 
-        uiHpBar.HandleDestroy();
         base.HandleDeath();
     }
     protected float GetTargetDistance()

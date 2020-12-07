@@ -37,7 +37,7 @@ public class ParabolaEnemy : EnemyBasic
             HitCount++;
             KnockBack(weapon.KnockBackTime, weapon.SternTime, weapon.GetParentUnit());
 
-            uiHpBar.SetValue(hp, MAXHP);
+            //uiHpBar.SetValue(hp, MAXHP);
         }
     }
 

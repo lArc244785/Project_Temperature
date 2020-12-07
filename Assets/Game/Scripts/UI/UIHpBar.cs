@@ -56,6 +56,7 @@ public class UIHpBar : MonoBehaviour
 
     public void HandleDestroy()
     {
+        this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 }

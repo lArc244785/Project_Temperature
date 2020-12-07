@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
     private float daySecond;
 
     private float timer = 0f;
-    public int hour;
+    public float hour;
 
     public bool isNight;
 
@@ -43,6 +43,8 @@ public class TimeManager : MonoBehaviour
         nightLight.intensity = 0;
         currentMainIntensity = .8f;
         sunsetLight.intensity = 0;
+
+        hour = 12f;
 
         for(int i =0; i<mat.Length; i++)
         {
@@ -72,14 +74,7 @@ public class TimeManager : MonoBehaviour
 
     public void ResultHour()
     {
-        for (int i = 1; i <= 24; i++)
-        {
-            if(mainLight.transform.rotation.eulerAngles.x > i * 15)
-            {
-                hour = i;
-                return;
-            }
-        }
+        hour += 10 * 0.075f * Time.deltaTime;
     }
 
     public void MainLIghtControl()

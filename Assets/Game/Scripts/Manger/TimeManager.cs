@@ -72,14 +72,28 @@ public class TimeManager : MonoBehaviour
 
     public void ResultHour()
     {
-        for (int i = 1; i <= 24; i++)
+        int resultHour = 6;
+
+        float r = mainLight.transform.rotation.eulerAngles.x;
+        //print("R: " +GameObject.Find("Directional Light").transform.localRotation.eulerAngles);
+
+        int t = 1;
+        while (true)
         {
-            if(mainLight.transform.rotation.eulerAngles.x > i * 15)
+            if(t * 15 >= r)
             {
-                hour = i;
-                return;
+                break;
             }
+            t++;
         }
+        
+         resultHour += t;
+        if(resultHour > 24)
+        {
+            resultHour -= 25;
+        }
+
+        hour = resultHour;
     }
 
     public void MainLIghtControl()

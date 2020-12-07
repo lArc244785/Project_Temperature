@@ -40,5 +40,13 @@ public class WeaponSensor : MonoBehaviour
         return targetUnits;
     }
 
+    public void All_FxAttackOff()
+    {
+        foreach(HitBox hitbox in hitBoxs)
+        {
+            hitbox.Fx_attackOff();
+        }
+    }
+
 
 }

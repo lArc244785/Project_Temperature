@@ -194,7 +194,20 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            spawnManager.NextWaveSpawn();
+            StartCoroutine(WaveSettingCoroutine());
         }
     }
+
+    IEnumerator WaveSettingCoroutine()
+    {
+        //맵 타일 떨어지는거
+
+        //맵 재설정
+
+        //몬스터 스폰
+        yield return spawnManager.NextWaveSpawn();
+    }
+
+
+
 }

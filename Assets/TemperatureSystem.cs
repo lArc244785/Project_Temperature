@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TemperatureSystem : MonoBehaviour
 {
-   private UnitBase player;
+   private PlayerControl player;
     private TimeManager time;
 
 
@@ -49,25 +49,38 @@ public class TemperatureSystem : MonoBehaviour
 
     private void Update()
     {
-        Temperature();
+        //Temperature();
     }
 
     private void Temperature()
     {
-        float windChill = timeTemperature[time.hour] - player.GetTemperature();
+        //print("BPM : " + player.GetBPMSystem().GetBPMString() + "BPM: Temperature: " + 
+        //    player.GetBPMSystem().GetBPMTemperature() +
+        //    " Hour: "+(time.hour - 1) + " OutTemperature: " + timeTemperature[time.hour - 1]  + " PlayerTemperature : " + player.GetTemperature()+
+        //    " Outsidetemperature :" + GetOutsidetemperature());
+
+        float resultTemperature = player.GetBPMSystem().GetBPMTemperature() + GetOutsidetemperature();
+        //print("ResultTemperature: " + resultTemperature);
+        player.AddSecondeTemperature(resultTemperature);
+    }
+
+    private float GetOutsidetemperature()
+    {
+        int hourIndex = time.hour - 1;
+        float windChill = timeTemperature[hourIndex] - player.GetTemperature();
         windChill = Mathf.Abs(windChill);
-        
-        if(windChill <= 10)
+
+         if (windChill <= 10)
         {
-            player.AddSecondeTemperature(0.1f);
+            return 0.1f;
         }
         else if(windChill <= 29)
         {
-            player.AddSecondeTemperature(0.3f);
+            return 0.3f;
         }
         else
         {
-            player.AddSecondeTemperature(0.5f);
+            return 0.5f;
         }
     }
 

@@ -63,7 +63,7 @@ public class MapMagner : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("플레이어한테 접근 가능한 타일 수: " + aroundTileCount);
+           // Debug.Log("플레이어한테 접근 가능한 타일 수: " + aroundTileCount);
 
 
             GameManager.Instance.GetEnemyManger().SetPath(tile.tileInfo.point);

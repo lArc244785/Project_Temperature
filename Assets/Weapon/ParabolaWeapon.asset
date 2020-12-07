@@ -16,7 +16,7 @@ MonoBehaviour:
   - DamageType: 0
     damage: 1
   tick: 1
-  tickRate: 0.5
+  tickRate: 1
   KnockBackTime: 0.5
   SternTime: 0
   KnockBackPower: 1.5

@@ -17,8 +17,6 @@ public class InputManger : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-
-
         //Debug.Log("Code 1 : OnMove" + input );
         if(input == Vector2.zero)
         {
@@ -29,6 +27,7 @@ public class InputManger : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+
         if (context.started)
         {
             Debug.Log("isInput: " + pc.isInputAction );
@@ -45,6 +44,19 @@ public class InputManger : MonoBehaviour
 
         //Debug.Log(context.performed);
     }
+
+    public void OnScrollWheel(InputAction.CallbackContext context)
+    {
+        Vector2 input = context.ReadValue<Vector2>();
+        if(input.y > 0)
+        {
+            GameManager.Instance.GetCamerManger().AddHeight(0.1f);
+        }else if (input.y < 0) {
+            GameManager.Instance.GetCamerManger().AddHeight(-0.1f);
+        }
+
+    }
+
 
     private void Update()
     {

@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         GetMapManger();
         GetEnemyManger();
 
-        SetStage(1, 10);
+        SetStage(1, 2);
 
     }
     //씬안에 데이터를 넘겨주는 녀석이 호출해주면 됩니다.

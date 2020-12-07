@@ -223,7 +223,7 @@ MonoBehaviour:
   ColdTemperatuer: -50
   Name: ForWardEnemy
   weaponTransfrom: {fileID: 8746283050808449314}
-  weapon: {fileID: 11400000, guid: 0cd41f9bc08e4be4f9372312db9a7a88, type: 2}
+  weapon: {fileID: 11400000, guid: 54d28b97f5eacc145a46c68e91546791, type: 2}
   weaponSensor: {fileID: 8746283050783382868}
   modelTransfrom: {fileID: 3726054396185116490}
   modelAni: {fileID: 0}

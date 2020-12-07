@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609821ed220e00648b08da852998a3f3, type: 3}
-  m_Name: ForWardWeapon
+  m_Name: ForWardWeaponCold
   m_EditorClassIdentifier: 
   damageList:
-  - DamageType: 0
+  - DamageType: 2
     damage: 1
   tick: 1
   tickRate: 0.5

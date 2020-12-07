@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ParabolaWeapon
   m_EditorClassIdentifier: 
   damageList:
-  - DamageType: 0
+  - DamageType: 1
     damage: 1
   tick: 1
   tickRate: 0.5

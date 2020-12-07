@@ -33,20 +33,27 @@ public class UIInGame : UIView
         nightIcon.fillAmount = 0.5f;
     }
 
+
+    public void Update()
+    {
+        UpdateTemperature();
+    }
+
+
     public void UpdateTemperature()
     {
-        temperature.text = GameManager.Instance.GetPlayerControl().temperature.ToString();
-        if (GameManager.Instance.GetPlayerControl().temperature > 40.0f)
+        temperature.text = GameManager.Instance.GetPlayerControl().GetTemperature().ToString("F1");
+        if (GameManager.Instance.GetPlayerControl().GetTemperature() > 40.0f)
         {
             temperatureIcon.DOColor(Color.red, 1.0f);
             Debug.Log("test");
         }
-        else if (GameManager.Instance.GetPlayerControl().temperature < 32.0f)
+        else if (GameManager.Instance.GetPlayerControl().GetTemperature() < 32.0f)
             temperatureIcon.DOColor(Color.blue, 1.0f);
         else
             temperatureIcon.DOColor(originalColor, 1.0f);
 
-        temperatureValue = (GameManager.Instance.GetPlayerControl().temperature - 23.0f) * 0.037f;
+        temperatureValue = (GameManager.Instance.GetPlayerControl().GetTemperature() - 23.0f) * 0.037f;
         temperatureIcon.fillAmount = temperatureValue;
     }
 

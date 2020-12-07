@@ -17,9 +17,9 @@ MonoBehaviour:
     damage: 1
   tick: 1
   tickRate: 1
-  KnockBackTime: 0.5
+  KnockBackTime: 0
   SternTime: 0
-  KnockBackPower: 1.5
+  KnockBackPower: 0
   isShotType: 1
   ShotBulletLifeTick: 10
   BulletPrefab: {fileID: 3201155951111978024, guid: 20b9ef8efa6dbc146a78609c084d3533,

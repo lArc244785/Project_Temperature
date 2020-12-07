@@ -21,39 +21,45 @@ public class BPMSystem : MonoBehaviour
     public void AddBPM(float bpm)
     {
         currentBPM += bpm;
-        Lerp();
+        Clamp();
     }
 
-    public void Update()
-    {
-        print("BPM: " + currentBPM);
-    }
 
-    public void BPMTemperature()
+
+    public float GetBPMTemperature()
     {
-        if (currentBPM < 80)
+
+
+        if (unit.GetTemperature() > unit.temperature)
         {
-            unit.AddSecondeTemperature(-0.5f);
+
+            if (currentBPM < 70)
+            {
+                return -0.5f;
+            }
+            else if (currentBPM < 80)
+            {
+                return -0.3f;
+            }
+            else if (currentBPM < 90)
+            {
+                return -0.1f;
+            }
         }
-        else if (currentBPM < 80)
+
+         if(currentBPM > 90.0f && currentBPM < 100)
         {
-            unit.AddSecondeTemperature(-0.3f);
+            return 0.1f;
+        }else if(currentBPM > 100 && currentBPM < 130)
+        {
+            return 0.3f;
         }
-        else if (currentBPM < 90)
+        else if(currentBPM > 130)
         {
-            unit.AddSecondeTemperature(-0.1f);
+            return 0.5f;
         }
-        else if(currentBPM < 100)
-        {
-            unit.AddSecondeTemperature(0.1f);
-        }else if(currentBPM < 130)
-        {
-            unit.AddSecondeTemperature(0.3f);
-        }
-        else
-        {
-            unit.AddSecondeTemperature(0.5f);
-        }
+
+        return 0.0f;
     }
 
     public void RecoveryBPMCoroutineOn()
@@ -81,7 +87,7 @@ public class BPMSystem : MonoBehaviour
         while(currentBPM > MIN_BPM )
         {
             currentBPM -= 1.0f * Time.deltaTime;
-            Lerp();
+            Clamp();
             yield return null;
         }
     }
@@ -112,7 +118,7 @@ public class BPMSystem : MonoBehaviour
         while (currentBPM < MAX_BPM)
         {
             currentBPM += 1.0f * Time.deltaTime;
-            Lerp();
+            Clamp();
             yield return null;
         }
     }
@@ -122,9 +128,9 @@ public class BPMSystem : MonoBehaviour
         return currentBPM.ToString("F");
     }
 
-    private void Lerp()
+    private void Clamp()
     {
-        Mathf.Lerp(MIN_BPM, MAX_BPM, currentBPM);
+        currentBPM = Mathf.Clamp(currentBPM , MIN_BPM, MAX_BPM );
     }
 
 }

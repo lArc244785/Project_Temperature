@@ -14,6 +14,7 @@ public class EnemyManger : MonoBehaviour
     public void Initializer()
     {
         pc = GameManager.Instance.GetPlayerControl();
+        HandleSetting();
     }
 
     public void HandleSetting()

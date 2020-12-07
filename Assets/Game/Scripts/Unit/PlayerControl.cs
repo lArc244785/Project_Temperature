@@ -84,7 +84,7 @@ public class PlayerControl : UnitBase
 
 
         UpdateSensorPos();
-        Rotation();
+        Rotation(!isControl);
 
         //bpmSystem.BPMTemperature();
 
@@ -98,8 +98,8 @@ public class PlayerControl : UnitBase
         if (moveDir.sqrMagnitude > 0.1f)
         {
             rigidbody.velocity = moveDir * speed;
-            AddTemperature(0.01f);
             modelAni.SetFloat("Walk", 1.0f);
+            FreamWaitWalkOffBPMOff();
             bpmSystem.WalkBPMCoroutineOn();
             bpmSystem.RecoveryBPMCoroutineOff();
             isMove = true;
@@ -107,7 +107,7 @@ public class PlayerControl : UnitBase
         else
         {
             modelAni.SetFloat("Walk", 0.0f);
-            bpmSystem.WalkBPMCoroutineOff();
+            FreamWaitWalkOffBPMOn();
             bpmSystem.RecoveryBPMCoroutineOn();
             isMove = false;
         }
@@ -119,40 +119,148 @@ public class PlayerControl : UnitBase
         }
     }
 
-
-
-    private void Rotation()
+    private void FreamWaitWalkOffBPMOn()
     {
-        if (!isRotion) return;
-
-        Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
-
-        //Get the Screen positions of the object
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-
-        //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = GameManager.Instance.GetInputManger().GetMousePostionToScreen();
-
-        //Get the angle between the points
-        float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-
-        if (isControl)
+        if(FreamWaitWalkOffBPM == null)
         {
-            unitTransform.parent = null;
-            AttackPivot.parent = unitTransform;
-            unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-        }
-        else
-        {
-            unitTransform.parent = null;
-            AttackPivot.parent = null;
-            AttackPivot.position = GetSkinnedMeshPostionToPostion();
-            unitTransform.parent = AttackPivot;
-            AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-            unitTransform.localRotation = Quaternion.identity;
+            FreamWaitWalkOffBPM = FreamWaitWalkOffBPMCoroutine();
+            StartCoroutine(FreamWaitWalkOffBPM);
         }
     }
 
+    private void FreamWaitWalkOffBPMOff()
+    {
+        if(FreamWaitWalkOffBPM != null)
+        {
+            StopCoroutine(FreamWaitWalkOffBPM);
+            FreamWaitWalkOffBPM = null;
+        }
+    }
+
+    IEnumerator FreamWaitWalkOffBPM;
+
+    IEnumerator FreamWaitWalkOffBPMCoroutine()
+    {
+        int frame = 0;
+        while(frame < 1)
+        {
+            yield return null;
+            frame++;
+        }
+        bpmSystem.WalkBPMCoroutineOff();
+    }
+
+
+    private void Rotation(bool isMouseMode = true)
+    {
+        if (!isRotion) return;
+
+        if (isMouseMode)
+        {
+            Camera mainCam = GameManager.Instance.GetCamerManger().GetMainCamera();
+
+            //Get the Screen positions of the object
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+            //Get the Screen position of the mouse
+            Vector2 mouseOnScreen = GameManager.Instance.GetInputManger().GetMousePostionToScreen();
+
+            //Get the angle between the points
+            float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+
+            if (isControl)
+            {
+                unitTransform.parent = null;
+                AttackPivot.parent = unitTransform;
+                unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            }
+            else
+            {
+                unitTransform.parent = null;
+                AttackPivot.parent = null;
+                AttackPivot.position = GetSkinnedMeshPostionToPostion();
+                unitTransform.parent = AttackPivot;
+                AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+                unitTransform.localRotation = Quaternion.identity;
+            }
+        }
+        else
+        {
+            float angle = GetKeyRotation();
+            if (isControl)
+            {
+                unitTransform.parent = null;
+                AttackPivot.parent = unitTransform;
+                unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            }
+            else
+            {
+                unitTransform.parent = null;
+                AttackPivot.parent = null;
+                AttackPivot.position = GetSkinnedMeshPostionToPostion();
+                unitTransform.parent = AttackPivot;
+                AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+                unitTransform.localRotation = Quaternion.identity;
+            }
+
+        }
+    }
+
+    private float GetKeyRotation()
+    {
+        Vector2 dir = new Vector2(moveDir.x, moveDir.z);
+        print(dir);
+
+        if (dir.x == 0)
+        {
+            if(dir.y >0)
+            {
+                return 0.0f;
+            }else if(dir.y < 0)
+            {
+                return 180.0f;
+            }
+        }
+
+        if(dir.y == 0)
+        {
+            if(dir.x > 0)
+            {
+                return 90.0f;
+            }else if(dir.x < 0)
+            {
+                return 270.0f;
+            }
+        }
+
+
+        if(dir.x > 0)
+        {
+            if(dir.y > 0)
+            {
+                return 45.0f;
+            }else if(dir.y < 0)
+            {
+                return 135.0f;
+            }
+        }
+
+        if(dir.x < 0)
+        {
+            if(dir.y > 0)
+            {
+                return 315.0f;
+            }else if(dir.y < 0)
+            {
+                return 225.0f;
+            }
+        }
+
+
+
+        return unitTransform.rotation.eulerAngles.y;
+
+    }
 
 
     public void comboAttack()
@@ -171,7 +279,7 @@ public class PlayerControl : UnitBase
         
         base.Attack(hitBox);
         bpmSystem.AddBPM(3.0f);
-        weaponSensor.hitBoxs[hitBox].ImfactOn();
+        weaponSensor.hitBoxs[hitBox].Fx_attackOn();
         RotaionOnOffCoroutine(1);
     }
 
@@ -306,9 +414,12 @@ public class PlayerControl : UnitBase
 
         comboSystem.ResetCombo();
 
+
+
         isDeshCollTime = true;
         isInputAction = false;
         isMove = false;
+        weaponSensor.All_FxAttackOff();
 
         modelAni.SetBool("isDeshing", true);
         modelAni.SetTrigger("Dash");
@@ -361,7 +472,10 @@ public class PlayerControl : UnitBase
         return unitTransform;
     }
 
-
+    public BPMSystem GetBPMSystem()
+    {
+        return bpmSystem;
+    }
 
 
 }

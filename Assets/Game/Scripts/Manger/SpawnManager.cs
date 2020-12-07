@@ -16,20 +16,20 @@ public class SpawnManager : MonoBehaviour
 
     public void Initializer(int StageNum)
     {
-        CreateWaveSpawnList(StageNum);
+       // CreateWaveSpawnList(StageNum);
     }
 
     private void Update()
     {
-        if (GameManager.Instance.isWaveSetting || GameManager.Instance.isGameClear) return;
+        //if (GameManager.Instance.isWaveSetting || GameManager.Instance.isGameClear) return;
 
-        if (waveList[GameManager.Instance.currentWave].ChackWaveEnmeysDie())
-        {
-            GameManager.Instance.NextWave();
-        }
+        //if (waveList[GameManager.Instance.currentWave].ChackWaveEnmeysDie())
+        //{
+        //    GameManager.Instance.NextWave();
+        //}
     }
 
-    public void NextWaveSpawn()
+    public IEnumerator NextWaveSpawn()
     {
         WaveSpawnData wsd = waveList[GameManager.Instance.currentWave];
         foreach(var enemyData in wsd.WaveSpawnEnemyList)
@@ -42,6 +42,8 @@ public class SpawnManager : MonoBehaviour
             enemy.transform.position = spawnPos;
         }
         GameManager.Instance.GetEnemyManger().HandleSetting();
+
+        yield break;
     }
 
 

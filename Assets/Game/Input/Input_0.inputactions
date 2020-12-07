@@ -7,8 +7,16 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "3edfbbf6-98c7-4056-9d8b-06536f7969be",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ScrollWheel",
+                    "type": "PassThrough",
+                    "id": "74b7a8aa-0f51-4094-989a-eff6a27d8845",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -264,6 +272,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rolling",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2b361a0-ea06-4414-ac2b-a0521fa85e64",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ScrollWheel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

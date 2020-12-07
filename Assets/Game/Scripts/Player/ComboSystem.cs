@@ -30,6 +30,7 @@ public class ComboSystem : MonoBehaviour
     public void currentComboReset()
     {
         currentCombo = 0;
+        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
     }
 
     public void isMovePossible()
@@ -45,8 +46,8 @@ public class ComboSystem : MonoBehaviour
     public void AddCombo()
     {
             currentCombo++;
+        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
             IsComboPossible = false;
-
     }
 
     public void Attack()

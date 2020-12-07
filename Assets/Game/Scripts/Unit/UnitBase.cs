@@ -426,13 +426,12 @@ public class UnitBase : Status
     public void AddSecondeTemperature(float t)
     {
         currentTemperature += t * Time.deltaTime;
-
-        //print("temp:" + currentTemperature + " : " + t);
     } 
     public float GetTemperature()
     {
         return currentTemperature;
     }
+
 
     public void AddTemperature(float t)
     {

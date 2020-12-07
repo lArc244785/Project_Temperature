@@ -8,6 +8,10 @@ public class ParabolaEnemy : EnemyBasic
     protected bool isParabolaAttack;
     protected IEnumerator ParabolaAttackCoroutine;
 
+    public void Start()
+    {
+        HandleSpawn();
+    }
 
     public override void HandleSpawn()
     {
@@ -74,24 +78,10 @@ public class ParabolaEnemy : EnemyBasic
             StartCoroutine(ParabolaAttackCoroutine);
             return;
         }
-        //공격범위가 아닐때
-        else if (isFind)
+        else
         {
             AttackTime = 0;
-            msg += "플레이어까지의 루트 확인: " + isFind + "\n";
-            msg += "플레어에게 이동하는 방향: " + moveDir + "\n";
-
-            //이동
-            if ((unitTransform.position - moveToPoint).sqrMagnitude < 0.01f)
-            {
-                SetNextMove();
-            }
-            Vector3 speedrig = moveDir * speed;
-            rigidbody.velocity = speedrig;
         }
-
-
-        Debug.Log(msg);
 
     }
 

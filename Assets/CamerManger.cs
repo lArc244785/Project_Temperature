@@ -28,6 +28,8 @@ public class CamerManger : MonoBehaviour
 
     public bool isMouseOffset;
 
+    [Range(-5.0f, 1.0f)]
+    public float height;
 
     public void Intilize()
     {
@@ -171,6 +173,16 @@ public class CamerManger : MonoBehaviour
         currentOffset.y = origineOffset.y;
 
         offset = currentOffset;
+        offset.y += height;
     }
+
+    public void AddHeight(float h)
+    {
+        height += h;
+        height = Mathf.Clamp(height, -5, 1);
+        offset.y = origineOffset.y + height;
+    }
+
+
 
 }

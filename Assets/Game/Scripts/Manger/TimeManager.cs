@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
     private float daySecond;
 
     private float timer = 0f;
-    public float hour;
+    private float hour;
 
     public bool isNight;
 
@@ -70,6 +70,11 @@ public class TimeManager : MonoBehaviour
     public void Timer()
     {
         timer += Time.deltaTime;
+    }
+
+    public int GetHour()
+    {
+        return (int)hour;
     }
 
     public void ResultHour()

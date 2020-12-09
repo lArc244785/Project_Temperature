@@ -297,10 +297,10 @@ public class PlayerControl : UnitBase
         Debug.Log("Player HIt" + gameObject.layer + "   " + GhostLayer);
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
-        modelAni.SetTrigger("Hit");
+        //modelAni.SetTrigger("Hit");
        // StartCoroutine(GhosetState(GhostTime));
         //MaterialChange(EnumInfo.Materia.Ghost);
-        comboSystem.currentComboReset();
+        //comboSystem.currentComboReset();
     }
 
     IEnumerator GhosetState(float time)
@@ -314,7 +314,7 @@ public class PlayerControl : UnitBase
     public override void ControlOff()
     {
         base.ControlOff();
-        isRotion = false;
+        RotaionOff();
         bpmSystem.WalkBPMCoroutineOff();
         bpmSystem.RecoveryBPMCoroutineOff();
     }
@@ -322,7 +322,7 @@ public class PlayerControl : UnitBase
     public override void ControlOn()
     {
         base.ControlOn();
-        isRotion = true;
+        RotaionOn();
     }
 
     public void RotaionOn()

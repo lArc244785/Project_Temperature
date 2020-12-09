@@ -24,7 +24,6 @@ public class ComboSystem : MonoBehaviour
     public void ResetCombo()
     {
         currentComboReset();
-        playerControl.modelAni.SetInteger("ComboCount", currentCombo);
     }
 
     public void currentComboReset()

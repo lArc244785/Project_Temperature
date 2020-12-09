@@ -139,7 +139,7 @@ public class UnitBase : Status
     public virtual void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
         
-        SetSkinnedMeshPostionToPostion();
+        //SetSkinnedMeshPostionToPostion();
 
         if (modelAni != null)
             modelAni.SetTrigger("Hit");
@@ -194,7 +194,7 @@ public class UnitBase : Status
     {
         if(KnockBacktime == 0.0f)
         {
-            ControlOn();
+            //ControlOn();
             yield break;
         }
 

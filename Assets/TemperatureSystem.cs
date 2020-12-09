@@ -25,6 +25,14 @@ public class TemperatureSystem : MonoBehaviour
         SetTimeTemperature(6, 9, -10, 10);
         SetTimeTemperature(9, 12, 10, 30);
 
+        int i = 0;
+        string log = string.Empty;
+        foreach(float temp in timeTemperature)
+        {
+            log += i + "시 외부 온도 : " + temp + "\n";
+            i++;
+        }
+        print(log);
     }
 
     private void SetTimeTemperature(int startIndex, int endIndex, float startTemperature, float endTemperature)
@@ -52,10 +60,22 @@ public class TemperatureSystem : MonoBehaviour
         Temperature();
     }
 
+    public void DrawLog()
+    {
+        float windChill = timeTemperature[time.GetHour()] - player.GetTemperature();
+        windChill = Mathf.Abs(windChill);
+
+        string msg =
+            "TestView : 시간 : " + time.GetHour() + " , " + "외부 온도 : " + timeTemperature[time.GetHour()] + "\n" +
+            "플레이어 온도 : " + player.GetTemperature() + "체감온도 : " + windChill;
+        print(msg);
+    }
+
+
     private void Temperature()
     {
-        print((int)time.hour);
-        float windChill = timeTemperature[(int)time.hour] - player.GetTemperature();
+        DrawLog();
+        float windChill = timeTemperature[time.GetHour()] - player.GetTemperature();
         windChill = Mathf.Abs(windChill);
         
         if(windChill <= 10)

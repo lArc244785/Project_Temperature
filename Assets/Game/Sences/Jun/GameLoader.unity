@@ -260,6 +260,26 @@ MonoBehaviour:
     additionalInstantiation: 1
     audioMixerGroup: {fileID: -5157299170100677154, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
       type: 2}
+  - itemName: System_Moon
+    initialInstantiationCount: 1
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: System_Sunrise
+    initialInstantiationCount: 1
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Main_BGM_Morning
+    initialInstantiationCount: 1
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: -5157299170100677154, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Main_BGM_Night
+    initialInstantiationCount: 1
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: -5157299170100677154, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
 --- !u!4 &385402283
 Transform:
   m_ObjectHideFlags: 0

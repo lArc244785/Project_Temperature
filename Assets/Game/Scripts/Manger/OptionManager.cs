@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class OptionManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class OptionManager : MonoBehaviour
     private OptionData currentOptionData;
 
     public FileManager fileManager;
+
+    public AudioMixer audioMixer;
 
     private void Awake()
     {
@@ -45,6 +48,8 @@ public class OptionManager : MonoBehaviour
     {
         currentOptionData = new OptionData(data);
         //apply here and save to disk
+        audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, (float)System.Convert.ToDouble(data.BGMVolume))) * 20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, (float)System.Convert.ToDouble(data.SFXVolume))) * 20);
     }
 
     public IEnumerator SaveOptionData()

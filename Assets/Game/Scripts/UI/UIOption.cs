@@ -70,9 +70,31 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         optionData = data;
 
         BGMSlider.value = optionData.BGMVolume;
-        //BGMFill.fillAmount = BGMSlider.value;
+        BGMFill.fillAmount = BGMSlider.value;
         SFXSlider.value = optionData.SFXVolume;
-        //SFXFill.fillAmount = SFXSlider.value;
+        SFXFill.fillAmount = SFXSlider.value;
+
+        if(optionData.isMuteBGM == 1)
+        {
+            BGMSlider.interactable = false;
+            originalBGMVolume = optionData.BGMVolume;
+            originalBGMColor = BGMFill.color;
+            optionData.BGMVolume = 0;
+            BGMButton.image.sprite = BGMMute;
+            BGMFill.color = Color.gray;
+            isBGMMute = true;
+        }
+
+        if (optionData.isMuteSFX == 1)
+        {
+            SFXSlider.interactable = false;
+            originalSFXVolume = optionData.SFXVolume;
+            originalSFXColor = SFXFill.color;
+            optionData.SFXVolume = 0;
+            SFXButton.image.sprite = SFXMute;
+            SFXFill.color = Color.gray;
+            isSFXMute = true;
+        }
     }
 
     public void MuteBGM()
@@ -86,6 +108,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             BGMButton.image.sprite = BGMMute;
             BGMFill.color = Color.gray;
             isBGMMute = true;
+            optionData.isMuteBGM = 1;
         }
         else
         {
@@ -94,6 +117,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             isBGMMute = false;
             BGMSlider.interactable = true;
             BGMFill.color = originalBGMColor;
+            optionData.isMuteBGM = 0;
         }
     }
 
@@ -108,6 +132,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             SFXButton.image.sprite = SFXMute;
             SFXFill.color = Color.gray;
             isSFXMute = true;
+            optionData.isMuteSFX = 1;
         }
         else
         {
@@ -116,6 +141,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             isSFXMute = false;
             SFXSlider.interactable = true;
             SFXFill.color = originalSFXColor;
+            optionData.isMuteSFX = 0;
         }
     }
 
@@ -123,12 +149,16 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
     {
         optionData.BGMVolume = BGMSlider.value;
         BGMFill.fillAmount = BGMSlider.value;
+
+        OptionManager.Instance.audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, BGMSlider.value)) * 20);
     }
 
     public void ApplySFXSlider()
     {
         optionData.SFXVolume = SFXSlider.value;
         SFXFill.fillAmount = SFXSlider.value;
+
+        OptionManager.Instance.audioMixer.SetFloat("SFXVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, SFXSlider.value)) * 20);
     }
 
     public void ReturnToGame()

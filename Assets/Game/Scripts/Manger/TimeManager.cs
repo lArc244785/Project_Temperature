@@ -30,13 +30,20 @@ public class TimeManager : MonoBehaviour
     public float degreePerSecond;
     private float daySecond;
 
-    private float timer = 0f;
+    private float nightTimer = 0f;
+    private float dayTimer = 0f;
+
     public float hour;
 
     public bool isNight;
 
+    public bool checkChange;
+
     private void Start()
     {
+        nightTimer = 240;
+        dayTimer = 80;
+
         daySecond = 320;
         degreePerSecond = 360 / daySecond;
         mainLight.transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -64,12 +71,37 @@ public class TimeManager : MonoBehaviour
 
         ResultHour();
 
+        Timer();
+
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
     }
 
     public void Timer()
     {
-        timer += Time.deltaTime;
+        nightTimer += 10 * Time.deltaTime;
+        dayTimer += 10 * Time.deltaTime;
+
+        if(isNight)
+        {
+            if (nightTimer / 300 > 1)
+            {
+                AudioPool.Instance.DespawnAll();
+                AudioPool.Instance.Play2D("System_Moon");
+                AudioPool.Instance.PlayBGM("Main_BGM_Night");
+                nightTimer = 0;
+            }
+        }
+
+        if(!isNight)
+        {
+            if (dayTimer / 300 > 1)
+            {
+                AudioPool.Instance.DespawnAll();
+                AudioPool.Instance.Play2D("System_Sunrise");
+                AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+                dayTimer = 0;
+            }
+        }
     }
 
     public void ResultHour()
@@ -93,6 +125,7 @@ public class TimeManager : MonoBehaviour
             targetMainIntensity = 0f;
             currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
             mainLight.intensity = currentMainIntensity;
+
         }
         else
         {

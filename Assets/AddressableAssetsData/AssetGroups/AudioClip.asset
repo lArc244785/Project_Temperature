@@ -17,8 +17,22 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: c40a13ce36968814cb490db7d43582d6
   m_SerializeEntries:
+  - m_GUID: 1b845723c47bdd6408a0337987d16f3f
+    m_Address: Assets/Game/Sound/SFX/Monster/Monster_Malrang_Hit.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: 1b845723c47bdd6408a0337987d16f3f, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 1b845723c47bdd6408a0337987d16f3f, type: 3}
   - m_GUID: 1c41ea840211e854ea652458b3f170e6
     m_Address: Assets/Game/Sound/BGM/Main_BGM_Morning.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 22f3db2209056324596cea02dffe92a5
+    m_Address: Assets/Game/Sound/SFX/Player/Character_Hit.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
@@ -38,6 +52,20 @@ MonoBehaviour:
     - AudioClip
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: 3573d6fcda891b74680625e20d759f39
+    m_Address: Assets/Game/Sound/SFX/Monster/Monster_Dragon_Attack.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: 3573d6fcda891b74680625e20d759f39, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 3573d6fcda891b74680625e20d759f39, type: 3}
+  - m_GUID: 54861b5fabb51b84ca5f3a56c2f83e5b
+    m_Address: Assets/Game/Sound/SFX/Monster/Monster_Malrang_Attack.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: 54861b5fabb51b84ca5f3a56c2f83e5b, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 54861b5fabb51b84ca5f3a56c2f83e5b, type: 3}
   - m_GUID: 5eabc094bbc3d6f438d999f7ec2bf2e4
     m_Address: Assets/Game/Sound/SFX/System_Sunrise.wav
     m_ReadOnly: 0

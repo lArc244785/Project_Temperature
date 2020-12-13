@@ -140,8 +140,8 @@ public class EnemyBasic : UnitBase
         //UnityEditor.EditorApplication.isPaused = true;
         base.HitEvent(damageList, weapon);
 
+        AudioPool.Instance.Play2D("Monster_Malrang_Hit");
 
-        
     }
 
     public override void KnockBack(float KnockBacktime, float SternTime, UnitBase TargetUnit, float Power = 0.8f)

@@ -301,6 +301,8 @@ public class PlayerControl : UnitBase
        // StartCoroutine(GhosetState(GhostTime));
         //MaterialChange(EnumInfo.Materia.Ghost);
         comboSystem.currentComboReset();
+
+        AudioPool.Instance.Play2D("Character_Hit");
     }
 
     IEnumerator GhosetState(float time)

@@ -35,6 +35,18 @@ public class AudioPool : MonoBehaviour
         }
     }
 
+    public AudioSource GetBGM(string itemName)
+    {
+        if (poolDict.ContainsKey(itemName))
+        {
+            var pool = poolDict[itemName];
+            AudioSource result = pool.GetItem();
+            return result;
+        }
+
+        return null;
+    }
+
     public AudioSource Play(string itemName, Vector3 pos)
     {
         if (poolDict.ContainsKey(itemName))
@@ -74,6 +86,7 @@ public class AudioPool : MonoBehaviour
             AudioSource result = pool.GetItem();
             result.spatialBlend = 0;
             result.loop = true;
+            result.volume = 1;
             result.Play();
             //result.SendMessage("OnSpawn", SendMessageOptions.DontRequireReceiver);
             return result;

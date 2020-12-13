@@ -89,6 +89,7 @@ public class ParabolaEnemy : EnemyBasic
     public override void Attack(int hitBox = 0)
     {
         base.Attack(hitBox);
+
     }
 
     IEnumerator ParabolaAttack()
@@ -109,6 +110,8 @@ public class ParabolaEnemy : EnemyBasic
         Utility.KillTween(rotionTween);
         weapon.SetShootAttackPath();
         weapon.Attack(0);
+
+        AudioPool.Instance.Play2D("Monster_Dragon_Attack");
 
         yield return new WaitForSeconds(weapon.tickRate);
         AttackTime = 0;

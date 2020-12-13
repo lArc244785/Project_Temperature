@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         GetInputManger();
         GetMapManger();
         GetEnemyManger();
+        GetTimeManager();
 
         SetStage(1, 2);
 

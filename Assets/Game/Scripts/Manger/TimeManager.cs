@@ -39,8 +39,19 @@ public class TimeManager : MonoBehaviour
 
     public bool checkChange;
 
+    private float currentVolume = 1f;
+    private float targetVolume;
+    private float currentVolumeVelocity;
+
+    private AudioSource dayBGM;
+    private AudioSource nightBGM;
+
     private void Start()
     {
+        dayBGM = AudioPool.Instance.GetBGM("Main_BGM_Morning");
+        nightBGM = AudioPool.Instance.GetBGM("Main_BGM_Night");
+        AudioPool.Instance.DespawnAll();
+
         AudioPool.Instance.PlayBGM("Main_BGM_Morning");
 
         nightTimer = 240;
@@ -55,7 +66,7 @@ public class TimeManager : MonoBehaviour
 
         hour = 12f;
 
-        for(int i =0; i<mat.Length; i++)
+        for (int i = 0; i < mat.Length; i++)
         {
             mat[i].SetFloat("_Blend", 0.0f);
         }
@@ -85,25 +96,54 @@ public class TimeManager : MonoBehaviour
 
         if(isNight)
         {
-            if (nightTimer / 300 > 1)
+            if (nightTimer > 200)
             {
-                AudioPool.Instance.DespawnAll();
-                AudioPool.Instance.Play2D("System_Moon");
-                AudioPool.Instance.PlayBGM("Main_BGM_Night");
+                StartCoroutine(ChangeToNightSound());
                 nightTimer = 0;
             }
         }
 
         if(!isNight)
         {
-            if (dayTimer / 300 > 1)
+            if (dayTimer > 200)
             {
-                AudioPool.Instance.DespawnAll();
-                AudioPool.Instance.Play2D("System_Sunrise");
-                AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+                StartCoroutine(ChangeToDaySound());
                 dayTimer = 0;
             }
         }
+    }
+
+    IEnumerator FadeoutSound(AudioSource BGM)
+    {
+        while (BGM.volume > 0.1f)
+        {
+            targetVolume = 0f;
+            currentVolume = Mathf.SmoothDamp(currentVolume, targetVolume, ref currentVolumeVelocity, 3f);
+            BGM.volume = currentVolume;
+
+            yield return null;
+        }
+        BGM.volume = 0;
+    }
+
+    IEnumerator ChangeToNightSound()
+    {
+        AudioPool.Instance.Play2D("System_Moon");
+        StartCoroutine(FadeoutSound(dayBGM));
+        yield return new WaitForSeconds(3f);
+        AudioPool.Instance.DespawnAll();
+        AudioPool.Instance.PlayBGM("Main_BGM_Night");
+        nightTimer = 0;
+    }
+
+    IEnumerator ChangeToDaySound()
+    {
+        AudioPool.Instance.Play2D("System_Sunrise");
+        StartCoroutine(FadeoutSound(nightBGM));
+        yield return new WaitForSeconds(3f);
+        AudioPool.Instance.DespawnAll();
+        AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+        dayTimer = 0;
     }
 
     public void ResultHour()

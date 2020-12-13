@@ -25,7 +25,6 @@ public class ForWardEnemy : EnemyBasic
         //UnityEditor.EditorApplication.isPaused = true;
         base.HitEvent(damageList, weapon);
 
-
         if (hp > 0)
         {
             SetLook(weapon.GetParentUnit().GetSkinnedMeshPostionToPostion(), 2, 0.35f);
@@ -104,6 +103,7 @@ public class ForWardEnemy : EnemyBasic
     public override void Attack(int hitBox = 0)
     {
         base.Attack(hitBox);
+
     }
 
 
@@ -144,6 +144,9 @@ public class ForWardEnemy : EnemyBasic
 
         rotionTween.Play();
         Attack();
+
+        AudioPool.Instance.Play2D("Monster_Malrang_Attack");
+
         float time = 0;
         while (time < CalculationAttackTime)
         {

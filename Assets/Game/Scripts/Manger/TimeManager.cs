@@ -41,6 +41,8 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
+        AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+
         nightTimer = 240;
         dayTimer = 80;
 

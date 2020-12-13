@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         Initializer();
 
         UIManager.Instance.uiMainMenu.Toggle(false);
+
+        AudioPool.Instance.DespawnAll();
     }
 
     private void Initializer()

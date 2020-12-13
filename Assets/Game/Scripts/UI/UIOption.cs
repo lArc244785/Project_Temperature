@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UIOption : UIView
+public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
 {
     public CanvasGroup canvasGroup;
 
@@ -32,7 +33,7 @@ public class UIOption : UIView
     private bool isBGMMute;
     private bool isSFXMute;
 
-    private bool isToggle;
+    public bool isToggle;
 
     private void Start()
     {
@@ -136,6 +137,8 @@ public class UIOption : UIView
         StartCoroutine(OptionManager.Instance.SaveOptionData());
         Toggle(false);
 
+        AudioPool.Instance.Play2D("Click");
+
         //if(!UIManager.Instance.uiInGame.isToggle)
         //{
         //    //UIManager.Instance.uiInGame.
@@ -154,5 +157,15 @@ public class UIOption : UIView
             Application.Quit();
 #endif
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        UIManager.Instance.isOverUI = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIManager.Instance.isOverUI = false;
     }
 }

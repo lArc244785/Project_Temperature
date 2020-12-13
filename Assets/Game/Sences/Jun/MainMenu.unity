@@ -2885,6 +2885,7 @@ MonoBehaviour:
   BGMOn: {fileID: 21300000, guid: 528896f68ff0b66459cf73204abe4abe, type: 3}
   SFXMute: {fileID: 21300000, guid: 69e9a8fe3ddd52a4895475bcebe17b6f, type: 3}
   SFXOn: {fileID: 21300000, guid: 528896f68ff0b66459cf73204abe4abe, type: 3}
+  isToggle: 0
 --- !u!224 &1833419773
 RectTransform:
   m_ObjectHideFlags: 0

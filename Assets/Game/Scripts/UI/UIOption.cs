@@ -27,9 +27,6 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
     public Sprite SFXMute;
     public Sprite SFXOn;
 
-    private float originalBGMVolume;
-    private float originalSFXVolume;
-
     private bool isBGMMute;
     private bool isSFXMute;
 
@@ -56,11 +53,14 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             OptionData data = OptionManager.Instance.GetCurrentOptionData();
             SetData(data);
             canvasGroup.interactable = true;
-            if(isBGMMute)
-            {
-                BGMSlider.value = originalBGMVolume;
-                SFXSlider.value = originalSFXVolume;
-            }
+
+            //    BGMSlider.value = originalBGMVolume;
+            //if (isSFXMute)
+            //    SFXSlider.value = originalSFXVolume;
+
+
+
+
         }
         base.Toggle(value);
     }
@@ -74,26 +74,10 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         SFXSlider.value = optionData.SFXVolume;
         SFXFill.fillAmount = SFXSlider.value;
 
-        if(optionData.isMuteBGM == 1)
-        {
-            BGMSlider.interactable = false;
-            originalBGMVolume = optionData.BGMVolume;
-            originalBGMColor = BGMFill.color;
-            optionData.BGMVolume = 0;
-            BGMButton.image.sprite = BGMMute;
-            BGMFill.color = Color.gray;
-            isBGMMute = true;
-        }
 
-        if (optionData.isMuteSFX == 1)
+        if (optionData.isMuteBGM == 1)
         {
-            SFXSlider.interactable = false;
-            originalSFXVolume = optionData.SFXVolume;
-            originalSFXColor = SFXFill.color;
-            optionData.SFXVolume = 0;
-            SFXButton.image.sprite = SFXMute;
-            SFXFill.color = Color.gray;
-            isSFXMute = true;
+            BGMSlider.value = data.originalBGMVolume;
         }
     }
 
@@ -102,7 +86,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         if(!isBGMMute)
         {
             BGMSlider.interactable = false;
-            originalBGMVolume = optionData.BGMVolume;
+            optionData.originalBGMVolume = optionData.BGMVolume;
             originalBGMColor = BGMFill.color;
             optionData.BGMVolume = 0;
             BGMButton.image.sprite = BGMMute;
@@ -112,7 +96,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
-            optionData.BGMVolume = originalBGMVolume;
+            optionData.BGMVolume = optionData.originalBGMVolume;
             BGMButton.image.sprite = BGMOn;
             isBGMMute = false;
             BGMSlider.interactable = true;
@@ -126,7 +110,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         if (!isSFXMute)
         {
             SFXSlider.interactable = false;
-            originalSFXVolume = optionData.SFXVolume;
+            optionData.originalSFXVolume = optionData.SFXVolume;
             originalSFXColor = SFXFill.color;
             optionData.SFXVolume = 0;
             SFXButton.image.sprite = SFXMute;
@@ -136,7 +120,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
-            optionData.SFXVolume = originalSFXVolume;
+            optionData.SFXVolume = optionData.originalSFXVolume;
             SFXButton.image.sprite = SFXOn;
             isSFXMute = false;
             SFXSlider.interactable = true;

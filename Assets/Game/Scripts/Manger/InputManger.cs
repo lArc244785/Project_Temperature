@@ -86,9 +86,13 @@ public class InputManger : MonoBehaviour
 
     public void OnOption(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (Application.isPlaying)
         {
-            UIManager.Instance.uiOption.Toggle(true);
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

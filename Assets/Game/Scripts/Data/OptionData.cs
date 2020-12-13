@@ -8,6 +8,8 @@ public class OptionData
     public float SFXVolume;
     public int isMuteBGM;
     public int isMuteSFX;
+    public float originalBGMVolume;
+    public float originalSFXVolume;
 
 
     public OptionData()

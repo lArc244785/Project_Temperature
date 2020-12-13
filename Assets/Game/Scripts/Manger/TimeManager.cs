@@ -115,6 +115,7 @@ public class TimeManager : MonoBehaviour
 
     IEnumerator FadeoutSound(AudioSource BGM)
     {
+        currentVolume = 1f;
         while (BGM.volume > 0.1f)
         {
             targetVolume = 0f;
@@ -246,5 +247,11 @@ public class TimeManager : MonoBehaviour
     public void DayNightIconControl()
     {
 
+    }
+    
+
+    public int GetHour()
+    {
+        return (int)hour;
     }
 }

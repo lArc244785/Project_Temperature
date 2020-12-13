@@ -57,8 +57,9 @@ public class PlayerMotionHandler : MonoBehaviour
 
     public void MoveActionFinsh()
     {
-        pc.SetSkinnedMeshPostionToPostion();
         HandleIsControlOn();
+        pc.SetSkinnedMeshPostionToPostion();
+
     }
 
 

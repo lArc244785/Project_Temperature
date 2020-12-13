@@ -116,8 +116,8 @@ public class EnemyBasic : UnitBase
         uiHpBar.HandleDestroy();
 
         GameManager.Instance.GetEnemyManger().enemyList.Remove(this);
-
         unitTransform.parent = GameManager.Instance.GetSpawnManager().DiedEnmey.transform;
+        GameManager.Instance.GetPlayerControl().AddTemperature(-0.1f);
 
         base.HandleDeath();
     }

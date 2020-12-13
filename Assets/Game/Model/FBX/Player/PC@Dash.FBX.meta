@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: -8444228808809566427
     second: Dash
+  - first:
+      74: 3594306096440868023
+    second: PC@Dash
   externalObjects: {}
   materials:
     materialImportMode: 1

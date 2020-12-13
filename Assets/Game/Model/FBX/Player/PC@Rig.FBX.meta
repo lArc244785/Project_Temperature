@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: 3191565145524526369
     second: PC@Rig
+  - first:
+      74: 8478776851236653044
+    second: PC_Skin
   externalObjects: {}
   materials:
     materialImportMode: 1

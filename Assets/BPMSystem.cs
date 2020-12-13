@@ -24,7 +24,7 @@ public class BPMSystem : MonoBehaviour
         Clamp();
     }
 
-
+    float nerf = 0.2f;
 
     public float GetBPMTemperature()
     {
@@ -49,14 +49,14 @@ public class BPMSystem : MonoBehaviour
 
          if(currentBPM > 90.0f && currentBPM < 100)
         {
-            return 0.1f;
+            return 0.1f* nerf;
         }else if(currentBPM > 100 && currentBPM < 130)
         {
-            return 0.3f;
+            return 0.3f * nerf;
         }
         else if(currentBPM > 130)
         {
-            return 0.5f;
+            return 0.5f * nerf;
         }
 
         return 0.0f;

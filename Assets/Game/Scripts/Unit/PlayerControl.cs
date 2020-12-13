@@ -39,16 +39,20 @@ public class PlayerControl : UnitBase
 
     public bool isRotion;
 
+    public bool isMouseMode;
+
     private IEnumerator RotaionFreamOnOff;
 
     public Transform AttackPivot;
+
+    
 
     private BPMSystem bpmSystem;
 
     public void Start()
     {
         Initializer();
-        isRotion = true;
+
     }
 
     public override void Initializer()
@@ -59,6 +63,8 @@ public class PlayerControl : UnitBase
         bpmSystem = GetComponent<BPMSystem>();
         bpmSystem.Initializer(this);
         temperatureSystem = GameManager.Instance.GetTemperatureSystem();
+        isRotion = true;
+        isMouseMode = false;
     }
 
     public void OnDrawGizmos()
@@ -84,13 +90,25 @@ public class PlayerControl : UnitBase
 
 
         UpdateSensorPos();
-        Rotation(!isControl);
+        Rotation(isMouseMode);
+
+        Temperature();
 
         //bpmSystem.BPMTemperature();
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
     }
+
+    private void Temperature()
+    {
+        float addTemperautre = temperatureSystem.GetTemperature() + bpmSystem.GetBPMTemperature();
+        Debug.Log("AddTemperature: " + addTemperautre);
+        AddSecondeTemperature(addTemperautre);
+    }
+
+
+
 
     public void Move()
     {
@@ -168,40 +186,40 @@ public class PlayerControl : UnitBase
             //Get the angle between the points
             float angle = Utility.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
-            if (isControl)
-            {
-                unitTransform.parent = null;
-                AttackPivot.parent = unitTransform;
-                unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-            }
-            else
-            {
+            //if (isControl)
+            //{
+            //    unitTransform.parent = null;
+            //    AttackPivot.parent = unitTransform;
+            //    unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            //}
+            //else
+            //{
                 unitTransform.parent = null;
                 AttackPivot.parent = null;
                 AttackPivot.position = GetSkinnedMeshPostionToPostion();
                 unitTransform.parent = AttackPivot;
                 AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
                 unitTransform.localRotation = Quaternion.identity;
-            }
+            //}
         }
         else
         {
             float angle = GetKeyRotation();
-            if (isControl)
-            {
+            //if (isControl)
+            //{
                 unitTransform.parent = null;
                 AttackPivot.parent = unitTransform;
                 unitTransform.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-            }
-            else
-            {
-                unitTransform.parent = null;
-                AttackPivot.parent = null;
-                AttackPivot.position = GetSkinnedMeshPostionToPostion();
-                unitTransform.parent = AttackPivot;
-                AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-                unitTransform.localRotation = Quaternion.identity;
-            }
+            //}
+            //else
+            //{
+            //    unitTransform.parent = null;
+            //    AttackPivot.parent = null;
+            //    AttackPivot.position = GetSkinnedMeshPostionToPostion();
+            //    unitTransform.parent = AttackPivot;
+            //    AttackPivot.rotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            //    unitTransform.localRotation = Quaternion.identity;
+            //}
 
         }
     }
@@ -322,7 +340,14 @@ public class PlayerControl : UnitBase
     public override void ControlOn()
     {
         base.ControlOn();
+        isMouseMode = false;
         RotaionOn();
+    }
+
+    private IEnumerator MouseModeChange()
+    {
+        yield return null;
+        isMouseMode = false;
     }
 
     public void RotaionOn()

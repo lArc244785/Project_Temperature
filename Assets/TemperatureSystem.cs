@@ -55,14 +55,11 @@ public class TemperatureSystem : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        Temperature();
-    }
+
 
     public void DrawLog()
     {
-        float windChill = timeTemperature[time.GetHour()] - player.GetTemperature();
+        float windChill = timeTemperature[time.GetHour()]  - player.GetTemperature()  ;
         windChill = Mathf.Abs(windChill);
 
         string msg =
@@ -72,24 +69,29 @@ public class TemperatureSystem : MonoBehaviour
     }
 
 
-    private void Temperature()
+    public float GetTemperature()
     {
         DrawLog();
-        float windChill = timeTemperature[time.GetHour()] - player.GetTemperature();
+        float windChill = timeTemperature[time.GetHour()]  - player.GetTemperature()  ;
         windChill = Mathf.Abs(windChill);
-        
-        if(windChill <= 10)
+
+        int isAboveZero = timeTemperature[time.GetHour()] > 0 ? 1 : -1;
+        float resultTemperature = 0.0f;
+
+        if (windChill <= 10)
         {
-            player.AddSecondeTemperature(0.1f);
+            resultTemperature = 0.1f * isAboveZero;
         }
         else if(windChill <= 29)
         {
-            player.AddSecondeTemperature(0.3f);
+            resultTemperature = 0.3f * isAboveZero;
         }
         else
         {
-            player.AddSecondeTemperature(0.5f);
+            resultTemperature = 0.5f * isAboveZero;
         }
+
+        return resultTemperature;
     }
 
     private void ChakTemperature()

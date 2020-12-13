@@ -53,9 +53,9 @@ public class ComboSystem : MonoBehaviour
     {
         if(currentCombo == 0)
         {
+            playerControl.isMouseMode = true;
             playerControl.GetRigidbody().velocity = Vector3.zero;
             playerControl.modelAni.SetTrigger("Attack");
-
             AddCombo();
         }
         else

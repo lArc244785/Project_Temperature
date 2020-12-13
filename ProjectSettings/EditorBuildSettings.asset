@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Game/Sences/Jun/GameLoader.unity
+    guid: 5fcf102e906507b4e9fa18e235369f64
+  - enabled: 1
     path: Assets/Game/Sences/Jun/MainMenu.unity
     guid: f56be863539452a4a94635c04254118a
   - enabled: 0
@@ -17,4 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Sences/InGame/Stage1.unity
     guid: 211a6cc9b206871499173afe96f032ca
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 0c0b773b7ecd7ee408482c6fc7e91a3d,
+      type: 2}

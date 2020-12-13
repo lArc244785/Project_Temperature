@@ -30,13 +30,33 @@ public class TimeManager : MonoBehaviour
     public float degreePerSecond;
     private float daySecond;
 
-    private float timer = 0f;
-    private float hour;
+    private float nightTimer = 0f;
+    private float dayTimer = 0f;
+
+    public float hour;
 
     public bool isNight;
 
+    public bool checkChange;
+
+    private float currentVolume = 1f;
+    private float targetVolume;
+    private float currentVolumeVelocity;
+
+    private AudioSource dayBGM;
+    private AudioSource nightBGM;
+
     private void Start()
     {
+        dayBGM = AudioPool.Instance.GetBGM("Main_BGM_Morning");
+        nightBGM = AudioPool.Instance.GetBGM("Main_BGM_Night");
+        AudioPool.Instance.DespawnAll();
+
+        AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+
+        nightTimer = 240;
+        dayTimer = 80;
+
         daySecond = 320;
         degreePerSecond = 360 / daySecond;
         mainLight.transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -46,7 +66,7 @@ public class TimeManager : MonoBehaviour
 
         hour = 12f;
 
-        for(int i =0; i<mat.Length; i++)
+        for (int i = 0; i < mat.Length; i++)
         {
             mat[i].SetFloat("_Blend", 0.0f);
         }
@@ -64,17 +84,66 @@ public class TimeManager : MonoBehaviour
 
         ResultHour();
 
+        Timer();
+
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
     }
 
     public void Timer()
     {
-        timer += Time.deltaTime;
+        nightTimer += 10 * Time.deltaTime;
+        dayTimer += 10 * Time.deltaTime;
+
+        if(isNight)
+        {
+            if (nightTimer > 200)
+            {
+                StartCoroutine(ChangeToNightSound());
+                nightTimer = 0;
+            }
+        }
+
+        if(!isNight)
+        {
+            if (dayTimer > 200)
+            {
+                StartCoroutine(ChangeToDaySound());
+                dayTimer = 0;
+            }
+        }
     }
 
-    public int GetHour()
+    IEnumerator FadeoutSound(AudioSource BGM)
     {
-        return (int)hour;
+        while (BGM.volume > 0.1f)
+        {
+            targetVolume = 0f;
+            currentVolume = Mathf.SmoothDamp(currentVolume, targetVolume, ref currentVolumeVelocity, 3f);
+            BGM.volume = currentVolume;
+
+            yield return null;
+        }
+        BGM.volume = 0;
+    }
+
+    IEnumerator ChangeToNightSound()
+    {
+        AudioPool.Instance.Play2D("System_Moon");
+        StartCoroutine(FadeoutSound(dayBGM));
+        yield return new WaitForSeconds(3f);
+        AudioPool.Instance.DespawnAll();
+        AudioPool.Instance.PlayBGM("Main_BGM_Night");
+        nightTimer = 0;
+    }
+
+    IEnumerator ChangeToDaySound()
+    {
+        AudioPool.Instance.Play2D("System_Sunrise");
+        StartCoroutine(FadeoutSound(nightBGM));
+        yield return new WaitForSeconds(3f);
+        AudioPool.Instance.DespawnAll();
+        AudioPool.Instance.PlayBGM("Main_BGM_Morning");
+        dayTimer = 0;
     }
 
     public void ResultHour()
@@ -98,6 +167,7 @@ public class TimeManager : MonoBehaviour
             targetMainIntensity = 0f;
             currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
             mainLight.intensity = currentMainIntensity;
+
         }
         else
         {

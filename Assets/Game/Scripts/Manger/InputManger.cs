@@ -27,6 +27,11 @@ public class InputManger : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (UIManager.Instance.isOverUI)
+            return;
+
+        if (UIManager.Instance.uiOption.isToggle)
+            return;
 
         if (context.started)
         {
@@ -84,12 +89,6 @@ public class InputManger : MonoBehaviour
         if (context.started)
         {
             UIManager.Instance.uiOption.Toggle(true);
-            //UIManager.Instance.uiInGame.gameObject.SetActive(false);
-            //UIManager.Instance.uiInGame.gameObject.SetActive(false);
-            //UIManager.Instance.uiInGame.Toggle(false);
-            //UIManager.Instance.uiDynamic.Toggle(false);
-
-            //UIManager.Instance.uiInGame.isToggle = false;
         }
     }
 }

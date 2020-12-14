@@ -87,6 +87,20 @@ public class TimeManager : MonoBehaviour
         Timer();
 
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
+
+        if (GetHour() == 0)
+        {
+            GameManager.Instance.lamp.LampPadeIn();
+        }else if(GetHour() == 5)
+        {
+            GameManager.Instance.lamp.LampPadeOut();
+        }
+        else if(GetHour() == 6)
+        {
+            GameManager.Instance.lamp.PadeInOutEvnetReset();
+        }
+    
+    
     }
 
     public void Timer()

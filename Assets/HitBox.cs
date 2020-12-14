@@ -17,6 +17,7 @@ public class HitBox : MonoBehaviour
         if (isPlayerHitBox)
         {
             fx_attack = transform.GetChild(0).gameObject;
+            
         }
     }
 

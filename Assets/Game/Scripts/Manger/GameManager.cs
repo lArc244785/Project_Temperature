@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private TimeManager timeManager;
     private TemperatureSystem temperatureSystem;
 
+    public LampFx lamp;
 
     public int stage;
     public int wave;

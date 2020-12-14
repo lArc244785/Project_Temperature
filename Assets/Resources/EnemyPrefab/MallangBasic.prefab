@@ -249,6 +249,7 @@ MonoBehaviour:
   tile: {fileID: 0}
   Range: 1.2
   hpBar: {fileID: 587439578917950807}
+  isCool: 1
 --- !u!1 &8746283051370661103
 GameObject:
   m_ObjectHideFlags: 0

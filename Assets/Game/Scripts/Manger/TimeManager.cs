@@ -61,7 +61,7 @@ public class TimeManager : MonoBehaviour
         degreePerSecond = 360 / daySecond;
         mainLight.transform.rotation = Quaternion.Euler(90, 0, 0);
         nightLight.intensity = 0;
-        currentMainIntensity = .8f;
+        currentMainIntensity = 1f;
         sunsetLight.intensity = 0;
 
         hour = 12f;
@@ -88,10 +88,10 @@ public class TimeManager : MonoBehaviour
 
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
 
-        if (GetHour() == 3)
+        if (GetHour() == 1)
         {
             GameManager.Instance.lamp.LampPadeIn();
-        }else if(GetHour() == 4)
+        }else if(GetHour() == 3)
         {
             GameManager.Instance.lamp.LampPadeOut();
         }
@@ -188,7 +188,7 @@ public class TimeManager : MonoBehaviour
         {
             isNight = false;
 
-            targetMainIntensity = .8f;
+            targetMainIntensity = 1f;
             currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 10f);
             mainLight.intensity = currentMainIntensity;
         }

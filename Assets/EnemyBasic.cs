@@ -26,7 +26,7 @@ public class EnemyBasic : UnitBase
 
     protected UIHpBar uiHpBar;
 
-
+    public bool isCool;
     
 
     public override void HandleSpawn()
@@ -40,7 +40,16 @@ public class EnemyBasic : UnitBase
         target = GameManager.Instance.GetPlayerControl();
         //FindPath(moveTile.point);
 
-        GameObject hpBarGO = Instantiate(Resources.Load("UIHPBar"), Vector3.zero, Quaternion.identity) as GameObject;
+        GameObject hpBarGO = null;
+
+        if(isCool)
+        {
+            hpBarGO = Instantiate(Resources.Load("UIHpBar1"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
+        else
+        {
+            hpBarGO = Instantiate(Resources.Load("UIHPBar"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
         hpBarGO.transform.SetParent(UIManager.Instance.uiDynamic.GetAnchorTransform());
         hpBarGO.transform.localScale = Vector3.one;
         uiHpBar = hpBarGO.GetComponent<UIHpBar>();
@@ -117,7 +126,7 @@ public class EnemyBasic : UnitBase
 
         GameManager.Instance.GetEnemyManger().enemyList.Remove(this);
         unitTransform.parent = GameManager.Instance.GetSpawnManager().DiedEnmey.transform;
-        GameManager.Instance.GetPlayerControl().AddTemperature(-0.1f);
+        GameManager.Instance.GetPlayerControl().AddTemperature(-0.5f);
 
         base.HandleDeath();
     }

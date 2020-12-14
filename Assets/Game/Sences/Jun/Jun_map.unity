@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1167273176}
-  m_IndirectSpecularColor: {r: 0.38093835, g: 0.5997637, b: 0.8419298, a: 1}
+  m_IndirectSpecularColor: {r: 0.36805922, g: 0.5945588, b: 0.83104926, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1388,12 +1388,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 263435729}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &80535992 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5016229286660860790, guid: 38447b8aa6688d749a31b70268e8d65c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1263037601}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &84702260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
@@ -1669,12 +1663,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
     type: 3}
   m_PrefabInstance: {fileID: 1651190017}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &116479311 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5016229286660860790, guid: 38447b8aa6688d749a31b70268e8d65c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1791275924}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &117198231
 PrefabInstance:
@@ -18631,6 +18619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38447b8aa6688d749a31b70268e8d65c, type: 3}
+--- !u!4 &1263037602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1263037601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1267004884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26177,6 +26170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38447b8aa6688d749a31b70268e8d65c, type: 3}
+--- !u!4 &1791275925 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1791275924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1806159034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5516501745565492495, guid: e3d299dfe73dba844ac9f55618434191,
@@ -27976,7 +27974,6 @@ Transform:
   m_LocalPosition: {x: -16.19, y: -4.55, z: -1.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 116479311}
   - {fileID: 2033715486}
   - {fileID: 1611746659}
   - {fileID: 1209296731}
@@ -28006,6 +28003,7 @@ Transform:
   - {fileID: 120118336}
   - {fileID: 1479793307}
   - {fileID: 291497449}
+  - {fileID: 1263037602}
   - {fileID: 361758349}
   - {fileID: 1057979623}
   - {fileID: 366688956}
@@ -28025,7 +28023,7 @@ Transform:
   - {fileID: 844630250}
   - {fileID: 2133995120}
   - {fileID: 554253278}
-  - {fileID: 80535992}
+  - {fileID: 1791275925}
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -29721,8 +29719,13 @@ MonoBehaviour:
   width: 15
   height: 15
   playerTile: {fileID: 0}
+  wave5: []
+  wave6: []
+  wave10: []
   isDebugMode: 0
   rootMaterial: {fileID: 0}
+  Wall0: {fileID: 0}
+  Wall1: {fileID: 0}
 --- !u!4 &2138933868
 Transform:
   m_ObjectHideFlags: 0
@@ -30502,6 +30505,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4298150071111241241, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5845335387555842527, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -30520,6 +30528,11 @@ PrefabInstance:
     - target: {fileID: 6246515519998481906, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
         type: 3}
       propertyPath: m_Maskable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610295312351435984, guid: 4c423c981923c3a4cafa26f1f8db8ec3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7703096701305456936, guid: 4c423c981923c3a4cafa26f1f8db8ec3,

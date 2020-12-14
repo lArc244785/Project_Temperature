@@ -465,7 +465,7 @@ public class PlayerControl : UnitBase
             Time.timeScale = 1.0f;
         }
 
-        AddTemperature(0.5f);
+        bpmSystem.AddBPM(5f);
 
         comboSystem.ResetCombo();
 

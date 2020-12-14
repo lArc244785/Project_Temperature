@@ -20,6 +20,7 @@ public class ForWardEnemy : EnemyBasic
     {
         base.HandleDeath();
     }
+
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
         //UnityEditor.EditorApplication.isPaused = true;

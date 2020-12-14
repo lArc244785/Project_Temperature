@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameLoader : MonoBehaviour
 {
 
-    private void Awake()
+    private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
         StartCoroutine(ProcessLoadGame());

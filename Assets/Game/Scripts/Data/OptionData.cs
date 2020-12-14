@@ -18,6 +18,8 @@ public class OptionData
         SFXVolume = 0.5f;
         isMuteBGM = 0;
         isMuteSFX = 0;
+        originalBGMVolume = BGMVolume;
+        originalSFXVolume = SFXVolume;
     }
 
     public OptionData(OptionData data)
@@ -26,5 +28,7 @@ public class OptionData
         this.SFXVolume = data.SFXVolume;
         this.isMuteBGM = data.isMuteBGM;
         this.isMuteSFX = data.isMuteSFX;
+        this.originalBGMVolume = data.originalBGMVolume;
+        this.originalSFXVolume = data.originalSFXVolume;
     }
 }

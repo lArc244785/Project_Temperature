@@ -91,8 +91,8 @@ public class TimeManager : MonoBehaviour
 
     public void Timer()
     {
-        nightTimer += 10 * Time.deltaTime;
-        dayTimer += 10 * Time.deltaTime;
+        nightTimer += Time.deltaTime;
+        dayTimer += Time.deltaTime;
 
         if(isNight)
         {
@@ -149,7 +149,7 @@ public class TimeManager : MonoBehaviour
 
     public void ResultHour()
     {
-        hour += 10 * 0.075f * Time.deltaTime;
+        hour += 0.075f * Time.deltaTime;
         if (hour > 24)
             hour = 0;
 
@@ -159,14 +159,14 @@ public class TimeManager : MonoBehaviour
     {
         //time for game
         //360 = 1day 300sec = 6degree
-        mainLight.transform.Rotate(Vector3.right, 10 * degreePerSecond*Time.deltaTime);
+        mainLight.transform.Rotate(Vector3.right, degreePerSecond*Time.deltaTime);
 
         if (mainLight.transform.eulerAngles.x >= 270)
         {
             isNight = true;
 
             targetMainIntensity = 0f;
-            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
+            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 10f);
             mainLight.intensity = currentMainIntensity;
 
         }
@@ -175,7 +175,7 @@ public class TimeManager : MonoBehaviour
             isNight = false;
 
             targetMainIntensity = .8f;
-            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 1f);
+            currentMainIntensity = Mathf.SmoothDamp(currentMainIntensity, targetMainIntensity, ref currentMainIntensityVelocity, 10f);
             mainLight.intensity = currentMainIntensity;
         }
     }
@@ -185,13 +185,13 @@ public class TimeManager : MonoBehaviour
         if (mainLight.transform.eulerAngles.x > 270 || mainLight.transform.eulerAngles.x < 20)
         {
             targetIntensity = 0.3f;
-            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 1f);
+            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 10f);
             nightLight.intensity = currentIntensity;
         }
         else
         {
             targetIntensity = 0f;
-            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 1f);
+            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref currentIntensityVelocity, 10f);
             nightLight.intensity = currentIntensity;
         }
     }
@@ -201,13 +201,13 @@ public class TimeManager : MonoBehaviour
         if (mainLight.transform.eulerAngles.x > 20 && mainLight.transform.eulerAngles.x < 40)
         {
             targetSunsetIntensity = 0.3f;
-            currentSunsetIntensity = Mathf.SmoothDamp(currentSunsetIntensity, targetSunsetIntensity, ref currentSunsetIntensityVelocity, 1f);
+            currentSunsetIntensity = Mathf.SmoothDamp(currentSunsetIntensity, targetSunsetIntensity, ref currentSunsetIntensityVelocity, 10f);
             sunsetLight.intensity = currentSunsetIntensity;
         }
         else
         {
             targetSunsetIntensity = 0f;
-            currentSunsetIntensity = Mathf.SmoothDamp(currentSunsetIntensity, targetSunsetIntensity, ref currentSunsetIntensityVelocity, 1f);
+            currentSunsetIntensity = Mathf.SmoothDamp(currentSunsetIntensity, targetSunsetIntensity, ref currentSunsetIntensityVelocity, 10f);
             sunsetLight.intensity = currentSunsetIntensity;
         }
     }
@@ -216,9 +216,9 @@ public class TimeManager : MonoBehaviour
     {
         if(blend < 1)
         {
-            //blend += Time.deltaTime * 0.0125f;
+            blend += Time.deltaTime * 0.0125f;
             //test ;
-            blend += Time.deltaTime * 0.125f;
+            //blend += Time.deltaTime * 0.125f;
             mat[index].SetFloat("_Blend", blend);
         }
         else

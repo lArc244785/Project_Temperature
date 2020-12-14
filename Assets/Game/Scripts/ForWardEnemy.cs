@@ -109,6 +109,8 @@ public class ForWardEnemy : EnemyBasic
 
     IEnumerator ForWardAttack()
     {
+        AudioPool.Instance.Play2D("Monster_Malrang_Attack");
+
         ControlOff();
         AttackSuccessOff();
         isAttackRate = true;
@@ -144,8 +146,6 @@ public class ForWardEnemy : EnemyBasic
 
         rotionTween.Play();
         Attack();
-
-        AudioPool.Instance.Play2D("Monster_Malrang_Attack");
 
         float time = 0;
         while (time < CalculationAttackTime)

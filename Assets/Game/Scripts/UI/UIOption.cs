@@ -53,14 +53,6 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             OptionData data = OptionManager.Instance.GetCurrentOptionData();
             SetData(data);
             canvasGroup.interactable = true;
-
-            //    BGMSlider.value = originalBGMVolume;
-            //if (isSFXMute)
-            //    SFXSlider.value = originalSFXVolume;
-
-
-
-
         }
         base.Toggle(value);
     }
@@ -69,15 +61,36 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
     {
         optionData = data;
 
-        BGMSlider.value = optionData.BGMVolume;
-        BGMFill.fillAmount = BGMSlider.value;
-        SFXSlider.value = optionData.SFXVolume;
-        SFXFill.fillAmount = SFXSlider.value;
-
+        if (optionData.isMuteBGM == 0)
+        {
+            BGMSlider.value = optionData.BGMVolume;
+            BGMFill.fillAmount = BGMSlider.value;
+            BGMButton.image.sprite = BGMOn;
+        }
+        if (optionData.isMuteSFX == 0)
+        {
+            SFXSlider.value = optionData.SFXVolume;
+            SFXFill.fillAmount = SFXSlider.value;
+            SFXButton.image.sprite = SFXOn;
+        }
 
         if (optionData.isMuteBGM == 1)
         {
             BGMSlider.value = data.originalBGMVolume;
+            BGMButton.image.sprite = BGMMute;
+            BGMFill.color = Color.gray;
+            optionData.BGMVolume = 0;
+            BGMSlider.interactable = false;
+            isBGMMute = true;
+        }
+        if (optionData.isMuteSFX == 1)
+        {
+            SFXSlider.value = data.originalSFXVolume;
+            SFXButton.image.sprite = SFXMute;
+            SFXFill.color = Color.gray;
+            optionData.SFXVolume = 0;
+            SFXSlider.interactable = false;
+            isSFXMute = true;
         }
     }
 
@@ -100,7 +113,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             BGMButton.image.sprite = BGMOn;
             isBGMMute = false;
             BGMSlider.interactable = true;
-            BGMFill.color = originalBGMColor;
+            BGMFill.color = Color.white;
             optionData.isMuteBGM = 0;
         }
     }
@@ -124,7 +137,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
             SFXButton.image.sprite = SFXOn;
             isSFXMute = false;
             SFXSlider.interactable = true;
-            SFXFill.color = originalSFXColor;
+            SFXFill.color = Color.white;
             optionData.isMuteSFX = 0;
         }
     }

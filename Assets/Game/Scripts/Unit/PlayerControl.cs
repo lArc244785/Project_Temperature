@@ -45,7 +45,7 @@ public class PlayerControl : UnitBase
 
     public Transform AttackPivot;
 
-    
+    bool check = true;
 
     private BPMSystem bpmSystem;
 
@@ -311,12 +311,22 @@ public class PlayerControl : UnitBase
 
     public override void HitEvent(List<Damage> damageList, WeaponBase weapon)
     {
+        int random = Random.Range(0, 5);
+        if(random <=2)
+        {
+            AudioPool.Instance.Play2D("Hit_01");
+        }
+        else
+        {
+            AudioPool.Instance.Play2D("Hit_02");
+        }
+
 
         Debug.Log("Player HIt" + gameObject.layer + "   " + GhostLayer);
         if (gameObject.layer == GhostLayer) return;
         base.HitEvent(damageList, weapon);
         //modelAni.SetTrigger("Hit");
-       // StartCoroutine(GhosetState(GhostTime));
+        // StartCoroutine(GhosetState(GhostTime));
         //MaterialChange(EnumInfo.Materia.Ghost);
         //comboSystem.currentComboReset();
     }
@@ -428,6 +438,13 @@ public class PlayerControl : UnitBase
 
     public void Desh()
     {
+        if(check)
+        {
+            AudioPool.Instance.Play2D("Dash");
+            check = false;
+        }
+
+
         if (isDeshCollTime || !isInputAction) return;
         if (isTimeStopCorutine)
         {
@@ -453,6 +470,8 @@ public class PlayerControl : UnitBase
         StartCoroutine(DeshCoroutine());
 
         bpmSystem.AddBPM(5.0f);
+
+        check = true;
     }
 
 

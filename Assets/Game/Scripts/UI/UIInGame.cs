@@ -60,7 +60,7 @@ public class UIInGame : UIView
 
     public void UpdateDayNightIcon(bool isNight)
     {
-        clockHand.Rotate(Vector3.back, 20 * timeManager.degreePerSecond * Time.deltaTime);
+        clockHand.Rotate(Vector3.back, 2 * timeManager.degreePerSecond * Time.deltaTime);
         if (isNight)
         {
             nightIcon.fillAmount = .0f;
@@ -68,9 +68,9 @@ public class UIInGame : UIView
             NightPanel.SetActive(true);
             DayPanel.SetActive(false);
 
-            //dayIcon.fillAmount += 0.00625f * Time.deltaTime;
+            dayIcon.fillAmount += 0.00625f * Time.deltaTime;
             //test
-            dayIcon.fillAmount += 0.0625f * Time.deltaTime;
+            //dayIcon.fillAmount += 0.0625f * Time.deltaTime;
         }
         else
         {
@@ -79,7 +79,7 @@ public class UIInGame : UIView
             DayPanel.SetActive(true);
             NightPanel.SetActive(false);
 
-            nightIcon.fillAmount += 0.0625f * Time.deltaTime;
+            nightIcon.fillAmount += 0.00625f * Time.deltaTime;
         }
     }
 }

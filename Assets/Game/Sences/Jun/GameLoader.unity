@@ -295,8 +295,33 @@ MonoBehaviour:
     additionalInstantiation: 1
     audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
       type: 2}
-  - itemName: Character_Hit
+  - itemName: Hit_01
     initialInstantiationCount: 5
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Hit_02
+    initialInstantiationCount: 5
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Dash
+    initialInstantiationCount: 3
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Attack_01
+    initialInstantiationCount: 2
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Attack_02
+    initialInstantiationCount: 2
+    additionalInstantiation: 1
+    audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
+      type: 2}
+  - itemName: Attack_03
+    initialInstantiationCount: 2
     additionalInstantiation: 1
     audioMixerGroup: {fileID: 2458617081527562599, guid: 1c673e01facf80d4cbe1be5eff1f4f70,
       type: 2}

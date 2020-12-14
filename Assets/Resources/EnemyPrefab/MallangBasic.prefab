@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  MAXHP: 1
+  MAXHP: 5
   isAlive: 1
   speed: 2
   temperature: 36.5

@@ -147,7 +147,7 @@ public class UIOption : UIView , IPointerEnterHandler, IPointerExitHandler
         optionData.BGMVolume = BGMSlider.value;
         BGMFill.fillAmount = BGMSlider.value;
 
-        OptionManager.Instance.audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, BGMSlider.value)) * 20);
+        OptionManager.Instance.audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, 0.5f * BGMSlider.value)) * 20);
     }
 
     public void ApplySFXSlider()

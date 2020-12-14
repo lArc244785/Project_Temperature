@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public UIOption uiOption;
     public UIDynamic uiDynamic;
 
+    public Animator animator;
+
     public bool isOverUI;
 
     private void Awake()

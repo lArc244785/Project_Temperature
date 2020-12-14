@@ -109,8 +109,6 @@ public class ForWardEnemy : EnemyBasic
 
     IEnumerator ForWardAttack()
     {
-        AudioPool.Instance.Play2D("Monster_Malrang_Attack");
-
         ControlOff();
         AttackSuccessOff();
         isAttackRate = true;
@@ -123,6 +121,8 @@ public class ForWardEnemy : EnemyBasic
             t += Time.deltaTime;
             yield return null;
         }
+
+        AudioPool.Instance.Play2D("Monster_Malrang_Attack");
 
         Vector3 forWardDir = weaponSensor.hitBoxs[0].gameObject.transform.position;
         forWardDir = new Vector3(forWardDir.x, unitTransform.position.y, forWardDir.z);

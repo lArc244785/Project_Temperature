@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: c40a13ce36968814cb490db7d43582d6
   m_SerializeEntries:
-  - m_GUID: 0cda93e95c9d221408b8aa5c97cc0c61
-    m_Address: Assets/Game/Sound/SFX/Player/Hit_02.wav
+  - m_GUID: 0808879e9c1576c49af751d751f386dd
+    m_Address: Assets/Game/Sound/SFX/Player/Dash.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
@@ -36,50 +36,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: 1c41ea840211e854ea652458b3f170e6, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 1c41ea840211e854ea652458b3f170e6, type: 3}
   - m_GUID: 22f3db2209056324596cea02dffe92a5
     m_Address: Assets/Game/Sound/SFX/Player/Character_Hit.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: 22f3db2209056324596cea02dffe92a5, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 22f3db2209056324596cea02dffe92a5, type: 3}
   - m_GUID: 2330f1eb13abd6f4ead975edafe37c24
     m_Address: Assets/Game/Sound/SFX/Click.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: 2330f1eb13abd6f4ead975edafe37c24, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 2330f1eb13abd6f4ead975edafe37c24, type: 3}
   - m_GUID: 2d6c79155ad7fc24ca537d42df455590
     m_Address: Assets/Game/Sound/SFX/System_Moon.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: 2d6c79155ad7fc24ca537d42df455590, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 2d6c79155ad7fc24ca537d42df455590, type: 3}
+  - m_GUID: 3082f688acb3b6e44a609ead1b37d671
+    m_Address: Assets/Game/Sound/SFX/Player/Attack_02.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: 3082f688acb3b6e44a609ead1b37d671, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 3082f688acb3b6e44a609ead1b37d671, type: 3}
   - m_GUID: 3573d6fcda891b74680625e20d759f39
     m_Address: Assets/Game/Sound/SFX/Monster/Monster_Dragon_Attack.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 383cd4132ae367c4383e2f488e315e59
-    m_Address: Assets/Game/Sound/SFX/Player/Hit_01.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AudioClip
-    m_MainAsset: {fileID: 8300000, guid: 383cd4132ae367c4383e2f488e315e59, type: 3}
-    m_TargetAsset: {fileID: 8300000, guid: 383cd4132ae367c4383e2f488e315e59, type: 3}
-  - m_GUID: 4608fa9e0d802fa4ebcd960a4725de18
-    m_Address: Assets/Game/Sound/SFX/Player/Attack_01.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AudioClip
-    m_MainAsset: {fileID: 8300000, guid: 4608fa9e0d802fa4ebcd960a4725de18, type: 3}
-    m_TargetAsset: {fileID: 8300000, guid: 4608fa9e0d802fa4ebcd960a4725de18, type: 3}
+    m_MainAsset: {fileID: 8300000, guid: 3573d6fcda891b74680625e20d759f39, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 3573d6fcda891b74680625e20d759f39, type: 3}
   - m_GUID: 54861b5fabb51b84ca5f3a56c2f83e5b
     m_Address: Assets/Game/Sound/SFX/Monster/Monster_Malrang_Attack.wav
     m_ReadOnly: 0
@@ -87,13 +80,20 @@ MonoBehaviour:
     - AudioClip
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: 5b3bbdad856d9e6409aa55e0a6b65d1e
-    m_Address: Assets/Game/Sound/SFX/Player/Attack_03.wav
+  - m_GUID: 5a78734bb10564f4493e9218254f1a41
+    m_Address: Assets/Game/Sound/SFX/Player/Hit_02.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 8300000, guid: 5b3bbdad856d9e6409aa55e0a6b65d1e, type: 3}
-    m_TargetAsset: {fileID: 8300000, guid: 5b3bbdad856d9e6409aa55e0a6b65d1e, type: 3}
+    m_MainAsset: {fileID: 8300000, guid: 5a78734bb10564f4493e9218254f1a41, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 5a78734bb10564f4493e9218254f1a41, type: 3}
+  - m_GUID: 5ac58cc6f20bdeb4e9062fce911701e1
+    m_Address: Assets/Game/Sound/SFX/Player/Attack_03.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: 5ac58cc6f20bdeb4e9062fce911701e1, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 5ac58cc6f20bdeb4e9062fce911701e1, type: 3}
   - m_GUID: 5eabc094bbc3d6f438d999f7ec2bf2e4
     m_Address: Assets/Game/Sound/SFX/System_Sunrise.wav
     m_ReadOnly: 0
@@ -101,13 +101,6 @@ MonoBehaviour:
     - AudioClip
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: 791249db9b798ac49af008c47cf2bb1a
-    m_Address: Assets/Game/Sound/SFX/Player/Attack_02.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AudioClip
-    m_MainAsset: {fileID: 8300000, guid: 791249db9b798ac49af008c47cf2bb1a, type: 3}
-    m_TargetAsset: {fileID: 8300000, guid: 791249db9b798ac49af008c47cf2bb1a, type: 3}
   - m_GUID: 9ab76cf04484694469a75ba976280491
     m_Address: Assets/Game/Sound/BGM/Main_BGM_Night.wav
     m_ReadOnly: 0
@@ -115,27 +108,34 @@ MonoBehaviour:
     - AudioClip
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: b91ff787feb574c408a29865e06f7423
-    m_Address: Assets/Game/Sound/SFX/Player/Dash.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AudioClip
-    m_MainAsset: {fileID: 8300000, guid: b91ff787feb574c408a29865e06f7423, type: 3}
-    m_TargetAsset: {fileID: 8300000, guid: b91ff787feb574c408a29865e06f7423, type: 3}
   - m_GUID: cdb77ed2fa7a6474c9824e959075cccf
     m_Address: Assets/Game/Sound/BGM/Main_BGM.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: cdb77ed2fa7a6474c9824e959075cccf, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: cdb77ed2fa7a6474c9824e959075cccf, type: 3}
+  - m_GUID: e620837abe754e345ad0b87319937c50
+    m_Address: Assets/Game/Sound/SFX/Player/Attack_01.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: e620837abe754e345ad0b87319937c50, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: e620837abe754e345ad0b87319937c50, type: 3}
   - m_GUID: ecd73ea121bfd9540b564f0c0e5a45e1
     m_Address: Assets/Game/Sound/SFX/Start.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 8300000, guid: ecd73ea121bfd9540b564f0c0e5a45e1, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: ecd73ea121bfd9540b564f0c0e5a45e1, type: 3}
+  - m_GUID: f112ecbdbaf910f45a39fc8e355d7a72
+    m_Address: Assets/Game/Sound/SFX/Player/Hit_01.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    m_MainAsset: {fileID: 8300000, guid: f112ecbdbaf910f45a39fc8e355d7a72, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: f112ecbdbaf910f45a39fc8e355d7a72, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 501a826d511b7bb4a988b053add40158, type: 2}
   m_SchemaSet:

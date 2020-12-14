@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
 
     private void Initializer()
     {
-        
         GetPlayerControl();
         GetCamerManger();
         GetInputManger();
@@ -54,19 +53,21 @@ public class GameManager : MonoBehaviour
         GetEnemyManger();
         GetTimeManager();
 
-        SetStage(1, 2);
 
     }
+
     //씬안에 데이터를 넘겨주는 녀석이 호출해주면 됩니다.
-    public void SetStage(int stage, int stageWave)
+    public void GameStart()
     {
-        this.stage = stage;
-      wave = stageWave;
+        stage = 0;
+        wave = 10;
         currentWave = 0;
         GetSpawnManager();
         StartCoroutine(spawnManager.NextWaveSpawn());
         isWaveSetting = false;
         isGameClear = false;
+
+
     }
 
 

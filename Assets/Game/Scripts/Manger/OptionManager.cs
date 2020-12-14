@@ -48,7 +48,7 @@ public class OptionManager : MonoBehaviour
     {
         currentOptionData = new OptionData(data);
         //apply here and save to disk
-        audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, (float)System.Convert.ToDouble(data.BGMVolume))) * 20);
+        audioMixer.SetFloat("BGMVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, (float)System.Convert.ToDouble(data.BGMVolume*0.5f))) * 20);
         audioMixer.SetFloat("SFXVolume", Mathf.Log(Mathf.Lerp(0.001f, 1, (float)System.Convert.ToDouble(data.SFXVolume))) * 20);
     }
 

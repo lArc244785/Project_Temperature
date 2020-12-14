@@ -112,7 +112,7 @@ public class MapMagner : MonoBehaviour
 
     public IEnumerator Wave()
     {
-        if (GameManager.Instance.currentWave + 1 == 5) 
+        if (GameManager.Instance.currentWave + 1 == 10) 
         {
             for(int i=0; i<wave5.Length; i++)
             {
@@ -121,7 +121,7 @@ public class MapMagner : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
         
-        if (GameManager.Instance.currentWave + 1 == 6)
+        if (GameManager.Instance.currentWave + 1 == 12)
         {
             for (int i = 0; i < wave6.Length; i++)
             {
@@ -130,7 +130,7 @@ public class MapMagner : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        if (GameManager.Instance.currentWave + 1 == 10)
+        if (GameManager.Instance.currentWave + 1 == 18)
         {
             for (int i = 0; i < wave10.Length; i++)
             {

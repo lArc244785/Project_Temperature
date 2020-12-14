@@ -77,10 +77,20 @@ public class PlayerControl : UnitBase
 
     }
 
+    private void CheckTemp()
+    {
+       
+        if(currentTemperature > HotTemperatuer || currentTemperature < ColdTemperatuer)
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
 
 
     public void Update()
     {
+        if (GameManager.Instance.isGameOver) return;
+        CheckTemp();
         TS = Time.timeScale;
         //print("AA");
         if ( isControl)

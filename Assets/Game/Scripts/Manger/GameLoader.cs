@@ -20,6 +20,9 @@ public class GameLoader : MonoBehaviour
 
         AudioPool.Instance.Init();
 
+
+        yield return new WaitForSeconds(1.5f);
+
         var asyncOp = SceneManager.LoadSceneAsync("MainMenu");
         yield return asyncOp;
 

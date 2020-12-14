@@ -16,6 +16,7 @@ public class InputManger : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+
         Vector2 input = context.ReadValue<Vector2>();
         //Debug.Log("Code 1 : OnMove" + input );
         if(input == Vector2.zero)
@@ -27,6 +28,8 @@ public class InputManger : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.isGameOver) return;
+
         if (UIManager.Instance.isOverUI)
             return;
 
@@ -65,6 +68,8 @@ public class InputManger : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isGameOver) return;
+
         if (isMouseButtonPush)
         {
             pc.comboAttack();
@@ -74,6 +79,7 @@ public class InputManger : MonoBehaviour
 
     public void OnRolling(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.isGameOver) return;
         pc.Desh();
     }
 

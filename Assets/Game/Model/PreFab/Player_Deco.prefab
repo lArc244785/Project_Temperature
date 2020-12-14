@@ -1534,8 +1534,8 @@ MonoBehaviour:
   speed: 4
   temperature: 36.5
   currentTemperature: 0
-  HotTemperatuer: 50
-  ColdTemperatuer: -10
+  HotTemperatuer: 60
+  ColdTemperatuer: 15
   Name: Player
   weaponTransfrom: {fileID: 3703563736299645244}
   weapon: {fileID: 11400000, guid: 31f8945557902444590752a9dd0f3e6e, type: 2}

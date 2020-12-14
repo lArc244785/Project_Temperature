@@ -45,6 +45,8 @@ public class ForWardEnemy : EnemyBasic
 
     private void FixedUpdate()
     {
+
+        if (GameManager.Instance.isGameOver) return;
         //if (!target.isAlive) return;
         AI();
     }

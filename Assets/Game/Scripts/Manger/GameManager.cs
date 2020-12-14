@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     public bool isWaveSetting = true;
     public bool isGameClear = false;
+    public bool isGameOver = false;
 
     private void Awake()
     {
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
         Initializer();
 
         UIManager.Instance.uiMainMenu.Toggle(false);
+        UIManager.Instance.uiGameStart.Toggle(true);
+        UIManager.Instance.uiGameStart.GameStartAnimationStart();
 
         AudioPool.Instance.DespawnAll();
     }
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
         GetMapManger();
         GetEnemyManger();
         GetTimeManager();
-
+        GetSpawnManager();
 
     }
 
@@ -60,14 +63,22 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         stage = 0;
-        wave = 10;
+        wave = 19;
         currentWave = 0;
-        GetSpawnManager();
         StartCoroutine(spawnManager.NextWaveSpawn());
         isWaveSetting = false;
         isGameClear = false;
 
 
+    }
+
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        playerControl.ControlOff();
+
+        UIManager.Instance.uiGameOver.GameOver();
     }
 
 
@@ -136,7 +147,7 @@ public class GameManager : MonoBehaviour
         if(spawnManager == null)
         {
             spawnManager = GameObject.FindObjectOfType<SpawnManager>();
-            spawnManager.Initializer(stage);
+            spawnManager.Initializer(1);
         }
         return spawnManager;
     }
@@ -186,8 +197,11 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
-        Debug.Log("StageClear");
+        isGameOver = true;
         isGameClear = true;
+
+        UIManager.Instance.uiGameClear.GameClear();
+
     }
 
     public void NextWave()

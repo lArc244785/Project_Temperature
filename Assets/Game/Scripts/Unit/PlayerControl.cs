@@ -298,6 +298,9 @@ public class PlayerControl : UnitBase
         base.Attack(hitBox);
         bpmSystem.AddBPM(3.0f);
         weaponSensor.hitBoxs[hitBox].Fx_attackOn();
+        string attackSound = "Attack_0" + (hitBox + 1);
+        AudioPool.Instance.Play2D(attackSound);
+
         //RotaionOnOffCoroutine(1);
     }
 

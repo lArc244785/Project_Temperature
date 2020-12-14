@@ -88,14 +88,14 @@ public class TimeManager : MonoBehaviour
 
         UIManager.Instance.uiInGame.UpdateDayNightIcon(isNight);
 
-        if (GetHour() == 0)
+        if (GetHour() == 3)
         {
             GameManager.Instance.lamp.LampPadeIn();
-        }else if(GetHour() == 5)
+        }else if(GetHour() == 4)
         {
             GameManager.Instance.lamp.LampPadeOut();
         }
-        else if(GetHour() == 6)
+        else if(GetHour() == 5)
         {
             GameManager.Instance.lamp.PadeInOutEvnetReset();
         }
